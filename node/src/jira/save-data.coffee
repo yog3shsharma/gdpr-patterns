@@ -1,23 +1,30 @@
 Jira_Api = require './api'
+Data     = require '../Data'
 
 class Save_Data
   constructor: ->
     @.jira = new Jira_Api()
-    @.folder_Data   =  (wallaby?.localProjectDir || './').path_Combine('../data')
-    @.folder_Issues = @.folder_Data.path_Combine 'Issues'
+    @.data = new Data()
 
   save_Issue: (key, callback)=>
     @.jira.issue key, (data)=>
       callback @.save_Issue_Data data
 
   save_Issue_Data: (data)->
+
     if data.key
+      issue_Project = data.fields.project.name
+      issue_Type = data.fields.issuetype.name
+      issue_Id   = data.key
       issue =
-        key: data.key                         # add this field to the issue data saved
-      for field in data.fields._keys().sort()
+        key: issue_Id                         # add this field to the issue data saved
+
+      for field in data.fields._keys().sort() # only add fields that have value
         if data.fields[field]
           issue[field] = data.fields[field]
-          file = @.folder_Issues.path_Combine "#{data.key}.json"
+
+      folder = @.data.folder_Issues.path_Combine("#{issue_Project}/#{issue_Type}").folder_Create()
+      file   = folder.path_Combine "/#{issue_Id}.json"
       issue.save_Json file
       return file
     else

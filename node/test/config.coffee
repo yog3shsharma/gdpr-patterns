@@ -4,7 +4,7 @@ describe 'Config', ->
 
   it 'check values',->
     using Config, ->
-      @.protocol  .assert_Is 'http'
+      @.protocol  .assert_Is 'https'
       @.apiVersion.assert_Is 'latest'
       if @.via_config
         @.host.assert_Contains 'jira'

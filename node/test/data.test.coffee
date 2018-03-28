@@ -8,8 +8,9 @@ describe 'Data', ->
   it 'constructor',->
     using new Data(),->
       @.folder_Data
-      @.folder_Data.assert_Folder_Exists()
-      @.folder_Issues.assert_Folder_Exists()
+      @.folder_Data    .assert_Folder_Exists()
+      @.folder_Issues  .assert_Folder_Exists()
+      @.folder_Mappings.assert_Folder_Exists()
 
   it 'issue_Data', ->
     key = 'GDPR-180'

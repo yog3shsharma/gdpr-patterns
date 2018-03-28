@@ -1,7 +1,7 @@
 require 'fluentnode'
 
 JiraApi = require('jira-client')
-Config  = require('../../config')
+Config  = require('../../src/config')
 
 
 class Api
@@ -34,11 +34,13 @@ class Api
     options =
       startAt   : 0
       maxResults: 200
+      #expand    : ['changelog']
       fields    : fields || ['summary','status']
 
     get_Issues = () =>
       @._call_Jira "searchJira", [jql,options], (data)->
         #console.log options, data.issues.size()
+        #console.log "[jira api] fetched #{data.issues.size()} issues"
         if data.issues.size() > 0
           options.startAt += data.issues.size()
           issues = issues.concat data.issues
@@ -48,6 +50,12 @@ class Api
 
 
     get_Issues jql
+
+  # This can be improved to fail faster when access is not available
+  ping_Server: (callback)->
+    url = "#{Config.protocol}://#{Config.host}"
+    url.GET (data)->
+      callback data
 
   search: (jql, callback)->
     options =

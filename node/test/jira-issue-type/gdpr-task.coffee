@@ -1,6 +1,6 @@
 Gdpr_Task   = require '../../src/jira-issue-type/gdpr-task'
 
-describe 'Gdpr', ->
+describe 'Gdpr_Task', ->
 
   it 'constructor',->
     using new Gdpr_Task(),->

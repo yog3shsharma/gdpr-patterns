@@ -1,6 +1,6 @@
 Save_Data = require '../../src/jira/save-data'
 
-xdescribe 'Save-Data', ->
+describe 'Save-Data', ->
   save_Data = null
 
   before ->
@@ -9,31 +9,23 @@ xdescribe 'Save-Data', ->
   it 'constructor', ->
     using save_Data, ->
       @.jira._jira_Api.apiVersion.assert_Is 'latest'
-      @.folder_Data.assert_Folder_Exists()
-      @.folder_Issues.assert_Folder_Exists()
+      @.data.folder_Data         .assert_Folder_Exists()
+      @.data.folder_Issues       .assert_Folder_Exists()
 
   it 'save_Issue', ->
-
     save_Data.save_Issue 'RISK-1', (file)->
+      file.parent_Folder()                .folder_Name().assert_Is 'RISK'   # check that parent folder is the issue type
+      file.parent_Folder().parent_Folder().folder_Name().assert_Is 'RISK'   # check that parent's parent folder is the project type
       file.assert_File_Exists()
       using file.load_Json(),->
-          @._keys().size().assert_Is 31
-          @.key.assert_Is 'RISK-1'
+        @.key.assert_Is 'RISK-1'
+        @.summary.assert_Is 'JIRA - Too many JIRA Administrators'
+
 
   xit 'save_Issues', ->
     jql = "issue in linkedIssues(Risk-218) and issuetype = 'Risk'"
     save_Data.save_Issues jql, (data)->
       data[0].assert_File_Exists
-
-  @.timeout 15000
-  xit 'save_Issues_In_Project (RISK) last 1 day', ->
-    save_Data.save_Issues_In_Project 'RISK',1, (files)->
-      files.assert_Size_Is_Bigger_Than 400
-
-  xit 'save_Issues_In_Project (SEC) last 5 days', ->
-    @.timeout 15000
-    save_Data.save_Issues_In_Project 'SEC', 5,  (files)->
-      files.assert_Size_Is_Bigger_Than 700
 
 xdescribe 'Data-Analysis | Check Data collected', ->
   save_Data = null
