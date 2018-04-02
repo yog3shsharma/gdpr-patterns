@@ -1,0 +1,3 @@
+[submodule "hugo/themes/coreui-hugo"]
+	path = hugo/themes/coreui-hugo
+	url = git@github.com:project-cx/coreui-hugo.git
