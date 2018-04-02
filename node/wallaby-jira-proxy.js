@@ -1,11 +1,12 @@
 module.exports = function () {
     return {
         files: [
-            'src/**/*.coffee'
+            'jira-issues/src/**/*.coffee',
+            'jira-proxy/src/**/*.coffee'
         ],
 
         tests: [
-            'test/**/*.coffee'
+            'jira-proxy/test/**/*.coffee'
         ],
 
         env: {

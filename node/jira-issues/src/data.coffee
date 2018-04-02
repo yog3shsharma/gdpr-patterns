@@ -14,7 +14,7 @@ class Data
     @.folder_Mappings   .folder_Create()
 
   issue_File: (id)->
-    path = @.issue_Files()[id]
+    path = @.issue_Files()[id?.upper()]
     if path
       return @.folder_Issues_Raw.path_Combine(path)
     return null
@@ -26,8 +26,8 @@ class Data
 
   issue_Raw_Data: (id)=>
     path = @.issue_File(id)
-    console.log path.file_Exists()
     if path
+      #console.log path.file_Exists()
       return path.load_Json()
     return null
 

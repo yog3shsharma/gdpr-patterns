@@ -9,7 +9,7 @@ describe  'Hugo-Proxy', ->
 
   it 'constructor',->
     using hugo_Proxy,->
-      @.hugo_Server.assert_Is 'http://localhost:1313'
+      @.hugo_Server.assert_Is 'localhost'
 
   it 'add_Routes', ->
     hugo_Proxy.add_Routes()

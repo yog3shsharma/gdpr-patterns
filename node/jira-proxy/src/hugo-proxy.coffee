@@ -17,9 +17,10 @@ class Hugo_Proxy
   handler_404: ()->
     @.app.get? '/404',  (req, res)=>
       #console.log 'handling 404 for ' + req.headers
-      res.json
-        status: 'handling 404'
-        query : req.query
+      res.send "404 on <a href='#{req.query.url}'>#{req.query.url}"
+#      res.send
+#        status: 'handling 404'
+#        query : req.query
 
 
   handler_star:()->
