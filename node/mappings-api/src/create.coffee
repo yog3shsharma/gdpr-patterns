@@ -1,4 +1,4 @@
-Data      = require '../Data'
+Data      = require './util/Data'
 Map_Files = require './map-files'
 
 class Create

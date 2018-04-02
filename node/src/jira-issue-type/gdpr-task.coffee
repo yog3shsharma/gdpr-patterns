@@ -5,7 +5,7 @@ class Gdpr_Task
     @._map_Data(id)
 
   _map_Data: (id)->
-    data = new Data().issue_Data(id)
+    data = new Data().issue_Raw_Data(id)
     if data
       @.id                  = data.key
       @.issue_Type          = data.issuetype.name

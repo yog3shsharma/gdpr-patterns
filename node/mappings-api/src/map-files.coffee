@@ -4,8 +4,8 @@ class Map_File_Paths
 
   create: ->
     xrefs_Files   = {}
-    files         = @.data.folder_Issues.files_Recursive()
-    issues_Folder =  @.data.folder_Issues.realPath()
+    files         = @.data.folder_Issues_Raw.files_Recursive()
+    issues_Folder =  @.data.folder_Issues_Raw.realPath()
     for file in files
       id   = file.file_Name_Without_Extension()
       xrefs_Files[id] = file.remove issues_Folder

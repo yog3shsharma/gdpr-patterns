@@ -10,7 +10,7 @@ describe 'Save-Data', ->
     using save_Data, ->
       @.jira._jira_Api.apiVersion.assert_Is 'latest'
       @.data.folder_Data         .assert_Folder_Exists()
-      @.data.folder_Issues       .assert_Folder_Exists()
+      @.data.folder_Issues_Raw   .assert_Folder_Exists()
 
   it 'save_Issue', ->
     save_Data.save_Issue 'RISK-1', (file)->

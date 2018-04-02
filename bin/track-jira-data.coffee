@@ -2,7 +2,7 @@
 require 'fluentnode'
 
 Track_Queries   = require '../node/src/jira/track-queries'
-Mappings_Create = require '../node/src/mappings/create.coffee'
+Mappings_Create = require '../node/mappings-api/src/create.coffee'
 
 track_Queries   = new Track_Queries()
 mappings_Create = new Mappings_Create()

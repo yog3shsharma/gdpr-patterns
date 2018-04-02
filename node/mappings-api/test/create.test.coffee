@@ -1,4 +1,4 @@
-Create   = require '../../src/mappings/create'
+Create   = require '../src/create'
 
 describe 'X-Refs | Create', ->
 

@@ -23,7 +23,7 @@ class Save_Data
         if data.fields[field]
           issue[field] = data.fields[field]
 
-      folder = @.data.folder_Issues.path_Combine("#{issue_Project}/#{issue_Type}").folder_Create()
+      folder = @.data.folder_Issues_Raw.path_Combine("#{issue_Project}/#{issue_Type}").folder_Create()
       file   = folder.path_Combine "/#{issue_Id}.json"
       issue.save_Json file
       return file

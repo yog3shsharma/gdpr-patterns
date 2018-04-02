@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/.bin/mocha  --recursive --compilers coffee:coffee-script/register node/mappings-api/"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "dependencies": {
     "fluentnode": "^0.7.1",
     "jira-client": "^6.4.1",
+    "mocha": "^5.0.5",
     "request": "^2.85.0"
   }
 }

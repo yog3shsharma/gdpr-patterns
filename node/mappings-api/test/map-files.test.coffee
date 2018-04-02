@@ -1,5 +1,5 @@
-Data      = require '../../src/data'
-Map_Files = require '../../src/mappings/map-files'
+Data      = require '../src/util/data'
+Map_Files = require '../src/map-files'
 
 describe 'X-Refs | Create', ->
   data      = null
@@ -17,4 +17,4 @@ describe 'X-Refs | Create', ->
 
     using file.load_Json(), ->
       key = @._keys().first()
-      data.folder_Issues.path_Combine(@[key]).assert_File_Exists()
+      data.folder_Issues_Raw.path_Combine(@[key]).assert_File_Exists()

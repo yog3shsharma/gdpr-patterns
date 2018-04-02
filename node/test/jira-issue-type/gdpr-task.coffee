@@ -6,7 +6,7 @@ describe 'Gdpr_Task', ->
     using new Gdpr_Task(),->
       @.assert_Is_Object()
 
-  it 'constructor(id)',->
+  it.only 'constructor(id)',->
     id =  'GDPR-180'
     using new Gdpr_Task(id),->
       @.id                .assert_Is 'GDPR-180'
