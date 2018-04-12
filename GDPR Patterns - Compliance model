@@ -1,0 +1,24 @@
+digraph G {
+
+label = "Compliance"
+
+Compliance [label="Compliance"]
+Regulatory [label="Regulatory"]
+Contractual [label="Contractual"]
+SecFramework [label="Security frameworks"]
+Operational [label="Operational"]
+AssurAct [label="Assurance activities"]
+
+
+Compliance -> Regulatory [label="can be"]
+Compliance -> Contractual [label="can be"]
+Compliance -> SecFramework [label="can be"]
+Compliance -> Operational [label="can be"]
+
+Regulatory -> AssurAct [label="supported by"]
+Contractual -> AssurAct [label="supported by"]
+SecFramework -> AssurAct [label="supported by"]
+Operational -> AssurAct [label="supported by"]
+
+
+}
