@@ -1,7 +1,7 @@
 require 'fluentnode'
 Server = require '../src/Server'
 
-xdescribe 'server | Server', ->
+describe 'server | Server', ->
 
   server = null
 

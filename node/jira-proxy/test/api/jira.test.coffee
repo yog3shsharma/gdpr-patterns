@@ -25,10 +25,25 @@ describe 'api | jira', ->
         data.via_config.assert_Is_True()
     jira.config(req,res)
 
-  it 'isues_Raw', ->
-    res.json (data)->
+  it 'issue_Raw', ->
+    res.json =  (data)->
+      data.key.assert_Is req.params.id
+
+    req = params : id : 'RISK-1'
+    jira.issue_Raw(req,res)
+
+  it 'issue', ->
+    res.json = (data)->
       console.log data
 
     req = params : id : 'RISK-1'
-    jira.issues_Raw(req,res)
+    jira.issue(req,res)
+
+  xit 'issues_Ids',->
+    res.json = (data)->
+      data.assert_Contains 'RISK-1'
+      data.assert_Size_Is_Above 10
+    jira.issues_Ids(req,res)
+
+
 

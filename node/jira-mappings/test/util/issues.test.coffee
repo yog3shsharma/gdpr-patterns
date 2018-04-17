@@ -8,6 +8,11 @@ describe 'Issues', ->
 
   it 'constructor',->
 
+  it 'fields_Schema', ->
+    using issues.fields_Schema(),->
+      console.log @
+
+
   it 'issue_Files', ->
     using issues.issue_Files(), ->
       @._keys().assert_Contains 'GDPR-180'
@@ -18,3 +23,5 @@ describe 'Issues', ->
       @.key.assert_Is key
 
     assert_Is_Null issues.issue_Raw_Data(null)
+
+

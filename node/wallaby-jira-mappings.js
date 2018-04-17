@@ -1,12 +1,11 @@
 module.exports = function () {
     return {
         files: [
-            'config.coffee',
-            'src/**/*.coffee'
+            'jira-mappings/src/**/*.coffee'
         ],
 
         tests: [
-            'test/**/*.coffee'
+            'jira-mappings/test/**/*.coffee'
         ],
 
         env: {

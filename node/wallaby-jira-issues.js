@@ -1,12 +1,11 @@
 module.exports = function () {
     return {
         files: [
-            'config.coffee',
-            'src/**/*.coffee'
+            'jira-issues/src/**/*.coffee'
         ],
 
         tests: [
-            'test/**/*.coffee'
+            'jira-issues/test/**/*.coffee'
         ],
 
         env: {

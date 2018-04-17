@@ -6,11 +6,11 @@ describe 'Gdpr_Task', ->
     using new Gdpr_Task(),->
       @.assert_Is_Object()
 
-  it.only 'constructor(id)',->
+  it 'constructor(id)',->
     id =  'GDPR-180'
     using new Gdpr_Task(id),->
       @.id                .assert_Is 'GDPR-180'
-      @.issue_Type        .assert_Is 'Task'
+      @.issue_Type        .assert_Is 'Journey'
       @.summary           .assert_Contains "HR"
       @.business_Function .assert_Is 'Human Resources'
       @.lawful_Basis      .assert_Is ['Article 6(1)(b) - contract', 'Article 9(2)(h) - Health']

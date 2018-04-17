@@ -21,11 +21,17 @@ describe 'Save-Data', ->
         @.key.assert_Is 'RISK-1'
         @.summary.assert_Is 'JIRA - Too many JIRA Administrators'
 
+  it.only 'save_Issues_Schema', ->
+    save_Data.save_Issues_Schema()
+
+
 
   xit 'save_Issues', ->
     jql = "issue in linkedIssues(Risk-218) and issuetype = 'Risk'"
     save_Data.save_Issues jql, (data)->
       data[0].assert_File_Exists
+
+
 
 xdescribe 'Data-Analysis | Check Data collected', ->
   save_Data = null
