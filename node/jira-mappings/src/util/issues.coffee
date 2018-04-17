@@ -40,6 +40,7 @@ class Issues
     return _issue_Files
 
   issue_Raw_Data: (id)=>
+    id = id?.upper()               # all ids in Jira are upper case
     path = @.issue_File(id)
     if path
         return path.load_Json()

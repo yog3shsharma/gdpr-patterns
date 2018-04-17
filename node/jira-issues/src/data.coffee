@@ -33,6 +33,7 @@ class Data
 
   issue_Data: (id)=>
     path = @.issue_Raw_File(id)
+    #return {}
     if path
       return path?.load_Json()
     return null

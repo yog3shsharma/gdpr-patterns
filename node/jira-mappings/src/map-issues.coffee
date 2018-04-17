@@ -1,5 +1,12 @@
 Issues    = require '../src/util/issues'
 
+config = # move this to spearate file
+  ignore_fields:   [ "Σ Progress" , "Attachment", "Classement", "Classement (Obsolete)", "Global Rank (Obsolete)",
+                     "Global Rank", "Moonpig IOS Definition of Ready Verified?","Severity Moonpig Mobile","Frequency","Regression",
+                     "Fix Version/s", "Progress", "Request participants","Reporter", "Sub-Tasks", "Time Tracking", "Affects Version/s", "Votes", "Watchers",
+                     "Log Work", "Work Ratio",
+                     "Component/s", "Description", "Labels"]
+
 class Map_Issues
   constructor: ->
     @.issues = new Issues()
@@ -8,6 +15,7 @@ class Map_Issues
     fields_Schema = @.issues.fields_Schema()
 
     raw_Issue = @.issues.issue_Raw_Data(id)
+
     if raw_Issue
       result = id : id      # add this extra mapping so that it will be needed on import (later)
 
@@ -15,9 +23,12 @@ class Map_Issues
         if fields_Schema[key]
           field_Name         = fields_Schema[key].name
           field_Type         = fields_Schema[key].schema_Type_Name
+
+          if config.ignore_fields.contains field_Name
+            console.log field_Name
+            continue
+
           result[field_Name] = @.get_Data_By_Type field_Name, field_Type, value
-          if result[field_Name] is null
-            break
       return result
 
     return null

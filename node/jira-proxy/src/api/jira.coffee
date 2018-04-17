@@ -1,6 +1,7 @@
-express   = require 'express'
-Data      = require '../../../jira-issues/src/data'
-Config    = require '../../../jira-issues/src/config'
+express    = require 'express'
+Data       = require '../../../jira-issues/src/data'
+Config     = require '../../../jira-issues/src/config'
+Map_Issues = require '../../../jira-mappings/src/map-issues'
 
 class Jira
   constructor: (options)->
@@ -9,6 +10,7 @@ class Jira
     @.app           = @.options.app
     @.log_Requests  = false
     @.data          = new Data()
+    @.map_Issues    = new Map_Issues()
     #@.config        =  Config
     #@.config        = Config
 
@@ -23,30 +25,26 @@ class Jira
 
     @
 
+  send_Json_Data:(req,res,json_Data)->                    # this should be added as a global filter
+    pretty = req.query?._keys().contains 'pretty'
+    if pretty
+      res.send "<pre>#{json_Data.json_Pretty()}</pre>"
+    else
+      res.json json_Data
+
   config: (req,res)=>
     res.json Config
 
   fields_Schema: (req, res)=>
-    pretty = req.query?._keys().contains 'pretty'
-    if pretty
-      json = @.data.file_Fields_Schema.load_Json().json_Pretty()
-      res.send "<pre>#{json}</pre>"
-    else
-      res.json @.data.file_Fields_Schema.load_Json()
+    @.send_Json_Data req, res, @.data.file_Fields_Schema.load_Json()
 
   issue_Raw: (req,res)=>
     id = req.params?.id?.to_Safe_String()
-    res.json @.data.issue_Raw_Data id
-    #res.send @.data.issue_Raw_Data(id)?.json_Pretty()
+    @.send_Json_Data req, res, @.data.issue_Raw_Data(id)
 
   issue: (req,res)=>
     id     = req.params?.id?.to_Safe_String()
-    pretty = req.query?._keys().contains 'pretty'
-    if pretty
-      json = @.data.issue_Data(id).json_Pretty()
-      res.send "<pre>#{json}</pre>"
-    else
-      res.json @.data.issue_Data(id)
+    @.send_Json_Data req, res, @.map_Issues.issue(id)
 
   issues_Ids: (req, res)=>
     res.json @.data.issue_Files()._keys()

@@ -20,15 +20,25 @@ describe 'api | supertest | Jira', ->
       data.assert_Contains("<pre>")
           .assert_Contains('"id": "resolution"')
 
+  it 'jira/issue-raw/RISK-1', ->
+    supertest.request '/api/jira/issue-raw/RISK-1', (data)->
+      data.assert_Is_Object()
+      data.key.assert_Is 'RISK-1'
+
+  it 'jira/issue-raw/RISK-1?pretty', ->
+    supertest.request '/api/jira/issue-raw/RISK-1?pretty', (data)->
+      data.assert_Is_String()
+      data.assert_Contains '"key": "RISK-1"'
+
   it 'jira/issue/RISK-1', ->
     supertest.request '/api/jira/issue/RISK-1', (data)->
       data.assert_Is_Object()
-      data.key.assert_Is 'RISK-1'
+      data.id.assert_Is 'risk-1'
 
   it 'jira/issue/RISK-1', ->
     supertest.request '/api/jira/issue/RISK-1?pretty', (data)->
       data.assert_Is_String()
-      #data.json_Parse().key.assert_Is 'RISK-1'
+      data.assert_Contains '"id": "risk-1"'
 
   it 'jira/issues/ids', ->
     supertest.request '/api/jira/issues/ids', (data)->

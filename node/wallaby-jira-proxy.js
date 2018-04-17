@@ -2,6 +2,7 @@ module.exports = function () {
     return {
         files: [
             'jira-issues/src/**/*.coffee',
+            'jira-mappings/src/**/*.coffee',
             'jira-proxy/src/**/*.coffee'
         ],
 
