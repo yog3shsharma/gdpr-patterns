@@ -48,3 +48,7 @@ describe 'api | supertest | Jira', ->
     supertest.request '/api/jira/issues/files', (data)->
       data["RISK-1"].assert_Is '/RISK/RISK/RISK-1.json'
 
+
+  xit 'jira/issues_Convert', ->
+    supertest.request '/api/jira/issues/convert', (data)->
+      console.log data

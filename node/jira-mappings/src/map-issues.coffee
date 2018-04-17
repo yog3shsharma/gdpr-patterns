@@ -25,7 +25,6 @@ class Map_Issues
           field_Type         = fields_Schema[key].schema_Type_Name
 
           if config.ignore_fields.contains field_Name
-            console.log field_Name
             continue
 
           result[field_Name] = @.get_Data_By_Type field_Name, field_Type, value

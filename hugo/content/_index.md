@@ -10,6 +10,12 @@ This is the home page
 
 Here are some working API links (will work when acessing this site via the proxy)
 
+#### Neo4J
+
+ - [match (n) return n](/api/neo4j/cypher?pretty&query=match+(n)+return+n)
+ - [match (n:Movie) return n](/api/neo4j/cypher?pretty&query=match (n:Movie) return n)
+
+
 #### Issues
 
  - [all ids](/api/jira/issues/ids)

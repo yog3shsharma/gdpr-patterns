@@ -11,6 +11,8 @@ config_data =
   password   : jira_Details?.password   ||'{password}',
   apiVersion : jira_Details?.apiVersion || 'latest'   ,
   strictSSL  : false
+  neo4j      : {username: 'neo4j', password: 'test'}
+
 
 
 module.exports = config_data

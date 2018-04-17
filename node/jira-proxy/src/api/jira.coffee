@@ -23,6 +23,8 @@ class Jira
     @.router.get  '/jira/issues/files'    , @.issues_Files
     @.router.get  '/jira/issues/ids'      , @.issues_Ids
 
+    @.router.get  '/jira/issues/convert'  , @.issues_Convert
+
     @
 
   send_Json_Data:(req,res,json_Data)->                    # this should be added as a global filter
@@ -51,6 +53,16 @@ class Jira
 
   issues_Files: (req,res)=>
     res.json @.data.issue_Files()
+
+
+  issues_Convert: (req, res)=>        # to move to separate file
+    files = @.data.file_Issue_Files.load_Json()
+    result = files_processed: []
+    for key,file of files
+      result.files_processed.push key
+      data        = @.map_Issues.issue(key)
+      target_File = @.data.folder_Issues.path_Combine("#{key}.json")
+    res.json result
 
 
 module.exports = Jira

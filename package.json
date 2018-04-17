@@ -24,6 +24,7 @@
     "fluentnode": "^0.7.1",
     "jira-client": "^6.4.1",
     "mocha": "^5.0.5",
+    "neo4j": "^2.0.0-RC2",
     "nodemon": "^1.17.3",
     "request": "^2.85.0"
   }
