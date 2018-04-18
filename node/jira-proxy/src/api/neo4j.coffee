@@ -1,8 +1,6 @@
 express    = require 'express'
 Data       = require '../../../jira-issues/src/data'
-Config     = require '../../../jira-issues/src/config'
-
-neo4j = require('neo4j');
+Neo4J_Api  = require '../neo4j/neo4j'
 
 class Neo4J
   constructor: (options)->
@@ -10,12 +8,15 @@ class Neo4J
     @.router        = express.Router()
     @.app           = @.options.app
     @.data          = new Data()
+    @.neo4j         = new Neo4J_Api()
 
 
   add_Routes: ()=>
     @.router.get  '/neo4j/cypher'            , @.cypher
     @.router.get  '/neo4j/create/:label'     , @.create
-    @.router.get  '/neo4j/create-all-nodes'  , @.create_all_nodes
+    @.router.get  '/neo4j/delete/all'        , @.delete_all
+
+#    @.router.get  '/neo4j/create-all-nodes'  , @.create_all_nodes
     @
 
   send_Json_Data:(req,res,json_Data)=>                    # this should be added as a global filter
@@ -25,21 +26,8 @@ class Neo4J
     else
       res.json json_Data
 
-  run_Cypher: (cypher,callback)=>
-
-    username = Config.neo4j.username
-    password = Config.neo4j.password
-    uri  = "http://#{username}:#{password}@localhost:7474')"
-
-    db = new neo4j.GraphDatabase(uri)
-
-    data =
-      query: cypher #,
-      params: { },
-    db.cypher data, callback
-
   exec_Cypher: (req, res, cypher)=>
-    @.run_Cypher cypher,  (err, results)=>
+    @.neo4j.run_Cypher cypher, {},  (err, results)=>
       if err
         @.send_Json_Data req, res,  err
       else
@@ -51,10 +39,7 @@ class Neo4J
 
     @.exec_Cypher req, res, query
 
-
-
-
-  create: (req,res)=>
+  create: (req,res)=>       # refactor
     query = req.query.query
     label = req.params.label
     cypher = "CREATE (n:#{label} {"
@@ -63,37 +48,39 @@ class Neo4J
     cypher +="})"
     cypher = cypher.replace(",}", "}")
 
-    console.log cypher
     @.exec_Cypher req, res, cypher
 
-
-  create_all_nodes: (req, res)=>
-
-    max_Create = 1000
-    files = @.data.folder_Issues.files()
-    done  = []
-    create_Loop = ()=>
-      next = files.pop()
-
-      data  = next.load_Json()
-      label =  data['Issue Type'].replace('-','_')
-      cypher = "CREATE (n:#{label} {"
-
-
-      cypher+= "id:'#{data.id}',"
-      cypher+= "Priority:'#{data.Priority}',"
-      cypher+= "Project:'#{data.Project}',  "
-      cypher+= "Status:'#{data.Status}'"
-      cypher +="})"
-      console.log done.size(), cypher
-      @.run_Cypher cypher, =>
-        done.push next
-        if done.size() > max_Create or files.size() is 0
-          res.json done
-        else
-          create_Loop()
-
-    create_Loop()
+  delete_all: (req, res)=>
+    @.neo4j.delete_all_nodes (err, response)=>
+      @.send_Json_Data req, res, response
+#
+#
+#  create_all_nodes: (req, res)=>
+#    max_Create = 1000
+#    files = @.data.folder_Issues.files()
+#    done  = []
+#    create_Loop = ()=>
+#      next = files.pop()
+#
+#      data  = next.load_Json()
+#      label =  data['Issue Type'].replace('-','_')
+#      cypher = "CREATE (n:#{label} {"
+#
+#
+#      cypher+= "id:'#{data.id}',"
+#      cypher+= "Priority:'#{data.Priority}',"
+#      cypher+= "Project:'#{data.Project}',  "
+#      cypher+= "Status:'#{data.Status}'"
+#      cypher +="})"
+#      console.log done.size(), cypher
+#      @.run_Cypher cypher, =>
+#        done.push next
+#        if done.size() > max_Create or files.size() is 0
+#          res.json done
+#        else
+#          create_Loop()
+#
+#    create_Loop()
 
   #MATCH (a:risk),(b:risk)
   #  WHERE a.id = 'RISK-2' AND b.id = 'RISK-1123'

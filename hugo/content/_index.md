@@ -2,6 +2,7 @@
 title: home page
 menu: home
 ---
+<base target="_blank">
 
 This is the home page
 
@@ -14,7 +15,8 @@ Here are some working API links (will work when acessing this site via the proxy
 
  - [match (n) return n](/api/neo4j/cypher?pretty&query=match+(n)+return+n)
  - [match (n:Movie) return n](/api/neo4j/cypher?pretty&query=match (n:Movie) return n)
-
+ - [create node](/api/neo4j/create/ABCAAA?a=123)
+ - [delete all nodes](/api/neo4j/delete/all?pretty)
 
 #### Issues
 

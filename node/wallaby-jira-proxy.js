@@ -11,7 +11,8 @@ module.exports = function () {
         ],
 
         env: {
-            type: 'node'
+            type: 'node',
+            runner: 'node'
         }
     }
 }

@@ -11,13 +11,19 @@ describe 'api | supertest | neo4j', ->
 
   it 'cypher', ->
     request 'cypher', (data)->
-      console.log data
+      data.records.size().assert_Is_Number()
 
-  xit 'create', ->
-    request 'create/AAAA?aaa=123&bbb=678', (data)->
-      console.log data
+  it 'create', ->
+    cypher = 'create/AAAA?aaa=123&bbb=678'
+    request cypher, (data)->
+      data.records.assert_Is []
+      data.summary.statement.text.assert_Is "CREATE (n:AAAA {aaa:'123',bbb:'678'})"
 
   xit 'create/all-nodes ', ->
     request 'create-all-nodes', (data)->
       console.log data
+
+  xit 'delete/all', ()->
+    request 'delete/all', (data)->
+      data.records.assert_Is []
 
