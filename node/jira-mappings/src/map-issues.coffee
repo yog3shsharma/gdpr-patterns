@@ -11,18 +11,18 @@ class Map_Issues
   constructor: ->
     @.issues = new Issues()
 
-  issue: (id)->
+  issue: (key)->
     fields_Schema = @.issues.fields_Schema()
 
-    raw_Issue = @.issues.issue_Raw_Data(id)
+    raw_Issue = @.issues.issue_Raw_Data(key)
 
     if raw_Issue
-      result = id : id      # add this extra mapping so that it will be needed on import (later)
+      result = key : key      # add this extra mapping so that it will be needed on import (later)
 
-      for key,value of raw_Issue
-        if fields_Schema[key]
-          field_Name         = fields_Schema[key].name
-          field_Type         = fields_Schema[key].schema_Type_Name
+      for name,value of raw_Issue
+        if fields_Schema[name]
+          field_Name         = fields_Schema[name].name
+          field_Type         = fields_Schema[name].schema_Type_Name
 
           if config.ignore_fields.contains field_Name
             continue

@@ -1,4 +1,5 @@
 Supertest = require '../../src/_test-utils/Supertest'
+cheerio   = require 'cheerio'
 
 describe 'api | supertest | Jira', ->
   supertest = null
@@ -33,12 +34,12 @@ describe 'api | supertest | Jira', ->
   it 'jira/issue/RISK-1', ->
     supertest.request '/api/jira/issue/RISK-1', (data)->
       data.assert_Is_Object()
-      data.id.assert_Is 'risk-1'
+      data.key.assert_Is 'risk-1'
 
   it 'jira/issue/RISK-1', ->
     supertest.request '/api/jira/issue/RISK-1?pretty', (data)->
       data.assert_Is_String()
-      data.assert_Contains '"id": "risk-1"'
+      data.assert_Contains '"key": "risk-1"'
 
   it 'jira/issues/ids', ->
     supertest.request '/api/jira/issues/ids', (data)->
@@ -52,3 +53,17 @@ describe 'api | supertest | Jira', ->
   xit 'jira/issues_Convert', ->
     supertest.request '/api/jira/issues/convert', (data)->
       console.log data
+
+
+  # BUGS
+
+  it 'No default engine error on jira/issue ',->
+    request 'issue/GDPR-180?pretty', (data)->
+      $ = cheerio.load data
+      $.text().assert_Contains '"key": "gdpr-180",'
+
+
+  it 'TypeError: Cannot read property json_Pretty of null',->
+    request 'issue/GDPR-aaaa?pretty', (data)->
+      data.assert_Contains 'no data'
+

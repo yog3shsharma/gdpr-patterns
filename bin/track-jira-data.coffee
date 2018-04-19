@@ -1,13 +1,13 @@
 #!/usr/bin/env coffee
 require 'fluentnode'
 
-Track_Queries   = require '../node/src/jira/track-queries'
-Mappings_Create = require '../node/mappings-api/src/create.coffee'
+Track_Queries   = require '../node/jira-issues/src/jira/track-queries'
+Mappings_Create = require '../node/jira-mappings/src/create.coffee'
 
 track_Queries   = new Track_Queries()
 mappings_Create = new Mappings_Create()
 
-delay         = 30 * 1000
+delay         = 60 * 1000
 
 update_Mappings = (result)->
   if result.size() > 0

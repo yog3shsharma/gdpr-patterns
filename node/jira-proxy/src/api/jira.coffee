@@ -30,7 +30,8 @@ class Jira
   send_Json_Data:(req,res,json_Data)->                    # this should be added as a global filter
     pretty = req.query?._keys().contains 'pretty'
     if pretty
-      res.send "<pre>#{json_Data.json_Pretty()}</pre>"
+      data = json_Data || { error: 'no data'}
+      res.send "<pre>#{data.json_Pretty()}</pre>"
     else
       res.json json_Data
 

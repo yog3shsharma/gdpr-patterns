@@ -15,18 +15,20 @@ class Issues
     _fields_Schema
 
   map_Fields_Schema: (raw_Data)->
-    results = {} #by_Name: {}, by_Id: {}
-    for item in raw_Data
-      if results[item.id]
-        console.log 'error on ' + results[item.id]
-      results[item.id] =
-        name : item.name
-        schema_Type_Name: item.schema?.type
-        schema_Type_Class: item.schema?.custom
-        schema_Type_ID   : item.schema?.id
-      #console.log item
-
+    results = {}
+    if raw_Data
+      for item in raw_Data
+        if results[item.id]
+          console.log 'error on ' + results[item.id]
+        results[item.id] =
+          name : item.name
+          schema_Type_Name: item.schema?.type
+          schema_Type_Class: item.schema?.custom
+          schema_Type_ID   : item.schema?.id
     return results
+
+  ids: ()=>
+    return @.issue_Files()._keys()
 
   issue_File: (id)->
     path = @.issue_Files()[id]
@@ -45,6 +47,7 @@ class Issues
     if path
         return path.load_Json()
     return null
+
 
 
 
