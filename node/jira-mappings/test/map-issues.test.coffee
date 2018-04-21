@@ -76,6 +76,9 @@ describe 'Jira_Api', ->
       project:
         raw: { self: '.../rest/api/2/project/12516', id: '12516', key: 'RISK', name: 'RISK'}
         result: 'RISK'
+      securitylevel:
+         raw: { self: 'https://jira.photobox.com/rest/api/2/securitylevel/10003', id: '10003', description: '', name: 'Public (Logged in Users)' }
+         result: 'Public (Logged in Users)'
       status:
         raw: { self: '.../rest/api/2/status/3', description: 'Defining what problem we are trying to solve', iconUrl: '.../images/icons/statuses/inprogress.png', name: 'In Progress', id: '3',statusCategory: { self: '.../rest/api/2/statuscategory/4', id: 4, key: 'indeterminate',colorName: 'yellow', name: 'In Progress' } }
         result: 'In Progress'
@@ -104,7 +107,7 @@ describe 'Jira_Api', ->
       else
         console.log "no parser for: #{key}"
 
-    console.log 'done'
+    #console.log 'done'
 
 
 

@@ -48,14 +48,15 @@ describe 'api | debug', ->
 
   it 'add_node_and_connection',->
     options =
-      node1:
-        label: 'Test'
-        params:  {a: 1000.random()}
-      node2:
-        label: 'Test'
-        params:  {b: "42"}
-      edge: "ABC"
+      source_label :'Test-Node'
+      source_key   : 42
+      target_label :'Test-Node'
+      target_key   : 1000.random()
+      edge_label   : 'An edge'
+
     neo4j.add_node_and_connection options, (err, response)->
+      console.log  err
+      assert_Is_Null err
       response.summary.counters.relationshipsCreated().assert_Is 1
       response.summary.counters.nodesCreated()
 

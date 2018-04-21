@@ -53,6 +53,7 @@ class Map_Issues
       priority       : (raw)-> return raw.name
       progress       : (raw)-> return raw.progress
       project        : (raw)-> return raw.name
+      securitylevel  : (raw)-> return raw.name
       status         : (raw)-> return raw.name
       string         : (raw)-> return raw
       timetracking   : (raw)-> return ''
@@ -79,7 +80,7 @@ class Map_Issues
 
     console.log "[get_Data_By_Type] no parser for #{field_Type}"
     #console.log field_Type
-    #console.log raw_Data
+    console.log raw_Data
     return null
 
 

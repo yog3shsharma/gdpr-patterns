@@ -45,15 +45,20 @@ class Neo4j
   # there is a limitation with this script at the moment since it needs the node1 and node2 params titles to be different
   add_node_and_connection: (options, callback)->
 
-    params = Object.assign({}, options.node1.params, options.node2.params)    # merge params
-    label_1 = options.node1.label.replace(' ','_').replace('-','_')
-    label_2 = options.node2.label.replace(' ','_').replace('-','_')
-    cypher = """MERGE (u1:#{label_1} #{@.params_For_Query(options.node1.params)})
-                MERGE (u2:#{label_2} #{@.params_For_Query(options.node2.params)})
-                MERGE (u1)-[r:#{options.edge}]->(u2)
+    params = key1: options.source_key, key2 :options.target_key
+
+    label_1 = @.label_Format options.source_label
+    label_2 = @.label_Format options.target_label
+    edge    = @.label_Format options.edge_label
+    cypher = """MERGE (u1:#{label_1} {key:{key1}} )
+                MERGE (u2:#{label_2} {key:{key2}} )
+                MERGE (u1)-[r:#{edge}]->(u2)
                 return u1,u2,r"""
     #console.log  cypher
     @.run_Cypher cypher, params, callback
+
+  label_Format: (text)->
+    return text.replace(/\s/g, '_').replace(/-/g,'_')
 
   params_For_Query: (params)=>      # move to utils section
     ids = params._keys()
@@ -61,5 +66,6 @@ class Neo4j
     for id in ids
       result.push "#{id}:{#{id}}"
     return '{'+ result.join(",") + '}'
+
 
 module.exports = Neo4j
