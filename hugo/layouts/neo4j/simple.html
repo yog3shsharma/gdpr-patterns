@@ -57,10 +57,25 @@
         await viz.render_async()
 
         options = {
+            nodes: {
+                    shape :'box'
+            },
+            edges: {
+                //arrows: {
+                //    to  : {enabled: true } },
+                //dashes : [1,2],
 
+                color: {color: "black" },
+
+                length: 20,
+
+                //value: 0.1,
+                physics: true
+            },
             physics  : {
                 barnesHut: {
-                    gravitationalConstant: params_Data.options.gravitationalConstant
+                    gravitationalConstant: params_Data.options.gravitationalConstant,
+                    //centralGravity : 0.5
                 } } }
 
         viz._network.setOptions(options)
