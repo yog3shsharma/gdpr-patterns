@@ -1,0 +1,10 @@
+{
+{{- range $key,$value := . }}
+
+    "{{ $key }}" :
+    {{- if eq (printf "%T" $value) "string" }} "{{- $value }}"
+    {{- else }}
+        {{ partial "toJson.html" $value }}
+    {{- end}},
+{{- end }}
+}
