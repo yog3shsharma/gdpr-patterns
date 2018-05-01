@@ -1,10 +1,14 @@
 {
-{{- range $key,$value := . }}
-
-    "{{ $key }}" :
-    {{- if eq (printf "%T" $value) "string" }} "{{- $value }}"
-    {{- else }}
-        {{ partial "toJson.html" $value }}
-    {{- end}},
-{{- end }}
+    {{- range $key,$value := .                          }}
+            "{{ $key }}" :
+    {{-     if eq (printf "%T" $value) "string"         }}
+    {{-        safeHTML (printf "\"%s\"" $value )       }}
+    {{-     else                                        }}
+    {{-         if eq (printf "%T" $value) "int"        }}
+    {{-             $value                              }}
+    {{-         else                                    }}
+    {{              partial "toJson.html" $value        }}
+    {{-         end                                     }}
+    {{-     end                                         }},
+    {{- end                                             }}
 }

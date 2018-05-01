@@ -57,9 +57,10 @@
         await viz.render_async()
 
         options = {
+
             physics  : {
                 barnesHut: {
-                    gravitationalConstant: params_Data.options.gravitationalConstant,
+                    gravitationalConstant: params_Data.options.gravitationalConstant
                 } } }
 
         viz._network.setOptions(options)
