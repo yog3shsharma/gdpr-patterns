@@ -21,6 +21,7 @@ class Server
     add_Routes '/api', './api/debug'
     add_Routes '/api', './api/jira'
     add_Routes '/api', './api/neo4j'
+    add_Routes '/api', './api/files'
 
     add_Routes '/'   , './hugo-proxy' #set hugo proxy
 

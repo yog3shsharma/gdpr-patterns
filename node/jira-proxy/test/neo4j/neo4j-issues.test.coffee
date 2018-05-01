@@ -1,7 +1,7 @@
 Neo4j_Issues = require '../../src/neo4j/neo4j-issues'
 Issues       = require '../../../jira-mappings/src/util/issues'
 
-describe 'api | debug', ->
+xdescribe 'api | debug', ->
   neo4j_Issues = null
   issues       = null
 
@@ -69,7 +69,7 @@ describe 'api | debug', ->
       result.size().assert_Is_Bigger_Than 10
       done()
 
-  it.only 'add_Issue_Linked_Issues_As_Single_Nodes', (done)->
+  it 'add_Issue_Linked_Issues_As_Single_Nodes', (done)->
     id =  "GDPR-228"
     #id = "RISK-1"
     neo4j_Issues.add_Issue_Linked_Issues_As_Single_Nodes id, (err, result)->

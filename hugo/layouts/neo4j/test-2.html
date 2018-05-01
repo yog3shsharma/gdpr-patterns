@@ -8,7 +8,7 @@
         }
 
         #viz {
-            width: 900px;
+            width: 700px;
             height: 700px;
             border: 1px solid lightgray;
             font: 22pt arial;
@@ -17,45 +17,37 @@
 </head>
 <body onload="draw()">
 <div id="viz"></div>
-<script src="/js/neovis.js"></script>
+<script src="http://localhost:3000/api/js/neovis.js"></script>
 <script type="text/javascript">
 
     var viz;
     var nodes;
-    var a
 
     function draw() {
         var config = {
-            container_id: "viz",
-            server_url: "bolt://localhost:7687",
-            server_user: "neo4j",
-            server_password: "test",
-            caption: "key",
+            container_id    : "viz",
+            server_url      : "bolt://localhost:7687",
+            server_user     : "neo4j",
+            server_password : "test",
+            caption         : "key",
             labels: {
-                //"Character": "name",
-                "Data_Source": {
-                    "caption": "key",
-                    size     : 10
+                Data_Source: {
+                    caption: "key"
                 }},
             relationships:
                 {
-                    "Data_touches": { thickness: 0.1 },
-                    "Data_sources": { thickness: 0.5 }
+                    //"Data_touches": { thickness: 0.1 },
+                    //"Data_sources: { thickness: 0.5 }
+                    Data_touches : { caption: "key" },
+                    Data_sources : { caption: "key" }
                 },
-            //arrows: true,
-            initial_cypher: "MATCH (n)-[r]->(m) RETURN n,r,m Limit 10"
+
+            initial_cypher: "MATCH (n)-[r]->(m) RETURN n,r,m Limit 20"
         };
 
         viz = new NeoVis.default(config);
         viz.render();
 
-        viz._network.body.emitter.on("_dataLoaded", function()
-        {
-            console.log('------------')
-            console.log(viz._network)
-            nodes = viz._data.nodes
-            nodes.add({ id:2 , label:"Asd"})
-        })
 
     }
 </script>
