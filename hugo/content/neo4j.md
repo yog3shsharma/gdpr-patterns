@@ -3,7 +3,7 @@ title   : Neo4J visualisation
 type    : neo4j
 layout  : simple
 cypher  : MATCH (n)-[r]->(m) RETURN n,r,m Limit 10
-gravity : -2000
+gravity : -8000
 labels  :
     Data_Journey:
         image   : 'http://visjs.org/examples/network/img/refresh-cl/System-Firewall-2-icon.png'
