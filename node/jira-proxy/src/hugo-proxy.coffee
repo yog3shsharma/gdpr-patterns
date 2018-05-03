@@ -32,6 +32,7 @@ class Hugo_Proxy
       options.method  = req.method;
       #console.log "proxying request to #{options.host}:#{options.port}#{options.path}"
       connector = http.request options, (serverRes)->
+        #console.log serverRes.headers
         #serverRes.pause()
         if serverRes.statusCode is 404
           res.redirect "/404?url=#{req.url}"
@@ -39,8 +40,8 @@ class Hugo_Proxy
 #            status: 'its a 404'
 #            url   : req.url
         else
+          res.set 'content-type', serverRes.headers['content-type']
           serverRes.pipe(res, {end:true})
-          #serverRes.resume();
       req.pipe(connector, {end:true});
     @
 
