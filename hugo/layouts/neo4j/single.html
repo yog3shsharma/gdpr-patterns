@@ -1,0 +1,11 @@
+{{ define "content" }}
+    {{ .Scratch.Set "cypher" .Params.cypher             }}
+    {{ .Scratch.Set "id"     (default "viz" .Params.id) }}
+    {{ .Scratch.Set "width"  .Params.width              }}
+    {{ .Scratch.Set "height" .Params.height             }}
+    {{ .Scratch.Set "layout" .Params.layout             }}
+
+    <h2> {{ .Params.title }}</h2>
+    {{ .Content }}
+    {{ partial "neo4j/cypher.html" . }}
+{{ end }}

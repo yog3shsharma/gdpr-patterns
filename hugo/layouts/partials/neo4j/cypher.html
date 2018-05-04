@@ -1,0 +1,27 @@
+{{ $height := .Scratch.Get "height"      }}
+{{ $width  := .Scratch.Get "width"       }}
+{{ $id     := .Scratch.Get "id"          }}
+{{ $cypher := .Scratch.Get "cypher"      }}
+{{ $layout := .Scratch.Get "layout"      }}
+{{ $title  := .Scratch.Get "title"      }}
+
+<div class="col">
+    {{ if $title }}
+    <h3>{{ $title }}</h3>
+    {{ end }}
+    <div class="viz" id="{{ $id }}"></div>
+    <script>
+
+        $("#{{ $id }}").height({{ safeJS $height }});
+        $("#{{ $id }}").width( {{ safeJS $width  }});
+        $(function() {
+            options =
+                {
+                    cypher : {{ $cypher  }} ,
+                    id     : {{ $id      }} ,
+                    layout : {{$layout   }}
+                }
+            new neo4j_Util().draw(options)
+        })
+    </script>
+</div>

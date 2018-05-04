@@ -1,17 +1,12 @@
-{{ $height := .Params.height }}
-{{ $width  := .Params.width }}
-{{ $id     := (default "viz" .Params.id) }}
+{{ .Scratch.Set "cypher" .Inner                             }}
 
-<div class="col">
-    <br>
-    <h5>{{ $id }}</h5>
-    <div class="viz" id="{{ $id }}"></div>
-    <script>
-
-        $("#{{ $id }}").height({{ safeJS $height }});
-        $("#{{ $id }}").width( {{ safeJS $width  }});
-        $(function() {
-            new neo4j_Util().draw("{{.Inner}}", "{{ $id }}")
-        })
-    </script>
-</div>
+{{ if  eq (printf "%T" .Params) "map[string]string"         }}
+    {{ .Scratch.Set "id"     (default "viz" .Params.id )    }}
+    {{ .Scratch.Set "width"  .Params.width                  }}
+    {{ .Scratch.Set "height" .Params.height                 }}
+    {{ .Scratch.Set "layout" .Params.layout                 }}
+    {{ .Scratch.Set "title"  .Params.title                  }}
+{{ else }}
+    {{ .Scratch.Set "id"     "viz"                          }}
+{{ end }}
+{{ partial "neo4j/cypher.html" .      }}
