@@ -1,5 +1,5 @@
 ---
-title     : Simple cypher query
+title     : 4-graphs
 type      : neo4j
 menu      : main
 layout    : query-in-md

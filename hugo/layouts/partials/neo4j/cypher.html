@@ -11,7 +11,7 @@
     {{ end }}
     <div class="viz" id="{{ $id }}"></div>
     <script>
-
+        let neo = null
         $("#{{ $id }}").height({{ safeJS $height }});
         $("#{{ $id }}").width( {{ safeJS $width  }});
         $(function() {
@@ -21,7 +21,18 @@
                     id     : {{ $id      }} ,
                     layout : {{$layout   }}
                 }
-            new neo4j_Util().draw(options)
+            neo = new neo4j_Util();
+            neo.draw(options)
+                .then(function(){
+                    neo.viz._network.on('stabilized', function () {
+                        if(afterLoad) {
+                            afterLoad()
+                            afterLoad = null;           // delete reference so that it is not called more than once (todo: needs better solution )
+                        }
+                    })
+                });
+
+
         })
     </script>
 </div>

@@ -34,6 +34,10 @@ class neo4j_Util {
                 color: {color: "black"},
                 //physics: true
             },
+            interaction: {
+                //navigationButtons: true,
+                keyboard: true
+            }
             // physics: {
             //     barnesHut: {
             //         gravitationalConstant: params_Data.options.gravitationalConstant,
@@ -69,4 +73,54 @@ class neo4j_Util {
         //cypher = document.getElementById("cypher").value
         draw()
     }
+
+    nodes_Ids () {
+        return Object.keys(neo.viz._nodes);
+    }
+
+    // these are experiment methods for the examples
+    cluster_By_Group(name) {
+        //new Promise()
+        let network = neo.viz._network
+        var clusterOptionsByData = {
+            joinCondition:function(childOptions) {
+                return childOptions.group == name;
+            },
+            clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'circle', label:name}
+        };
+        neo.viz._network.cluster(clusterOptionsByData);
+
+
+        network.on("selectNode", function(params) {
+            console.log(params)
+            if (params.nodes.length == 1) {
+                if (network.isCluster(params.nodes[0]) == true) {
+                    network.openCluster(params.nodes[0]);
+                }
+            }
+        });
+    }
+
+    go_to_node (nodeId) {
+
+        let network = 123
+        var options = {
+            scale: 1.0,
+            offset: {x:0,y:0},
+            animation: {
+                duration: 1000,
+                easingFunction: "easeInOutQuad"
+            }
+        };
+
+        if( ! neo.viz._nodes[nodeId])
+            nodeId = this.nodes_Ids()[nodeId]
+        neo.viz._network.focus(nodeId, options)
+        return new Promise( resolve =>{
+            neo.viz._network.on('animationFinished', function() {
+                resolve()
+            })
+        })
+    }
+
 }
