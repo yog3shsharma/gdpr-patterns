@@ -28,15 +28,15 @@ class neo4j_Util {
 
         let options = {
             nodes: {
-                shape: 'box'
+                shape: 'box',
             },
             edges: {
-                color: {color: "black"},
+                //color: {color: "black"},
                 //physics: true
             },
             interaction: {
                 //navigationButtons: true,
-                keyboard: true
+                //keyboard: true
             }
             // physics: {
             //     barnesHut: {
@@ -101,23 +101,26 @@ class neo4j_Util {
         });
     }
 
-    go_to_node (nodeId) {
+    go_to_node (nodeId, speed) {
 
-        let network = 123
+        let network = neo.viz._network
         var options = {
             scale: 1.0,
             offset: {x:0,y:0},
             animation: {
-                duration: 1000,
+                duration: speed ? speed : 1000,
                 easingFunction: "easeInOutQuad"
             }
         };
 
         if( ! neo.viz._nodes[nodeId])
             nodeId = this.nodes_Ids()[nodeId]
-        neo.viz._network.focus(nodeId, options)
+
+        network.selectNodes([nodeId])
+        console.log(nodeId)
+        network.focus(nodeId, options)
         return new Promise( resolve =>{
-            neo.viz._network.on('animationFinished', function() {
+            network.once('animationFinished', function() {
                 resolve()
             })
         })

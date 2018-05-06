@@ -9,17 +9,18 @@ relationships:
 
 Here is an example of animating nodes movements
 
-<script>
-
-function afterLoad() {
-    neo.viz._network.on('stabilized' , async function ()
+{{< repl mode="JavaScript" height="155" >}}
+async function animate()
+{
+    speed = 1000
+    for (i = 0; i < 5; i++)
     {
-        for (i = 0; i < 5; i++)
-        {
-            //neo.viz._network.fit()  // will reset view
-            await neo.go_to_node(i)
-        }
+        await neo.go_to_node(i, speed)
+        //neo.viz._network.fit()  // will reset view
+    }
+};
 
-    });
-}
-</script>
+animate()
+{{</ repl >}}
+
+### Graph

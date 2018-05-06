@@ -38,7 +38,7 @@ function afterLoad() {
      let network = neo.viz._network
         network.on("afterDrawing", function (ctx) {
             add_Text_To_Node(0,"this is new text", ctx)
-            add_Text_To_Node(1,"node 1t", ctx)
+            add_Text_To_Node(1,"this is new text", ctx)
         })
 
 }

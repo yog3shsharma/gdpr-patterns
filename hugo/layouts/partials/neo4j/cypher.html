@@ -24,10 +24,9 @@
             neo = new neo4j_Util();
             neo.draw(options)
                 .then(function(){
-                    neo.viz._network.on('stabilized', function () {
-                        if(afterLoad) {
-                            afterLoad()
-                            afterLoad = null;           // delete reference so that it is not called more than once (todo: needs better solution )
+                    neo.viz._network.once('stabilized', function () {
+                        if(window.afterLoad) {
+                            window.afterLoad()
                         }
                     })
                 });
