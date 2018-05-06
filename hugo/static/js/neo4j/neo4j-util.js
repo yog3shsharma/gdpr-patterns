@@ -37,7 +37,7 @@ class neo4j_Util {
             interaction: {
                 //navigationButtons: true,
                 //keyboard: true
-            }
+            },
             // physics: {
             //     barnesHut: {
             //         gravitationalConstant: params_Data.options.gravitationalConstant,
@@ -117,7 +117,6 @@ class neo4j_Util {
             nodeId = this.nodes_Ids()[nodeId]
 
         network.selectNodes([nodeId])
-        console.log(nodeId)
         network.focus(nodeId, options)
         return new Promise( resolve =>{
             network.once('animationFinished', function() {

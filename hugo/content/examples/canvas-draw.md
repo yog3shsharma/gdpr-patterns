@@ -2,23 +2,26 @@
 title     : Example - Canvas Draw
 type      : neo4j
 menu      : main
-cypher    : MATCH (a)-[to]-(b) return * Limit 40
+cypher    : MATCH (a)-[to]-(b) return * Limit 10
+height    : 150
 labels    :
     RISK:
-        shape: 'text'
-        label: "."
+        #shape: 'text'
+        #label: "."
         #mass: 2
 relationships:
 ---
 
-Here is an example of clustering nodes (click to expand)
+Here is an example of drawing directly on the canvas
 
-<script>
+Note that sometimes the new nodes will only show after moving the graph
+
+{{< repl mode="JavaScript" height="300">}}
 
 function add_Text_To_Node(nodeId, text)
 {
-    let network = neo.viz._network
-    ctx = neo.viz._network.canvas.getContext()
+    let network      = neo.viz._network
+    ctx              = neo.viz._network.canvas.getContext()
     var nodeId       = neo.nodes_Ids()[nodeId];
     var nodePosition = network.getPositions([nodeId]);
     var x            = nodePosition[nodeId].x
@@ -34,12 +37,15 @@ function add_Text_To_Node(nodeId, text)
     //neo.go_to_node(0)
 }
 
-function afterLoad() {
-     let network = neo.viz._network
-        network.on("afterDrawing", function (ctx) {
-            add_Text_To_Node(0,"this is new text", ctx)
-            add_Text_To_Node(1,"this is new text", ctx)
-        })
 
-}
-</script>
+let network = neo.viz._network
+network.on("afterDrawing", function (ctx) {
+    add_Text_To_Node(0,"this is new text", ctx)
+    add_Text_To_Node(1,"more new text", ctx)
+})
+
+
+
+return "done"
+
+{{</ repl >}}

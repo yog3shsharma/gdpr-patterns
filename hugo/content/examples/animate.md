@@ -7,7 +7,7 @@ labels    :
 relationships:
 ---
 
-Here is an example of animating nodes movements
+Here is an example of animating nodes movements.
 
 {{< repl mode="JavaScript" height="155" >}}
 async function animate()

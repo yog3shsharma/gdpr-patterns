@@ -99,7 +99,9 @@
         value = myCodeMirror_{{safeJS $code_div}}.getValue()
         if (mode ==='JavaScript')
             try {
-                result = eval(value)
+                result = new Function(value)()
+                if(typeof(result) == "object")
+                    result = JSON.stringify(result)
             } catch( err)
             {
               result = err

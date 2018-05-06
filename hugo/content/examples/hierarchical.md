@@ -8,4 +8,4 @@ labels    :
 relationships:
 ---
 
-Here is an example of using the `hiearchical` layout
+Here is an example of using the `hiearchical` layout.

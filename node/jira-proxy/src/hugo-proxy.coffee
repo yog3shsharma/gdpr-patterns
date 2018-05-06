@@ -1,5 +1,6 @@
 express   = require 'express'
 http      = require('http')
+https     = require('https')
 url       = require('url')
 
 class Hugo_Proxy
@@ -12,7 +13,10 @@ class Hugo_Proxy
 
   add_Routes: ()=>
     @.handler_404()
+#    @.handler_repl()
     @.handler_star()
+    @.handler_errors()
+    @
 
   handler_404: ()->
     @.app.get? '/404',  (req, res)=>
@@ -21,6 +25,34 @@ class Hugo_Proxy
 #      res.send
 #        status: 'handling 404'
 #        query : req.query
+
+#  handler_repl: ()->
+#    #https://repl.it/repls/ConsciousPrettyInterface?lite=true
+#    @.app.get? '/repl',  (req, res)=>
+#      target = "https://repl.it/repls/ConsciousPrettyInterface?lite=true"
+#      options  = url.parse(target);
+#      #options.method = "GET"
+#      connector = https.request options, (serverRes)->
+#        serverRes.pipe(res, {end:true})
+#      req.pipe(connector, {end:true});
+#
+#    @.app.get? '/_next/*',  (req, res)=>
+#      options         = url.parse(req.url);
+#      options.host    = "repl.it"
+#      options.headers = req.headers;
+#      options.method  = req.method;
+#      connector = https.request options, (serverRes)->
+#        serverRes.pipe(res, {end:true})
+#      req.pipe(connector, {end:true});
+#
+#    @.app.get? '/public/*',  (req, res)=>
+#      options         = url.parse(req.url);
+#      options.host    = "repl.it"
+#      options.headers = req.headers;
+#      options.method  = req.method;
+#      connector = https.request options, (serverRes)->
+#        serverRes.pipe(res, {end:true})
+#      req.pipe(connector, {end:true});
 
 
   handler_star:()->
@@ -44,6 +76,12 @@ class Hugo_Proxy
           serverRes.pipe(res, {end:true})
       req.pipe(connector, {end:true});
     @
+
+  handler_errors: ()->
+    @.app.use (err, req, res, next)->
+      res.status(500).json(err.stack)
+
+
 
 
 
