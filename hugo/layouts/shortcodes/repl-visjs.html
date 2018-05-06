@@ -1,0 +1,24 @@
+<h1>REPL and vizJs</h1>
+
+{{ partial "repl/vars-setup.html" . }}
+{{ partial "repl/js-includes.html"       }}
+{{ partial "repl/css-styles.html"        }}
+
+{{ $code  := .Inner }}
+{{ .Scratch.Set "code"       $code       }}
+
+
+{{ $code_div   := .Scratch.Get "code_div"   }}
+{{ $result_div := .Scratch.Get "result_div" }}
+
+<div class="row">
+    <div class="col-6">
+        {{ partial "repl/card-code.html" . }}
+    </div>
+    <div class="col-6">
+        {{ partial "visjs/just-canvas.html" . }}
+
+    </div>
+</div>
+
+{{ partial "repl/js-codemirror.html" . }}

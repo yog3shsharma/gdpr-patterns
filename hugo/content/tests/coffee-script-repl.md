@@ -1,13 +1,14 @@
 ---
-title: Coffee Script REPL
+title : Coffee Script REPL
 cypher: match (a)-[b]-(c) return * limit 10
+menu  : main
 ---
 
 
 here is a simple example
 
 {{< repl >}}
-return 42
+return 42;
 {{</ repl >}}
 
 Here are some variable assigments

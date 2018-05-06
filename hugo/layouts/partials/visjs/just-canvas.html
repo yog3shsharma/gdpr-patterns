@@ -1,0 +1,16 @@
+
+{{ $result_div     := .Scratch.Get "result_div"          }}
+
+<script src="http://visjs.org/dist/vis.js" />
+
+<div id="{{$result_div}}"/>
+<script>
+    var container = document.getElementById('{{$result_div}}');
+    var data = {
+        nodes: {},
+        edges: {}
+    };
+    var options = {};
+    var network = new vis.Network(container, data, options);
+    var network = new vis.Network(container, data, options);
+</script>

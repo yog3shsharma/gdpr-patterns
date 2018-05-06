@@ -1,67 +1,20 @@
-{{ if  eq (printf "%T" .Params) "map[string]string"         }}
-    {{ .Scratch.Set "mode"   .Params.mode                   }}
-    {{ .Scratch.Set "height" .Params.height                 }}
-{{ end}}
+{{ partial "repl/vars-setup.html" . }}
+{{ partial "repl/js-includes.html"       }}
+{{ partial "repl/css-styles.html"        }}
 
-{{ $mode   := default "CoffeeScript"  (.Scratch.Get "mode") }}
-{{ $height := default 150 (.Scratch.Get "height")           }}
-<script>
-    mode = "{{ $mode }}"
-</script>
-{{ $code   := .Inner }}
+{{ $code  := .Inner }}
+{{ .Scratch.Set "code"       $code       }}
 
-{{ $code_div   := (printf "repl_%d" (index (seq 1000 | shuffle) 0) ) }}
-{{ $result_div := (printf "repl_%d" (index (seq 1000 | shuffle) 0) ) }}
 
-<link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
-
-<script src="http://codemirror.net/lib/codemirror.js"></script>
-<script src="http://codemirror.net/addon/edit/matchbrackets.js"></script>
-<script src="http://codemirror.net/mode/coffeescript/coffeescript.js"></script>
-
-<script src="http://coffeescript.org/v2/browser-compiler/coffeescript.js"></script>
-
-<style>
-    .card                          {   margin       : 0px   ;                     }
-    #card-response                 {   height       : 100%  ;                     }
-    #repl                          {   margin       : 5px   ;                     }
-    #repl           .col-10        {   padding-right: 0px   ;                     }
-    #repl           .col-2         {   padding-left : 5px   ;                     }
-    #card-code     .card-header    {   padding      : 0px   ; padding-left: 5px;  }
-    #card-code     .card-actions a {   padding      : 0px   ;                     }
-    #card-code     .card-actions i {   color        : black ;                     }
-    #card-code     .card-body      {   padding      : 0px   ;                     }
-    #card-response .card-header    {   padding      : 0px   ; padding-left: 5px;  }
-    #card-response .card-body      {   padding      : 0px   ;                     }
-
-    #card-response textarea {
-        position  :absolute;
-        bottom    : 0px;
-        top       : 20px;
-        left      : 0px;
-        right     : 2px;
-        padding   : 5px;
-        font-size : 12px;
-    }
-
-</style>
+{{ $code_div   := .Scratch.Get "code_div"   }}
+{{ $result_div := .Scratch.Get "result_div" }}
 
 <div class="_card border-primary " id="repl">
 
     <div class="_card-body">
         <div class="row">
             <div class="col-10">
-                <div class="card border-primary " id="card-code">
-                    <div class="card-header">
-                        Code ({{$mode}})
-                        <div class="card-actions bg-success">
-                            <a href="#" class="btn-setting" onclick="exec_Code_{{safeJS $code_div}}()"><i class="icon-control-play"></i></a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <textarea id="code_{{$code_div}}">{{ $code }} </textarea>
-                    </div>
-                </div>
+                {{ partial "repl/card-code.html" . }}
             </div>
             <div class="col-2">
                 <div class="card border-primary " id="card-response">
@@ -77,52 +30,4 @@
     </div>
 </div>
 
-
-<script>
-    var options = {
-        lineNumbers: true,
-        mode: "coffeescript",
-        extraKeys: {
-            'Cmd-Enter': (cm) => {
-                exec_Code_{{safeJS $code_div}}()
-            },
-        },
-    }
-    var target = document.getElementById("code_{{$code_div}}")
-    var myCodeMirror_{{safeJS $code_div}} = CodeMirror.fromTextArea(target, options);
-
-    myCodeMirror_{{safeJS $code_div}}.setSize("100%", {{ safeJS $height}})
-</script>
-
-<script>
-    function exec_Code_{{safeJS $code_div}}(){
-        value = myCodeMirror_{{safeJS $code_div}}.getValue()
-        if (mode ==='JavaScript')
-            try {
-                result = new Function(value)()
-                if(typeof(result) == "object")
-                    result = JSON.stringify(result)
-            } catch( err)
-            {
-              result = err
-            }
-        else
-            result = CoffeeScript.run(value)        // default to CoffeeScript
-
-        $("#result_{{$result_div}}").val(result)
-    }
-
-    window.addEventListener("load",function(event) {
-        if ((typeof neo)=== "undefined")
-        {
-            exec_Code_{{safeJS $code_div}}()
-        }
-        else
-        {
-            window.afterLoad = function() {
-                exec_Code_{{safeJS $code_div}}()
-            }
-        }
-    })
-
-</script>
+{{ partial "repl/js-codemirror.html" . }}
