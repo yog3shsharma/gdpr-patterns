@@ -10,16 +10,18 @@ class neo4j_Util {
 
 
     async draw(values) {
+
         let self = this;
+        self.values = values ? values  : self.values;  // store this values for later
         var config = {
-            container_id    : values.id,
+            container_id    : self.values.id,
             server_url      : server_url,
             server_user     : server_user,
             server_password : server_password,
             labels          : params_Data.labels,
             relationships   : params_Data.relationships,
-            initial_cypher  : values.cypher,
-            layout          : values.layout
+            initial_cypher  : self.values.cypher,
+            layout          : self.values.layout
         };
 
         self.viz = new NeoVis.default(config);
@@ -30,24 +32,17 @@ class neo4j_Util {
             nodes: {
                 shape: 'box',
             },
-            edges: {
-                //color: {color: "black"},
-                //physics: true
-            },
-            interaction: {
-                //navigationButtons: true,
-                //keyboard: true
-            },
-            // physics: {
-            //     barnesHut: {
-            //         gravitationalConstant: params_Data.options.gravitationalConstant,
-            //         //centralGravity : 0.5
-            //     }
-            // }
+            physics: {
+                barnesHut: {
+                    gravitationalConstant: params_Data.options.gravitationalConstant,
+                    //centralGravity : 0.5
+                }
+            }
         }
         self.viz._network.setOptions(options)
 
         self.setLayout(config.layout)
+        self.show_Stats()
     }
 
     setLayout(layout) {
@@ -67,15 +62,17 @@ class neo4j_Util {
 
     }
 
-    run_query(value) {
+    run_query(cypher) {
 
-        cypher = value
-        //cypher = document.getElementById("cypher").value
-        draw()
+        this.values.cypher = cypher
+        this.draw()
     }
 
     nodes_Ids () {
         return Object.keys(neo.viz._nodes);
+    }
+    show_Stats(){
+        console.log('showing stats')
     }
 
     // these are experiment methods for the examples

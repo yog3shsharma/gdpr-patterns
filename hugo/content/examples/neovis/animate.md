@@ -1,7 +1,6 @@
 ---
 title     : Example - Animate
 type      : neo4j
-menu      : main
 cypher    : MATCH (a)-[to]-(b) return * Limit 40
 labels    :
 relationships:

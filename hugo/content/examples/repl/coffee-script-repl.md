@@ -1,7 +1,6 @@
 ---
 title : Coffee Script REPL
 cypher: match (a)-[b]-(c) return * limit 10
-menu  : main
 ---
 
 

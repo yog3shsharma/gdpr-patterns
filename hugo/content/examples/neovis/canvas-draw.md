@@ -1,7 +1,6 @@
 ---
 title     : Example - Canvas Draw
 type      : neo4j
-menu      : main
 cypher    : MATCH (a)-[to]-(b) return * Limit 10
 height    : 150
 labels    :

@@ -2,7 +2,6 @@
 title  : Coffee Script REPL and Cypher code
 type   : neo4j
 cypher : match (a)-[b]-(c) return * limit 10
-menu   : main
 ---
 
 {{< repl >}}

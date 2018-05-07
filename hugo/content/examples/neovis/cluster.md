@@ -1,7 +1,6 @@
 ---
 title     : Example - Cluster
 type      : neo4j
-menu      : main
 cypher    : MATCH (a)-[to]-(b) return * Limit 140
 labels    :
 relationships:
