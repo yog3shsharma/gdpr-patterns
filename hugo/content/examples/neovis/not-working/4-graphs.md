@@ -1,7 +1,7 @@
 ---
-title     : 4-graphs
+title     : (4-graphs)
 type      : neo4j
-//layout    : query-in-md
+layout    : query-in-md
 gravity   : -500
 root_node: 'RISK-855'
 labels   :

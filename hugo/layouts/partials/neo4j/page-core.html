@@ -8,8 +8,12 @@
         relationships : {{ safeJS (partial "toJson.html" .Params.relationships) }},
         options       : {
                             gravitationalConstant: {{ safeJS (default "-800" .Params.gravity) }}
-                        }
-        }
+                        },
+        hide_Graph    : "{{default false .Params.hide_graph}}"
+    }
+
+
+
 
     let server_url      = "{{ .Site.Data.neo4j_server.url       }}",
         server_user     = "{{ .Site.Data.neo4j_server.user      }}",

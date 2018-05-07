@@ -5,7 +5,7 @@
 {{ $layout := .Scratch.Get "layout"      }}
 {{ $title  := .Scratch.Get "title"      }}
 
-<div class="col">
+<div class="col" id="cypher-div">
     {{ if $title }}
     <h3>{{ $title }}</h3>
     {{ end }}
@@ -29,11 +29,13 @@
             neo = new neo4j_Util();
             neo.draw(options)
                 .then(function(){
-                    neo.viz._network.once('stabilized', function () {
-                        if(window.afterLoad) {
-                            window.afterLoad()
-                        }
-                    })
+                    if (neo.viz._network) {
+                        neo.viz._network.once('stabilized', function () {
+                            if (window.afterLoad) {
+                                window.afterLoad()
+                            }
+                        })
+                    }
                 });
 
 

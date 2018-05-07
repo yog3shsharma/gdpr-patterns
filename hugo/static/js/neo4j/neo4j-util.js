@@ -1,6 +1,5 @@
 
 var viz;
-var root_Node_Id = '{{ .Params.root_Node}}';
 var cypher       = params_Data.cypher;
 
 class neo4j_Util {
@@ -28,26 +27,40 @@ class neo4j_Util {
         self.viz.setup();
 
         self.reset_Stats()
-        await self.viz.render_async()
-                   .catch(self.handle_Neo4j_Error)
-        self.show_Stats()
-        self.show_RawData()
 
-        let options = {
-            nodes: {
-                shape: 'box',
-            },
-            physics: {
-                barnesHut: {
-                    gravitationalConstant: params_Data.options.gravitationalConstant,
-                    //centralGravity : 0.5
+        if (params_Data.hide_Graph =="true")
+        {
+            await self.viz.exec_Neo4j_query(self.viz._query)
+            self.show_Table()
+            $('#cypher-div').hide()
+        }
+        else
+        {
+
+            await self.viz.render_async()
+                       .catch(self.handle_Neo4j_Error)
+            self.show_Stats()
+            self.show_Table()
+            self.show_RawData()
+
+
+            let options = {
+                nodes: {
+                    shape: 'box',
+                },
+                physics: {
+                    barnesHut: {
+                        gravitationalConstant: params_Data.options.gravitationalConstant,
+                        //centralGravity : 0.5
+                    }
                 }
             }
+            if (self.viz._network) {
+                self.viz._network.setOptions(options)
+                self.setLayout(config.layout)
+            }
         }
-        if (self.viz._network) {
-            self.viz._network.setOptions(options)
-            self.setLayout(config.layout)
-        }
+
 
     }
 
@@ -103,6 +116,11 @@ class neo4j_Util {
             $('#neo4j-received-data').val(received_Data)
             $('#neo4j-visjs-nodes').val(visjs_Nodes)
             $('#neo4j-visjs-edges').val(visjs_Edges)
+        }
+    }
+    show_Table() {
+        if ($('#neo4j-table').length) {     // see if this id exists and show the table (this need to be refactored )
+            create_Table()
         }
     }
 

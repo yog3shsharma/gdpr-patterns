@@ -3,10 +3,19 @@
     {{ .Scratch.Set "autorun" .Params.autorun               }}
 {{ end}}
 
+
+{{ .Scratch.Set "query" (trim .Inner "\n") }}
+
 {{ $height    := default 35    (.Scratch.Get "height") }}
 {{ $autorun   := default "yes" (.Scratch.Get "autorun") }}
 {{ $code_div  := (printf "repl_%d" (index (seq 1000 | shuffle) 0) ) }}
-{{ $query     := (trim .Inner "\n")}}
+
+{{ if eq (.Scratch.Get "query") ""                      }}
+{{    .Scratch.Set "query" ($.Page.Params.cypher)       }}
+{{ end                                                  }}
+
+{{ $query     := .Scratch.Get "query"                   }}
+
 
 <style>
     #textarea_{{safeJS $code_div}} {

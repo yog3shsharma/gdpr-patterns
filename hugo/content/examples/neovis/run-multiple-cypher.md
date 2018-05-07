@@ -1,5 +1,5 @@
 ---
-title     : Run Cypher queries
+title     : Run multiple cypher queries
 type      : neo4j
 height    : 350
 labels    :
@@ -15,5 +15,10 @@ return *
 Limit 10
 {{</ cypher-query >}}
 
+{{< cypher-query autorun="no" height="80">}}
+MATCH (a)-[to]-(b)
+return *
+Limit 40
+{{</ cypher-query >}}
 
 ### Graph
