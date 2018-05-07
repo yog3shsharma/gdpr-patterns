@@ -31,6 +31,7 @@ class neo4j_Util {
         await self.viz.render_async()
                    .catch(self.handle_Neo4j_Error)
         self.show_Stats()
+        self.show_RawData()
 
         let options = {
             nodes: {
@@ -89,10 +90,20 @@ class neo4j_Util {
         $('#loading-spinner').show()
         $("#cypher-error-alert").hide()     // move to separate ui setup method
     }
-    show_Stats(){
+    show_Stats() {
         $('#node_count').html(neo.nodes_Ids().length)
         $('#edge_count').html(neo.edges_Ids().length)
         $('#loading-spinner').hide()
+    }
+    show_RawData() {
+        if ($('#neo4j-received-data').length) {     // see if we are in debug mode (this need to be refactored )
+            var received_Data = JSON.stringify(neo.viz._records, null, "   ")
+            var visjs_Nodes   = JSON.stringify(neo.viz._nodes  , null, "   ")
+            var visjs_Edges   = JSON.stringify(neo.viz._edges  , null, "   ")
+            $('#neo4j-received-data').val(received_Data)
+            $('#neo4j-visjs-nodes').val(visjs_Nodes)
+            $('#neo4j-visjs-edges').val(visjs_Edges)
+        }
     }
 
     // these are experiment methods for the examples
