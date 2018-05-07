@@ -1,8 +1,7 @@
 ---
 title     : Example - run-cypher
 type      : neo4j
-#cypher    : MATCH (a)-[to]-(b) return * Limit 40
-#gravity   : -30000
+height    : 350
 labels    :
 relationships:
 ---

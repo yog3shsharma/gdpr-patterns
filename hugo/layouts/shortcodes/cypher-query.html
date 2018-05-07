@@ -19,13 +19,18 @@
         margin-right: 15px;
         margin-left: 15px;
     }
+    .alert {
+        border-radius: .8rem;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
 </style>
 
 <div class="form-group row" id="cypher-query">
     <div class="col-md-12">
         <div class="input-group">
             <textarea id="textarea_{{safeJS $code_div}}"
-                      class="form-control"> {{ $query }}</textarea>
+                      class="form-control">{{ $query }}</textarea>
 
             <span class="input-group-append">
                 <button type="button"
@@ -38,6 +43,10 @@
         </div>
     </div>
 </div>
+<div id="cypher-error-alert" class="alert alert-danger" role="alert" style="display:none">
+    <strong>Cypher Error!</strong>
+    <br><span id="cypher-error-text"></span>
+</div>
 
 <script>
     function run_Query_{{safeJS $code_div}}() {
@@ -46,6 +55,16 @@
     }
     function afterLoad() {
         if ('{{$autorun}}'==='yes')             // once there is one, all will be afected
-            run_Query()
+            run_Query_{{safeJS $code_div}}()
     }
+
+    // set it up so that the query is run on Cmd+Enter or Cmd+s
+    jQuery(document).keydown(function(event) {
+            if((event.ctrlKey || event.metaKey) && (event.which == 13 ||  event.which == 83)) {
+                run_Query_{{safeJS $code_div}}()
+                event.preventDefault();
+                return false;
+            }
+        }
+    );
 </script>

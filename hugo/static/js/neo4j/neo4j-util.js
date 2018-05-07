@@ -26,7 +26,11 @@ class neo4j_Util {
 
         self.viz = new NeoVis.default(config);
         self.viz.setup();
-        await self.viz.render_async();
+
+        self.reset_Stats()
+        await self.viz.render_async()
+                   .catch(self.handle_Neo4j_Error)
+        self.show_Stats()
 
         let options = {
             nodes: {
@@ -39,10 +43,11 @@ class neo4j_Util {
                 }
             }
         }
-        self.viz._network.setOptions(options)
+        if (self.viz._network) {
+            self.viz._network.setOptions(options)
+            self.setLayout(config.layout)
+        }
 
-        self.setLayout(config.layout)
-        self.show_Stats()
     }
 
     setLayout(layout) {
@@ -63,16 +68,31 @@ class neo4j_Util {
     }
 
     run_query(cypher) {
-
         this.values.cypher = cypher
         this.draw()
     }
 
+    edges_Ids () {
+        return Object.keys(neo.viz._edges);
+    }
     nodes_Ids () {
         return Object.keys(neo.viz._nodes);
     }
+    handle_Neo4j_Error (err){
+        $("#cypher-error-alert").show()
+        $("#cypher-error-text").html(err.message);
+        return true
+    }
+    reset_Stats() {
+        $('#node_count').html(0)
+        $('#edge_count').html(0)
+        $('#loading-spinner').show()
+        $("#cypher-error-alert").hide()     // move to separate ui setup method
+    }
     show_Stats(){
-        console.log('showing stats')
+        $('#node_count').html(neo.nodes_Ids().length)
+        $('#edge_count').html(neo.edges_Ids().length)
+        $('#loading-spinner').hide()
     }
 
     // these are experiment methods for the examples
