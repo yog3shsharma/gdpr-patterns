@@ -11,7 +11,7 @@
     {{ end }}
     <div class="viz" id="{{ $id }}"></div>
     <script>
-        let neo = null
+        neo = null
         $("#{{ $id }}").height({{ safeJS $height }});
         $("#{{ $id }}").width( {{ safeJS $width  }});
         $(function() {

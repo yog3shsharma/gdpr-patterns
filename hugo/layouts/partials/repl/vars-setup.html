@@ -1,6 +1,8 @@
 {{ if  eq (printf "%T" .Params) "map[string]string"         }}
     {{ .Scratch.Set "mode"   .Params.mode                   }}
     {{ .Scratch.Set "height" .Params.height                 }}
+    {{ .Scratch.Set "height" .Params.height                 }}
+    {{ .Scratch.Set "show"   .Params.show                 }}
 {{ end}}
 
 {{ $mode   := default "CoffeeScript"  (.Scratch.Get "mode") }}

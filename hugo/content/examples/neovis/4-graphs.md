@@ -1,8 +1,7 @@
 ---
 title     : 4-graphs
 type      : neo4j
-menu      : main
-layout    : query-in-md
+//layout    : query-in-md
 gravity   : -500
 root_node: 'RISK-855'
 labels   :
@@ -16,6 +15,8 @@ labels   :
         caption: key
 relationships:
 ---
+
+### NOTE: NOT WORKING
 
 Here are multiple queries of cypher `MATCH (a)-[to]-(b)` with different values of `Limit`
 

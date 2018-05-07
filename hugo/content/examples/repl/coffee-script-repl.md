@@ -19,5 +19,7 @@ result = a_var + 2
 return result
 {{</ repl >}}
 
+---
 
+[to repl examples](../)
 
