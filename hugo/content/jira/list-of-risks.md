@@ -1,7 +1,7 @@
 ---
 title     : List of Risks
 type      : neo4j
-cypher    : MATCH (a)-[to:is_parent_of]-(b) return * Limit 50
+cypher    : MATCH (a)-[to]-(b) return * Limit 50
 #cypher    : "MATCH (a {key : 'RISK-221'})-[to:is_parent_of*0..5]-(b) return * Limit 50"
 #height    : 100
 #width     : 100
@@ -14,3 +14,9 @@ labels    :
         caption: key
 relationships:
 ---
+
+Here are all the risk
+
+{{< cypher-query height="80">}}
+
+{{</ cypher-query >}}

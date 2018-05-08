@@ -105,13 +105,25 @@ class neo4j_Util {
         $('#loading-spinner').show()
         $("#cypher-error-alert").hide()     // move to separate ui setup method
     }
+    handle_Double_Click(params) {     // move to shortcode
+        //console.log(params)
+        if (params.nodes.length === 1) {
+            let id = params.nodes[0]
+            let nodes = neo.viz._network.body.data.nodes;
+            let key = nodes.get(id).label
+            let url = 'https://jira.photobox.com/browse/' + key
+            window.open(url, '_blank')
+        }
+    }
     setup_Events() {
-        // neo.viz._network.on("doubleClick", function (params) {
-        //     console.log('on DoubleCLick', params)
-        // })
+        let self = this
+         neo.viz._network.on("doubleClick", function (params) {
+             self.handle_Double_Click(params)
+             //console.log('on DoubleCLick', params)
+         })
         neo.viz._network.on("selectNode", function (params) {
-            if (on_Node_Selected)
-                on_Node_Selected(params)
+            if (window.on_Node_Selected)
+                window.on_Node_Selected(params)
             //console.log('Node selected', params)
         })
         neo.viz._network.on("hoverNode", function (params) { // needs interaction: { hover: true } enabled
