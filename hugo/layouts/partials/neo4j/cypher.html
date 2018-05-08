@@ -9,42 +9,44 @@
     {{ if $title }}
     <h3>{{ $title }}</h3>
     {{ end }}
+
     <div class="viz" id="{{ $id }}"></div>
     <small>
         <span class="badge badge-pill badge-dark"  id="node_count">0</span> nodes
         <span class="badge badge-pill badge-dark"  id="edge_count">0</span> edges
         <i id="loading-spinner" class='fa fa-spinner fa-spin fa-fw'></i>
     </small>
-    <script>
-        neo = null
-        $("#{{ $id }}").height({{ safeJS $height }});
-        $("#{{ $id }}").width( {{ safeJS $width  }});
-        $(function() {
-            options =
-                {
-                    cypher : {{ $cypher  }} ,
-                    id     : {{ $id      }} ,
-                    layout : {{$layout   }}
-                }
-            neo = new neo4j_Util();
-            neo.draw(options)
-                .then(function(){
-                    if (neo.viz._network) {
-                        neo.viz._network.once('stabilized', function () {
-                            if (window.afterLoad) {
-                                window.afterLoad()
-                            }
-                        })
-                    }
-                    else
-                    {
+</div>
+
+<script>
+    neo = null
+    $("#{{ $id }}").height({{ safeJS $height }});
+    $("#{{ $id }}").width( {{ safeJS $width  }});
+    $(function() {
+        options =
+            {
+                cypher : {{ $cypher  }} ,
+                id     : {{ $id      }} ,
+                layout : {{$layout   }}
+            }
+        neo = new neo4j_Util();
+        neo.draw(options)
+            .then(function(){
+                if (neo.viz._network) {
+                    neo.viz._network.once('stabilized', function () {
                         if (window.afterLoad) {
                             window.afterLoad()
                         }
+                    })
+                }
+                else
+                {
+                    if (window.afterLoad) {
+                        window.afterLoad()
                     }
-                });
+                }
+            });
 
 
-        })
-    </script>
-</div>
+    })
+</script>

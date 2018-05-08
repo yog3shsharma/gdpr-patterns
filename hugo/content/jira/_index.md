@@ -1,6 +1,7 @@
 ---
-title: Jira data
-menu: main
+title : Jira data
+menu  : main
+weight: 20
 ---
 
 Multiple Jira views

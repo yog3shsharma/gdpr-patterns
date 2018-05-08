@@ -43,12 +43,13 @@ class neo4j_Util {
             self.show_Stats()
             self.show_Table()
             self.show_RawData()
-
+            self.setup_Events()
 
             let options = {
                 nodes: {
                     shape: 'box',
                 },
+                //interaction: { hover: true },
                 physics: {
                     barnesHut: {
                         gravitationalConstant: params_Data.options.gravitationalConstant,
@@ -103,6 +104,19 @@ class neo4j_Util {
         $('#edge_count').html(0)
         $('#loading-spinner').show()
         $("#cypher-error-alert").hide()     // move to separate ui setup method
+    }
+    setup_Events() {
+        // neo.viz._network.on("doubleClick", function (params) {
+        //     console.log('on DoubleCLick', params)
+        // })
+        neo.viz._network.on("selectNode", function (params) {
+            if (on_Node_Selected)
+                on_Node_Selected(params)
+            //console.log('Node selected', params)
+        })
+        neo.viz._network.on("hoverNode", function (params) { // needs interaction: { hover: true } enabled
+            console.log('on hoverNode', params)
+        })
     }
     show_Stats() {
         $('#node_count').html(neo.nodes_Ids().length)
