@@ -46,13 +46,15 @@ class Map_Issues
   get_Data_By_Type: (field_Name, field_Type, raw_Data)->
     parser =
       any            : (raw)-> return raw
-      datetime       : (raw)-> new Date(raw_Data).toDateString()
+      date           : (raw)-> return new Date(raw_Data).toDateString()
+      datetime       : (raw)-> return new Date(raw_Data).toDateString()
       issuetype      : (raw)-> return raw.name
       number         : (raw)-> return raw
       option         : (raw)-> return raw.value
       priority       : (raw)-> return raw.name
       progress       : (raw)-> return raw.progress
       project        : (raw)-> return raw.name
+      resolution     : (raw)-> return raw.name
       securitylevel  : (raw)-> return raw.name
       status         : (raw)-> return raw.name
       string         : (raw)-> return raw

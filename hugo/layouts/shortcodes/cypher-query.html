@@ -66,7 +66,20 @@
         if ('{{$autorun}}'==='yes')             // once there is one, all will be afected
             run_Query_{{safeJS $code_div}}()
     }
+    function get_Query_from_Url()
+    {
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                .exec(window.location.search);
 
+            return (results !== null) ? decodeURIComponent(results[1].replace(/\+/g, " ")) || 0 : false;
+        }
+        cypher = $.urlParam('cypher')
+        if (cypher )
+        {
+            $("#textarea_{{safeJS $code_div}}").val(cypher)
+        }
+    }
     // set it up so that the query is run on Cmd+Enter or Cmd+s
     jQuery(document).keydown(function(event) {
             if((event.ctrlKey || event.metaKey) && (event.which == 13 ||  event.which == 83)) {
@@ -76,4 +89,6 @@
             }
         }
     );
+
+    get_Query_from_Url()
 </script>

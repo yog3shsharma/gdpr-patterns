@@ -31,6 +31,7 @@ class neo4j_Util {
         if (params_Data.hide_Graph =="true")
         {
             await self.viz.exec_Neo4j_query(self.viz._query)
+                          .catch(self.handle_Neo4j_Error)
             self.show_Table()
             $('#cypher-div').hide()
         }

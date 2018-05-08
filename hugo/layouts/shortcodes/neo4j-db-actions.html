@@ -5,7 +5,7 @@
     }
     #action-target {
         width     :100%;
-        height    :100%;
+        height    :400px;
         background: white;
     }
 </style>
@@ -28,7 +28,14 @@
                                 onClick="neo4j_reset_db()">reset db</button>
                         <button type="button"
                                 class="btn btn-primary"
-                                onClick="aaa()">another action</button>
+                                onClick="neo4j_reset_db()">reset db</button>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                onClick="create_all_gdpr()">create_all_gdpr</button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                onClick="create_all_risk()">create_all_risk</button>
                     </div>
                 </div>
             </div>
@@ -37,7 +44,8 @@
 
     </div>
     <div class="col-6">
-        <iframe name="action-target" id="action-target"></iframe>
+        <iframe name="action-target"
+                id="action-target"></iframe>
     </div>
 </div>
 
@@ -49,7 +57,23 @@
         $("#action-target").attr("src", target);
     }
     function neo4j_reset_db() {
-        open_action('/api/neo4j/cypher?pretty&query=match+(n)+return+n')
+        open_action('/api/neo4j/delete/all?pretty')
     }
+    function create_nodes_for_issue() {
+        open_action('' +
+            'http://localhost:1313/api/neo4j/nodes/create/GDPR-223?pretty')
+    }
+    function create_all_gdpr() {
+        open_action('' +
+            '/api/neo4j/nodes/create-regex/GDPR-?pretty')
+    }
+
+    function create_all_risk() {
+        open_action('' +
+            '/api/neo4j/nodes/create-regex/RISK-?pretty')
+    }
+
+
+
 </script>
 

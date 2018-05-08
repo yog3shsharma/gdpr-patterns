@@ -36,6 +36,12 @@
                             }
                         })
                     }
+                    else
+                    {
+                        if (window.afterLoad) {
+                            window.afterLoad()
+                        }
+                    }
                 });
 
 

@@ -1,9 +1,8 @@
 ---
-title     : Neo4j Stats
+title     : Table - Neo4j Stats
 type      : neo4j
 height    : 350
-labels    :
-relationships:
+hide_graph : true
 ---
 
 ### Query
@@ -21,6 +20,3 @@ RETURN DISTINCT
 {{</ cypher-query >}}
 
 {{< neo4j-table >}}
-
-
-### Graph

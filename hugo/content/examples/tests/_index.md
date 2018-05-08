@@ -1,3 +1,4 @@
 ---
-title: Examples - Tests
+title: Dev Tests
+menu : main
 ---
