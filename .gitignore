@@ -4,3 +4,4 @@ node_modules/
 *.log
 
 hugo/content/pbx-gs
+bin/local

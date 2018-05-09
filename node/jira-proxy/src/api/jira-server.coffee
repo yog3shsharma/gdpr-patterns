@@ -1,7 +1,8 @@
 express         = require 'express'
+Config          = require '../../../jira-issues/src/config'
+Data       = require '../../../jira-issues/src/data'
 Jira_Api        = require '../../../jira-issues/src/jira/api'
 Save_Data       = require '../../../jira-issues/src/jira/save-data'
-Config          = require '../../../jira-issues/src/config'
 Mappings_Create = require '../../../jira-mappings/src/create'
 
 class Jira
@@ -9,12 +10,14 @@ class Jira
     @.options         = options || {}
     @.router          = express.Router()
     @.app             = @.options.app
+    @.data            = new Data()
     @.jira_Api        = new Jira_Api()
     @.save_Data       = new Save_Data()
     @.mappings_Create = new Mappings_Create()
 
 
   add_Routes: ()=>
+    @.router.get  '/jira-server/setup'                 , @.setup
     @.router.get  '/jira-server/config'                , @.config
     @.router.get  '/jira-server/homepage'              , @.homepage
     @.router.get  '/jira-server/issue/:id'             , @.issue
@@ -31,7 +34,7 @@ class Jira
       res.json json_Data
 
   config: (req,res)=>
-    res.json Config
+    @.send_Json_Data req,res, Config
 
   homepage: (req,res)=>
     @.jira_Api.ping_Server (data)->
@@ -50,5 +53,20 @@ class Jira
 
   mappings_Issues_Files : (req,res)=>
     @.send_Json_Data req,res, @.mappings_Create.files()
+
+  setup: (req,res)=>
+
+    @.data.setup()                          # setup data folders
+    @.mappings_Create.all()                 # create first set of mappings
+    await @.save_Data.save_Issues_Schema()  # make sure schema exists
+
+    result =
+      folder_Data         : @.data.folder_Data
+      folder_Issues       : @.data.folder_Issues
+      folder_Issues_Raw   : @.data.folder_Issues_Raw
+      folder_Mappings     : @.data.folder_Mappings
+      file_Fields_Schema  : @.data.file_Fields_Schema
+      issue_Files         : @.data.file_Issue_Files
+    @.send_Json_Data req,res, result
 
 module.exports = Jira

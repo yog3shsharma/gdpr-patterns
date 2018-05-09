@@ -3,6 +3,7 @@ require 'fluentnode'
 JiraApi = require('jira-client')
 Config  = require('../../src/config')
 
+
 class Api
   constructor: ->
     @._jira_Api = new JiraApi(Config)

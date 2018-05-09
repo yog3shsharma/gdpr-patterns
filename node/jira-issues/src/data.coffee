@@ -10,12 +10,13 @@ class Data
     @.file_Issue_Files   = @.folder_Mappings.path_Combine 'issue-files.json'
     @.file_Fields_Schema = @.folder_Issues_Raw.path_Combine 'fields-schema.json'
 
-  config: ->
+  setup: ->
     # make sure folders exist
     @.folder_Data       .folder_Create()
     @.folder_Issues     .folder_Create()
     @.folder_Issues_Raw .folder_Create()
     @.folder_Mappings   .folder_Create()
+    @
 
   issue_Raw_File: (id)->
     path = @.issue_Files()[id?.upper()]

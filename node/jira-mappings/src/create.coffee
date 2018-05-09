@@ -12,7 +12,6 @@ class Create
     result
 
   map_Files: =>
-    @.data.setup()                       # refactor into global setup methd
     return new Map_Files(@.data).create()
 
   files: =>

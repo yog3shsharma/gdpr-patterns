@@ -1,6 +1,6 @@
 Supertest = require '../../src/_test-utils/Supertest'
 
-describe.only 'api | supertest | files', ->
+describe 'api | supertest | files', ->
   supertest = null
 
   request = (path, callback)->

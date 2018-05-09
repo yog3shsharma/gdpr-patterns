@@ -8,8 +8,8 @@ cd bin/Docker
 docker build --no-cache -t diniscruz/gdpr-patterns gdpr-patterns        || exit 1
 
 # command to run the gdpr-patterns image
-docker run --rm -it -p 3001:3000 diniscruz/gdpr-patterns
-exit 0
+#docker run --rm -it -p 3001:3000 diniscruz/gdpr-patterns
+#exit 0
 
 docker push diniscruz/gdpr-patterns
 

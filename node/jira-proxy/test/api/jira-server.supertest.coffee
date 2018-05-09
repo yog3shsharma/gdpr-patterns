@@ -1,6 +1,6 @@
 Supertest = require '../../src/_test-utils/Supertest'
 
-describe.only 'api | supertest | jira-server', ->
+describe 'api | supertest | jira-server', ->
   supertest = null
 
   request = (path, callback)->
@@ -30,6 +30,13 @@ describe.only 'api | supertest | jira-server', ->
   it 'mappings/issue/files', ->
     request "mappings/issues/files", (result)->
       result["RISK-1"].assert_Is "/RISK/RISK/RISK-1.json"
+
+  it.only 'setup', ->
+    request "setup", (result)->
+      using result, ->
+        @.folder_Mappings.assert_Folder_Exists()
+        @.file_Fields_Schema.assert_File_Exists()
+        @.issue_Files.assert_File_Exists()
 
 
   it 'mappings/create', ->
