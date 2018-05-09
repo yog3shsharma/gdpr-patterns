@@ -1,4 +1,4 @@
-Data = require '../Data'
+Data = require '../data'
 
 class Gdpr_Task
   constructor: (id)->
