@@ -26,5 +26,5 @@ describe.only 'api | supertest | jira-server', ->
   it 'issue/{id} (id not exists)', ->
     id = 'AAAA-bb'
     request "issue/#{id}", (data)->
-      data.jira_error.assert_Contains  'Issue Does Not Exist'
+      data.assert_Is { error: "Issue not found: #{id}"}
 

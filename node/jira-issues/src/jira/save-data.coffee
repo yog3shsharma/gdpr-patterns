@@ -50,7 +50,6 @@ class Save_Data
     @.save_Issues "project=#{project}", callback
 
   save_Issues_Schema: (callback)->
-
     @.jira._call_Jira 'listFields', [] ,(data)->
       console.log data
 
