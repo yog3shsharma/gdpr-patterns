@@ -11,8 +11,11 @@ class Create
     result.push @.map_Files()
     result
 
-  map_Files    : => return new Map_Files(@.data).create()
+  map_Files: =>
+    @.data.setup()                       # refactor into global setup methd
+    return new Map_Files(@.data).create()
 
-  files        : =>  @.data.file_Issue_Files.load_Json()
+  files: =>
+    @.data.file_Issue_Files.load_Json()
 
 module.exports = Create
