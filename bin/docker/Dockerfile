@@ -2,12 +2,20 @@ FROM    node:9.10.1
 
 RUN     git clone https://github.com/pbx-gs/gdpr-patterns.git
 WORKDIR gdpr-patterns
-RUN     pwd
-RUN     ls -la
 RUN     sed -ie 's/git@github.com:/https:\/\/github.com\//' .gitmodules
 RUN     git submodule init                      && \
         git submodule update                    && \
         npm install
+RUN     git pull origin
 
+ENV HUGO_VERSION 0.36.1
+ENV HUGO_BINARY hugo_${HUGO_VERSION}_Linux-64bit.deb
 
-RUN node_modules/.bin/coffee bin/start-jira-proxy.coffee
+ADD     https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_BINARY} /tmp/hugo.deb
+RUN     dpkg -i /tmp/hugo.deb                   && \
+	    rm /tmp/hugo.deb
+RUN    apt-get update && apt-get install vim -y
+
+CMD bin/start-servers.sh
+
+#RUN node_modules/.bin/coffee bin/start-jira-proxy.coffee
