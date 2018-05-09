@@ -1,2 +1,5 @@
 !hugo/data/neo4j_server.yaml
 data
+node_modules/
+config.json
+*.log

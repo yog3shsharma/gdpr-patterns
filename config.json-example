@@ -1,0 +1,13 @@
+{
+    "neo4j": {
+        "url": "localhost",
+        "username": "neo4j",
+        "password": "test"
+    },
+
+    "jira": {
+        "url": "localhost",
+        "username": "neo4j",
+        "password": "test"
+    }
+}

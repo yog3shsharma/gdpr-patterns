@@ -2,6 +2,7 @@ require 'fluentnode'
 
 JiraApi = require('jira-client')
 Config  = require('../../src/config')
+GlobalConfig = require(process.argv.slice(1)[1]);
 
 
 class Api
@@ -53,7 +54,7 @@ class Api
 
   # This can be improved to fail faster when access is not available
   ping_Server: (callback)->
-    url = "#{Config.protocol}://#{Config.host}"
+    url = GlobalConfig.jira.url
     url.GET (data)->
       callback data
 
