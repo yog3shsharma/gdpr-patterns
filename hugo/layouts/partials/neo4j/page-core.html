@@ -1,4 +1,9 @@
 <!--<script src="http://localhost:3000/api/js/neovis.js"></script>-->
+
+{{ $neo4j_Url      := (default .Site.Data.neo4j_server.url (getenv "Neo4J_Url"     )) }}
+{{ $neo4j_Username := (default .Site.Data.neo4j_server.url (getenv "Neo4J_Username")) }}
+{{ $neo4j_Password := (default .Site.Data.neo4j_server.url (getenv "Neo4J_Password")) }}
+
 <script src="http://localhost:3000/js/neo4j/neovis.js"></script>
 
 <script>
@@ -16,9 +21,9 @@
 
 
 
-    let server_url      = "{{ .Site.Data.neo4j_server.url       }}",
-        server_user     = "{{ .Site.Data.neo4j_server.user      }}",
-        server_password = "{{ .Site.Data.neo4j_server.password  }}",
+    let server_url      = "{{ $neo4j_Url      }}",
+        server_user     = "{{ $neo4j_Username }}",
+        server_password = "{{ $neo4j_Password }}",
         container_id    = "viz";
 
 
