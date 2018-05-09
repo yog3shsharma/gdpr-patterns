@@ -1,5 +1,5 @@
 Jira_Api = require './api'
-Data     = require '../Data'
+Data     = require '../data'
 
 class Save_Data
   constructor: ->
