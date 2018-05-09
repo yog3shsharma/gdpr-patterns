@@ -17,6 +17,8 @@ RUN     dpkg -i /tmp/hugo.deb                   && \
 
 RUN     git pull origin ; # trigger update
 
+EXPOSE 3000 1313
+
 CMD bin/start-servers.sh
 
 #RUN node_modules/.bin/coffee bin/start-jira-proxy.coffee

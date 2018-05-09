@@ -4,7 +4,7 @@ type         : neo4j
 height       : 350
 labels       :
 relationships:
-gravity      : -50000
+gravity      : -5000
 menu         : main
 weight       : 1
 ---
