@@ -51,9 +51,9 @@
 
 
 <script>
-    function open_action(path)
+    function open_action(target)
     {
-        target = "http://localhost:3000" + path
+        //target = "http://localhost:3000" + path
         $("#action-target").attr("src", target);
     }
     function neo4j_reset_db() {
@@ -61,7 +61,7 @@
     }
     function create_nodes_for_issue() {
         open_action('' +
-            'http://localhost:1313/api/neo4j/nodes/create/GDPR-223?pretty')
+            '/api/neo4j/nodes/create/GDPR-223?pretty')
     }
     function create_all_gdpr() {
         open_action('' +
