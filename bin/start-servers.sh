@@ -3,7 +3,7 @@ echo "*** Starting Hugo Server ***"
 echo "***************************"
 
 cd hugo
-hugo serve &
+hugo serve $(pwd)/../config.json &
 cd ..
 
 node_modules/.bin/nodemon         \
