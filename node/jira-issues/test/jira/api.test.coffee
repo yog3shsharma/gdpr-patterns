@@ -30,12 +30,10 @@ describe 'Jira_Api', ->
       data.issues.size().assert_Is 50
 
   # other
-  it 'should get issues after a certain date', ()->
+  xit 'should get issues after a certain date', ()->
     fields = ["*all"]
     jira_Api.issues "project=GDPR and id=GDPR-180", fields, (data)->
-      console.log data
-      console.log data.json_Pretty().save_As('test.json')
-      console.log Math.floor(new Date() / 1000)
-      console.log Date.now();
-
-      252.65
+      #console.log data
+      #console.log data.json_Pretty().save_As('test.json')
+      #console.log Math.floor(new Date() / 1000)
+      #console.log Date.now();

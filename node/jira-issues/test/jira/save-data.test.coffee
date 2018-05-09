@@ -21,7 +21,7 @@ describe 'Save-Data', ->
         @.key.assert_Is 'RISK-1'
         @.summary.assert_Is 'JIRA - Too many JIRA Administrators'
 
-  it.only 'save_Issues_Schema', ->
+  it 'save_Issues_Schema', ->
     save_Data.save_Issues_Schema()
 
 

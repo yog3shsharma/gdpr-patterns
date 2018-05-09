@@ -20,6 +20,7 @@ class Server
 
     add_Routes '/api', './api/debug'
     add_Routes '/api', './api/jira'
+    add_Routes '/api', './api/jira-server'
     add_Routes '/api', './api/neo4j'
     add_Routes '/api', './api/files'
 

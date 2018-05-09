@@ -16,15 +16,13 @@ class Jira
 
 
   add_Routes: ()=>
-    @.router.get  '/jira/config'          , @.config
+    #@.router.get  '/jira/config'          , @.config
     @.router.get  '/jira/fields/schema'   , @.fields_Schema
     @.router.get  '/jira/issue-raw/:id'   , @.issue_Raw
     @.router.get  '/jira/issue/:id'       , @.issue
     @.router.get  '/jira/issues/files'    , @.issues_Files
     @.router.get  '/jira/issues/ids'      , @.issues_Ids
-
     @.router.get  '/jira/issues/convert'  , @.issues_Convert
-
     @
 
   send_Json_Data:(req,res,json_Data)->                    # this should be added as a global filter
@@ -35,8 +33,8 @@ class Jira
     else
       res.json json_Data
 
-  config: (req,res)=>
-    res.json Config
+#  config: (req,res)=>
+#    res.json Config
 
   fields_Schema: (req, res)=>
     @.send_Json_Data req, res, @.data.file_Fields_Schema.load_Json()

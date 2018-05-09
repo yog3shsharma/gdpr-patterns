@@ -2,8 +2,6 @@ require 'fluentnode'
 
 JiraApi = require('jira-client')
 Config  = require('../../src/config')
-GlobalConfig = require(process.argv.slice(1)[1]);
-
 
 class Api
   constructor: ->
@@ -18,8 +16,8 @@ class Api
       .then (data)->
         callback data
       .catch (err)->
-        console.log err.message
-        throw err
+        #console.log err.message
+        callback {"jira_error" : err.message }
 
   issue: (key, callback)->
     issueNumber  = key
@@ -54,7 +52,7 @@ class Api
 
   # This can be improved to fail faster when access is not available
   ping_Server: (callback)->
-    url = GlobalConfig.jira.url
+    url = "#{Config.protocol}://#{Config.host}"
     url.GET (data)->
       callback data
 

@@ -10,11 +10,11 @@ describe 'Gdpr_Task', ->
     id =  'GDPR-180'
     using new Gdpr_Task(id),->
       @.id                .assert_Is 'GDPR-180'
-      @.issue_Type        .assert_Is 'Journey'
-      @.summary           .assert_Contains "HR"
+      @.issue_Type        .assert_Is 'Sub-Function'
+      @.summary           .assert_Contains "Dental"
       @.business_Function .assert_Is 'Human Resources'
       @.lawful_Basis      .assert_Is ['Article 6(1)(b) - contract', 'Article 9(2)(h) - Health']
-      @.data_Location     .assert_Is '?'
+      @.data_Location     .assert_Contains 'drive'
       @.data_Security     .assert_Contains "Access Control"
       @.data_Source       .assert_Contains "HRIS"
       @.personal_Data     .assert_Contains "Personal Information"

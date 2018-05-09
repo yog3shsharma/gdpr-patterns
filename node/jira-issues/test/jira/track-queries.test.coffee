@@ -32,7 +32,7 @@ describe 'Track-Queries', ->
     using track_Queries.now_Date(), ->
       @.assert_Contains(new Date().getFullYear())
 
-  it 'update', (done)->
+  xit 'update', (done)->
     #@.timeout 15000
     name = 'gdpr-project'
     jql  = 'project=GDPR'

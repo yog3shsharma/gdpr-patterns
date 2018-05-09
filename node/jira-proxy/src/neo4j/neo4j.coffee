@@ -1,7 +1,9 @@
 #neo4j   = require('neo4j');
 neo4j = require('neo4j-driver').v1;
-#Config  = require '../../../jira-issues/src/config'
-Config = require(process.argv.slice(1)[1]);
+if (wallaby?.localProjectDir)
+  Config  = require '../../../jira-issues/src/config'
+else
+  Config = require(process.argv.slice(1)[1]);
 
 
 _driver = null
