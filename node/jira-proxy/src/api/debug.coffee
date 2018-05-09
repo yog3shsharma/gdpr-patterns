@@ -17,6 +17,7 @@ class Debug
 
     @.router.get  '/debug/ping'       , @.ping
     @.router.get  '/git/pull'         , @.git_pull
+    @.router.get  '/jira/status'      , @.jira_status
     @
 
   ping: (req,res)->
@@ -31,5 +32,7 @@ class Debug
         params  : params
         cmd_log : data;
       res.json(result)
+
+  jira_status: (req,res)->
 
 module.exports = Debug

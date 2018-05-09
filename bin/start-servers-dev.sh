@@ -1,9 +1,9 @@
-echo "***************************"
-echo "*** Starting Hugo Server ***"
-echo "***************************"
+echo "********************************************"
+echo "*** Starting Hugo Server in Dev mode     ***"
+echo "********************************************"
 
 cd hugo
-hugo serve --watch=false &
+hugo serve  &
 cd ..
 
 node_modules/.bin/nodemon         \

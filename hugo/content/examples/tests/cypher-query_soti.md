@@ -8,7 +8,7 @@ relationships:
         color: red
 gravity      : -5000
 menu         : main
-weight       : 2
+weight       : 8
 ---
 
 Testing Schema 

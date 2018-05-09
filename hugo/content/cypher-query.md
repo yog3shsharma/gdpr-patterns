@@ -6,7 +6,7 @@ labels       :
 relationships:
 gravity      : -5000
 menu         : main
-weight       : 1
+weight       : 5
 ---
 
 write your own cypher queries
