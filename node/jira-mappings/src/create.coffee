@@ -6,8 +6,10 @@ class Create
     @.data = new Data()
 
   all: ->
-    console.log "Creating all mappings"
-    @.map_Files()
+    #console.log "Creating all mappings"
+    result = []
+    result.push @.map_Files()
+    result
 
   map_Files    : => return new Map_Files(@.data).create()
 

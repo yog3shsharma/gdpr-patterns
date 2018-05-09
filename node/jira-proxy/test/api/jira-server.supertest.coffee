@@ -22,9 +22,17 @@ describe.only 'api | supertest | jira-server', ->
     request "issue/#{id}", (data)->
       data.key.assert_Is id
 
-
   it 'issue/{id} (id not exists)', ->
     id = 'AAAA-bb'
     request "issue/#{id}", (data)->
       data.assert_Is { error: "Issue not found: #{id}"}
 
+  it 'mappings/issue/files', ->
+    request "mappings/issues/files", (result)->
+      result["RISK-1"].assert_Is "/RISK/RISK/RISK-1.json"
+
+
+  it 'mappings/create', ->
+    request "mappings/create", (result)->
+      result.size().assert_Is 1
+      result[0].assert_File_Exists()

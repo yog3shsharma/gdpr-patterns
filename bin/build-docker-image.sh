@@ -3,7 +3,10 @@ echo "*** Building docker image ***"
 echo "*****************************"
 
 cd bin/Docker
-ls
+#docker --no-cache build -t node-hugo         node-hugo/.          || exit 1
+docker build --no-cache -t gdpr-patterns-base gdpr-patterns-base/. || exit 1
+
+exit 0
 
 docker build -t diniscruz/gdpr-patterns . || exit 1
 #docker build -t diniscruz/gdpr-patterns .
