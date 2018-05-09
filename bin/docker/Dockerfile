@@ -15,7 +15,7 @@ ADD     https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_
 RUN     dpkg -i /tmp/hugo.deb                   && \
 	    rm /tmp/hugo.deb
 
-RUN     git pull origin ;
+RUN     git pull origin ; # trigger update
 
 CMD bin/start-servers.sh
 

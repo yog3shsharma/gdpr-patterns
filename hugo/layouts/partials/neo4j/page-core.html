@@ -1,8 +1,8 @@
 <!--<script src="http://localhost:3000/api/js/neovis.js"></script>-->
 
-{{ $neo4j_Url      := (default .Site.Data.neo4j_server.url (getenv "Neo4J_Url"     )) }}
-{{ $neo4j_Username := (default .Site.Data.neo4j_server.url (getenv "Neo4J_Username")) }}
-{{ $neo4j_Password := (default .Site.Data.neo4j_server.url (getenv "Neo4J_Password")) }}
+{{ $neo4j_Url      := (default .Site.Data.neo4j_server.url      (getenv "Neo4J_Url"     )) }}
+{{ $neo4j_Username := (default .Site.Data.neo4j_server.username (getenv "Neo4J_Username")) }}
+{{ $neo4j_Password := (default .Site.Data.neo4j_server.password (getenv "Neo4J_Password")) }}
 
 <script src="http://localhost:3000/js/neo4j/neovis.js"></script>
 
