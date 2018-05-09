@@ -2,6 +2,8 @@ express      = require 'express'
 Data         = require '../../../jira-issues/src/data'
 Neo4J_Api    = require '../neo4j/neo4j'
 Neo4j_Issues = require '../neo4j/neo4j-issues'
+Config = require(process.argv.slice(1)[1]);
+
 
 class Neo4J
   constructor: (options)->
@@ -43,7 +45,7 @@ class Neo4J
     query ?= 'match (n:Movie) return n'
 
     @.exec_Cypher req, res, query
-
+  
   create: (req,res)=>       # refactor
     #query = req.query.query
     label = req.params.label
@@ -56,7 +58,7 @@ class Neo4J
     @.exec_Cypher req, res, cypher
 
   delete_all: (req, res)=>
-    @.neo4j.delete_all_nodes (err, response)=>
+    @.neo4j.delete_all_nodes (err, response)=>      
       @.send_Json_Data req, res, response
 
   nodes_Create: (req,res)=>
