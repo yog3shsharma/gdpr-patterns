@@ -30,6 +30,7 @@ layout: api-iframe
 
 **admin**
 
+- [update server (git)      ](/api/git/pull)
 - [reset db                 ](/api/neo4j/delete/all?pretty)
 
 

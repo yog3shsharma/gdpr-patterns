@@ -20,7 +20,7 @@ class Data
     @.folder_Mappings   .folder_Create()
     #{}.save_Json @.file_Tracked_Queries
     @
- 
+
   delete_Raw_Data: (id)=>
     path = @.issue_Raw_File(id)
     if path?.file_Exists()
