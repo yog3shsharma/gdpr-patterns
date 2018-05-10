@@ -15,9 +15,12 @@ layout: api-iframe
 - [mappings/create      ](/api/jira-server/mappings/create?pretty)
 - [homepage             ](/api/jira-server/homepage)
 
-**api/server**
+**api/jira**
 
 - [issue/RISK-2         ](/api/jira/issue/RISK-2?pretty)
+- [field's schema       ](/api/jira/fields/schema?pretty)
+
+
 
 <hr/>
 

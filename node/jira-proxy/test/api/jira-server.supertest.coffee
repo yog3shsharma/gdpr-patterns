@@ -31,7 +31,7 @@ describe 'api | supertest | jira-server', ->
     request "mappings/issues/files", (result)->
       result["RISK-1"].assert_Is "/RISK/RISK/RISK-1.json"
 
-  it.only 'setup', ->
+  it 'setup', ->
     request "setup", (result)->
       using result, ->
         @.folder_Mappings.assert_Folder_Exists()

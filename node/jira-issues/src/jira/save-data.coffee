@@ -1,14 +1,43 @@
-Jira_Api = require './api'
-Data     = require '../data'
+Jira_Api        = require './api'
+Data            = require '../data'
+Mappings_Create = require '../../../jira-mappings/src/create'
 
 class Save_Data
   constructor: ->
-    @.jira = new Jira_Api()
-    @.data = new Data()
+    @.jira            = new Jira_Api()
+    @.data            = new Data()
+    @.mappings_Create = new Mappings_Create()
+
+  get_Issue: (key, callback)=>
+    raw_Data = @.data.issue_Raw_Data(key)
+    if raw_Data
+      callback raw_Data
+    else
+      console.log("Issue #{key} didn't exist locally, so fetching it from JIRA Server")
+      @.save_Issue key,(file)=>
+        if not file
+          callback { issue: "not found"}
+        else
+          @.data.issue_Files_Reset_cache()
+          @.mappings_Create.map_Files()
+          callback file.load_Json()         # to handle the issues that have been renamed
+          return
+
+          raw_Data =  @.data.issue_Raw_Data(key)
+          if raw_Data
+            console.log "got raw_Data for id  #{raw_Data.key }"
+            callback raw_Data
+          else
+            console.log "raw_data was null"
+            callback error : "raw_data was null"
+
 
   save_Issue: (key, callback)=>
-    @.jira.issue key, (data)=>
-      callback @.save_Issue_Data data
+    @.jira.issue key, (result)=>
+      if result?.jira_error
+        callback result.jira_error
+      else
+        callback @.save_Issue_Data result
 
   save_Issue_Data: (data)->
 

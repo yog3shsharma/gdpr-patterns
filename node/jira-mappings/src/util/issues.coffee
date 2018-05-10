@@ -1,4 +1,5 @@
-Data      = require './data'
+#Data      = require './data'
+Data      = require '../../../jira-issues/src/data'
 
 _issue_Files   = null  # local cache
 _fields_Schema = null  # local cache

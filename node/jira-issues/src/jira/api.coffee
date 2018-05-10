@@ -17,11 +17,11 @@ class Api
       .then (data)->
         callback data
       .catch (err)->
-        #console.log err.message
+        console.log err.message
         callback {"jira_error" : err.message }
 
   issue: (key, callback)->
-    issueNumber  = key
+    issueNumber  = key.upper()
     expand       = ""
     fields       = ""
     properties   = "*"

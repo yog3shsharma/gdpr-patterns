@@ -2,7 +2,7 @@ require 'fluentnode'
 
 class Data
   constructor: ->
-    @.folder_Data        =  (wallaby?.localProjectDir.path_Combine('..') || './').path_Combine('data')
+    @.folder_Data        =  (wallaby?.localProjectDir || './').path_Combine('data')
     @.folder_Issues      = @.folder_Data.path_Combine('Issues')
     @.folder_Issues_Raw  = @.folder_Data.path_Combine('Issues_Raw')
     @.folder_Mappings    = @.folder_Data.path_Combine('Mappings')
@@ -18,16 +18,25 @@ class Data
     @.folder_Mappings   .folder_Create()
     @
 
+  delete_Raw_Data: (id)=>
+    path = @.issue_Raw_File(id)
+    if path?.file_Exists()
+      return path.delete_File()
+    return true
+
   issue_Raw_File: (id)->
     path = @.issue_Files()[id?.upper()]
     if path
       return @.folder_Issues_Raw.path_Combine(path)
     return null
 
-  issue_Files: ->
+  issue_Files: ()->
     if not _issue_Files
       _issue_Files = @.file_Issue_Files.load_Json()
     return _issue_Files
+
+  issue_Files_Reset_cache: ()->
+    _issue_Files = null
 
   issue_Raw_Data: (id)=>
     path = @.issue_Raw_File(id)

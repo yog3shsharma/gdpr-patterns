@@ -29,7 +29,7 @@ class Map_Issues
 
           result[field_Name] = @.get_Data_By_Type field_Name, field_Type, value
       return result
-
+    console.log "did not found data for id #{key}"
     return null
 
   get_LinkedIssues: (raw_Data)->
