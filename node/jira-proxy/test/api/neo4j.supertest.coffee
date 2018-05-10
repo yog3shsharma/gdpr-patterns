@@ -24,16 +24,28 @@ describe 'api | supertest | neo4j', ->
     request 'delete/all', (data)->
       data.records.assert_Is []
 
+  it 'add-Issue-and-Linked-Nodes',->
+    id = 'RISK-1'
+    request "nodes/add-Issue-and-Linked-Nodes/#{id}", (data)->
+      data.nodes_created.assert_Is_Bigger_Than 0
+
+  it 'add-Issue-and-Linked-Nodes (not found)',->
+    id = 'RISK-3'
+    request "nodes/add-Issue-and-Linked-Nodes/#{id}", (data)->
+      data.assert_Is { nodes_created: 0, results: [] }
+
+
   it 'nodes_Create', ->
-    id = 'GDPR-223,GDPR-225,GDPR-226,GDPR-326'
+    id = 'RISK-1,GDPR-223,GDPR-225,GDPR-226,GDPR-326'
     request "nodes/create/#{id}", (data)->
-      console.log data.nodes_created
-      data.nodes_created.assert_Is_Bigger_Than 7 #20
+      data.nodes_created.assert_Is_Bigger_Than 7
 
-
+  @.timeout 5000
   xit 'create-regex', ->
-    id = 'GDPR-22'
-    request "nodes/create-regex/#{id}", (data)->
+    regex = 'GDPR-22'
+    #regex = "RISK-1"
+    request "nodes/create-regex/#{regex}", (data)->
       #console.log data
       #console.log data.nodes_created
+      data.matches.assert_Is_Bigger_Than 7
       data.nodes_created.assert_Is_Bigger_Than 7 #20

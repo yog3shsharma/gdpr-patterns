@@ -24,9 +24,10 @@ class Neo4j
     session.run(cypher, params)
       .then  (result)->
         session.close();
-        callback null,result
+        callback? null,result
+        return result
       .catch  (error)->
-        callback error, null
+        callback? error, null
 
   create_node: (label, params, callback)=>
     label = label.replace('-','_').replace(' ', '_')
@@ -41,6 +42,13 @@ class Neo4j
     params_query = @.params_For_Query(params)
     cypher = "MERGE (u:#{label} #{params_query})  RETURN u"
     @.run_Cypher cypher, params, callback
+
+
+  add_node: (label, key)=>
+    cypher = "MERGE (u1:#{label} {key:{key}} ) return *"
+    params = key : key
+    @.run_Cypher cypher, params
+
 
   # there is a limitation with this script at the moment since it needs the node1 and node2 params titles to be different
   add_node_and_connection: (options, callback)->

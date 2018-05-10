@@ -46,6 +46,12 @@ describe 'api | debug', ->
         assert_Is_Null err
         response.summary.counters.nodesCreated().assert_Is 0
 
+  it 'add_node',->
+      key = "RISK3"
+      value = "RISK-ABCAB"
+      result = await neo4j.add_node(key, value)
+      result.records.assert_Size_Is 1
+
   it 'add_node_and_connection',->
     options =
       source_label :'Test-Node'

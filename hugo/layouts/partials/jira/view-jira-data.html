@@ -42,6 +42,7 @@
             {
                 key = jira_fields[i]
                 value = data[key] ? data[key] : ""
+                value = apply_Filter(key,value)
                 row = $('<tr><th>' + key + '</th><td>'+ value +'</d></tr>')
                 table.append(row)
             }
@@ -51,6 +52,7 @@
             for(var key in data)
             {
                 value = data[key]
+                value = apply_Filter(key,value)
                 row = $('<tr><th>' + key + '</th><td>'+ value +'</d></tr>')
                 table.append(row)
             }
@@ -58,7 +60,17 @@
         _data = data
         $('#issue-data').html(table)
     }
+    function apply_Filter(key, value)
+    {
+        jira_link = "https://jira.photobox.com/browse/"
+        if (key === 'key')
+            return "<a href=" + jira_link + value +" target='_blank'>" + value + "</a>"
+        if (key === 'Linked Issues') {
+            return JSON.stringify(value)            // todo:format this better
 
+        }
+        return value
+    }
     function get_Query_from_Url()
     {
         $.urlParam = function (name) {

@@ -1,4 +1,5 @@
 Map_Issues = require '../../../jira-mappings/src/map-issues'
+Save_Data  = require '../../../jira-issues/src/jira/save-data'
 Neo4j      = require '../neo4j/neo4j'
 async      = require 'async'
 
@@ -6,6 +7,7 @@ class Neo4j_Issues
   constructor:->
     #@.data = new Data()
     @.map_Issues = new Map_Issues()
+    @.save_Data  = new Save_Data()
     @.neo4j = new Neo4j()
 
 #  add_Issue: (id, callback)=>
@@ -29,6 +31,28 @@ class Neo4j_Issues
 #    async.eachSeries ids, add_Helper, ()->
 #      callback null, result
 
+  add_Issue_And_Linked_Nodes: (key,callback)=>
+    results = []
+    @.save_Data.get_Issue key, (raw_Data)=>                        # will force load if issue doesn't exist locally
+      if (not raw_Data?.key)                                          # to handle issue rename
+        return results
+      key = raw_Data.key
+      data    = @.map_Issues.issue(key)
+
+      label = data['Issue Type']
+      node_Result          = await @.neo4j.add_node label, key
+      linked_Issues_Result = await @.add_Issue_Linked_Issues_As_Single_Nodes key
+      if node_Result
+        results.push node_Result
+      else
+        console.log "[add_Issue_And_Linked_Nodes] no node_Result for key: #{key}"
+
+      if linked_Issues_Result
+        results = results.concat linked_Issues_Result
+
+      #console.log nodes_created : results?.size(), results : results
+
+      return results
 
   add_Issue_As_Nodes: (id,callback)->
     @.add_Issue_Linked_Issues_As_Single_Nodes id, (err, results)->
@@ -43,19 +67,27 @@ class Neo4j_Issues
           result =  results1.concat results2
           callback err, result
 
-  add_Issues_As_Nodes: (ids, callback)->
+  add_Issues_As_Nodes: (ids)->
     results = []
-    add_Helper = (id, next)=>
-      @.add_Issue_As_Nodes id, (err, partial_Result)=>
-      #
-      #@.add_Issue_As_Nodes_with_Metadata id, (err, partial_Result)=>
-        if err
-          callback null, results
-        else
-          results = results.concat partial_Result
-          next()
-    async.eachSeries ids, add_Helper, ()->
-      callback null, results
+#    add_Helper = (id, next)=>
+#      @.add_Issue_As_Nodes id, (err, partial_Result)=>
+#      #
+#      #@.add_Issue_As_Nodes_with_Metadata id, (err, partial_Result)=>
+#        if err
+#          callback null, results
+#        else
+#          results = results.concat partial_Result
+#          next()
+
+    for id in ids
+      id_Results = await @.add_Issue_And_Linked_Nodes id
+      if id_Results
+        results = results.concat id_Results
+      else
+        console.log "[add_Issues_As_Nodes] no results for id: #{id}"
+    #async.eachSeries ids, add_Helper, ()->
+    #callback? null, results
+    return results
 
   add_Issue_Metatada_As_Nodes: (key,callback)->
     data  = @.map_Issues.issue(key)
@@ -105,8 +137,10 @@ class Neo4j_Issues
 
   add_Issue_Linked_Issues_As_Single_Nodes: (key,callback)->
     data  = @.map_Issues.issue(key)
+
     if not data
-      return callback {}
+      callback?()
+      return []
 
     issue_Key     = data.key
     issue_Type    = data['Issue Type'   ]
@@ -126,15 +160,21 @@ class Neo4j_Issues
         #edge_label   : issue.direction
       targets.push options
 
-    run_Target = (options, next)=>
+    run_Target = (options)=>
       @.neo4j.add_node_and_connection options, (err, response)->
         if err
-          callback err, targets
+          results.push err
+          #callback err, targets
         else
           results.push response
-          next()
-    async.eachSeries targets, run_Target, ->
-      callback null, results
+
+    for target in targets
+      await run_Target target
+    callback? null, results
+    return results
+
+    #async.eachSeries targets, run_Target, ->
+    #  callback null, results
 
 
   add_Linked_Issues_As_Full_Nodes: (key,callback)->

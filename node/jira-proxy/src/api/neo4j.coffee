@@ -14,13 +14,15 @@ class Neo4J
 
 
   add_Routes: ()=>
-    @.router.get  '/neo4j/cypher'            , @.cypher
-    @.router.get  '/neo4j/create/:label'     , @.create
-    @.router.get  '/neo4j/delete/all'        , @.delete_all
+    @.router.get  '/neo4j/cypher'                               , @.cypher
+    @.router.get  '/neo4j/delete/all'                           , @.delete_all
 
-    @.router.get  '/neo4j/nodes/create/:id'  , @.nodes_Create
-    @.router.get  '/neo4j/nodes/create-regex/:regex'  , @.nodes_Create_via_Filter
+    @.router.get  '/neo4j/nodes/add-Issue-and-Linked-Nodes/:id' , @.add_Issue_And_Linked_Nodes
+    @.router.get  '/neo4j/nodes/create/:ids'                    , @.nodes_Create
+    @.router.get  '/neo4j/nodes/create-regex/:regex'            , @.nodes_Create_via_Filter
 
+    #@.router.get  '/neo4j/create/:label'                  , @.create
+    #@.router.get  '/neo4j/nodes/create/:id'           , @.nodes_Create
 #    @.router.get  '/neo4j/create-all-nodes'  , @.create_all_nodes
     @
 
@@ -44,37 +46,47 @@ class Neo4J
 
     @.exec_Cypher req, res, query
   
-  create: (req,res)=>       # refactor
-    #query = req.query.query
-    label = req.params.label
-    cypher = "CREATE (n:#{label} {"
-    for key, value of req.query
-      cypher += "#{key}:'#{value}',"
-    cypher +="})"
-    cypher = cypher.replace(",}", "}")
-
-    @.exec_Cypher req, res, cypher
+#  create: (req,res)=>       # refactor
+#    #query = req.query.query
+#    label = req.params.label
+#    cypher = "CREATE (n:#{label} {"
+#    for key, value of req.query
+#      cypher += "#{key}:'#{value}',"
+#    cypher +="})"
+#    cypher = cypher.replace(",}", "}")
+#
+#    @.exec_Cypher req, res, cypher
 
   delete_all: (req, res)=>
     @.neo4j.delete_all_nodes (err, response)=>      
       @.send_Json_Data req, res, response
 
+  add_Issue_And_Linked_Nodes: (req,res)=>
+    id = req.params.id
+    results = await @.neo4j_Issues.add_Issue_And_Linked_Nodes id, (err, results)=>
+    @.send_Json_Data req, res, { nodes_created : results.size?(), results : results }
+
   nodes_Create: (req,res)=>
-    id = req.params.id.split(',')
-    @.neo4j_Issues.add_Issues_As_Nodes id, (err, results)=>
-      if err
-        @.send_Json_Data req, res,  err
-      else
-        @.send_Json_Data req, res, { nodes_created: results.size(), results: results}
+    ids = req.params.ids.split(',')
+
+    results = await @.neo4j_Issues.add_Issues_As_Nodes ids
+
+    @.send_Json_Data req, res, nodes_created: results.size?(), results: results
+
 
   nodes_Create_via_Filter : (req,res)=>
     regex   = req.params.regex
     ids     = @.neo4j_Issues.map_Issues.issues.ids()
     matches = (id for id in ids when id.match(regex))
+
+    results = await @.neo4j_Issues.add_Issues_As_Nodes matches
+    @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
+
+    return
     @.neo4j_Issues.add_Issues_As_Nodes matches, (err, results)=>
       if err
         @.send_Json_Data req, res,  err
       else
-        @.send_Json_Data req, res, { matches_size: matches.size(), matches : matches, nodes_created: results.size()}
+        @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), matches : matches, nodes_created: results.size()}
 
 module.exports = Neo4J

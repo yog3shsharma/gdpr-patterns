@@ -24,6 +24,8 @@ class Jira
     @.router.get  '/jira-server/config'                      , @.config
     @.router.get  '/jira-server/homepage'                    , @.homepage
     @.router.get  '/jira-server/issue/:id'                   , @.issue
+    @.router.get  '/jira-server/issues'                      , @.issues
+
     @.router.get  '/jira-server/mappings/issues/files'       , @.mappings_Issues_Files
     @.router.get  '/jira-server/mappings/create'             , @.mappings_Create_All
     @.router.get  '/jira-server/track-queries/current'       , @.track_Queries_Current
@@ -54,6 +56,17 @@ class Jira
         res.json file.load_Json()
       else
         res.json { error: "Issue not found: #{id}"}
+
+  issues: (req,res)=>
+    jql = req.query.jql
+    if jql
+      @.save_Data.save_Issues jql, (files)=>
+        result =
+          issues_retrieved: files.size()
+          issues_Ids: files.file_Names_Without_Extension()
+        @.send_Json_Data req,res, result
+    else
+      res.json error: 'jql must be provided'
 
   mappings_Create_All: (req,res)=>
     res.json @.mappings_Create.all()
@@ -97,7 +110,7 @@ class Jira
 
     result =
       folder_Data         : @.data.folder_Data
-      folder_Issues       : @.data.folder_Issues
+      #folder_Issues       : @.data.folder_Issues
       folder_Issues_Raw   : @.data.folder_Issues_Raw
       folder_Mappings     : @.data.folder_Mappings
       file_Fields_Schema  : @.data.file_Fields_Schema

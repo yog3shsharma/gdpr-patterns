@@ -31,9 +31,8 @@ layout: api-iframe
 **admin**
 
 - [update server (git)      ](/api/git/pull)
-- [reset db                 ](/api/neo4j/delete/all?pretty)
 
 
 <hr/>
 
-<a href="/" target="_self">Go to Home</a> (break IFrame target)
+<a href="/admin/" target="_self">Back to /admin</a>

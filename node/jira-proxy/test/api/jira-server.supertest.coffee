@@ -27,6 +27,14 @@ describe 'api | supertest | jira-server', ->
     request "issue/#{id}", (data)->
       data.assert_Is { error: "Issue not found: #{id}"}
 
+  it 'issue/{id} (id not exists)', ->
+    jql = 'project = RISK and key = RISK-1'
+    request "issues?jql=#{jql}", (data)->
+      console.log data
+      data.issues_retrieved.assert_Is 1
+      data.issues_Ids.assert_Is ['RISK-1']
+
+
   it 'mappings/issue/files', ->
     request "mappings/issues/files", (result)->
       result["RISK-1"].assert_Is "/RISK/RISK/RISK-1.json"

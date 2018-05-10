@@ -1,7 +1,7 @@
 Neo4j_Issues = require '../../src/neo4j/neo4j-issues'
 Issues       = require '../../../jira-mappings/src/util/issues'
 
-xdescribe 'api | debug', ->
+describe 'api | debug', ->
   neo4j_Issues = null
   issues       = null
 
@@ -45,22 +45,20 @@ xdescribe 'api | debug', ->
       result.size().assert_Is_Bigger_Than 10
       done()
 
-  it.only 'add_Issue_As_Nodes (RISK)', (done)->
+  it 'add_Issue_As_Nodes (RISK)', (done)->
     id =  "RISK-424" #RISK-1"
     neo4j_Issues.add_Issue_As_Nodes id, (err, result)->
       assert_Is_Null err
-      result.size().assert_Is_Bigger_Than 10
+      result.size().assert_Is_Bigger_Than 1
       done()
     return ""   # hack to handle mocha error: Resolution method is overspecified. Specify a callback *or* return a Promise; not both.
 
 
-  it 'add_Issues_As_Nodes', (done)->
+  it.only 'add_Issues_As_Nodes', ()->
     id =  ["GDPR-222", "GDPR-223", "GDPR-225","GDPR-329"]
-    neo4j_Issues.add_Issues_As_Nodes id, (err, result)->
-      assert_Is_Null err
-      console.log result.size()
-      result.size().assert_Is_Bigger_Than 10
-      done()
+    result = await neo4j_Issues.add_Issues_As_Nodes id, (err, result)->
+
+    result.size().assert_Is_Bigger_Than 3
 
   it 'add_Issue_Metatada_As_Nodes', (done)->
     id =  "GDPR-223"
