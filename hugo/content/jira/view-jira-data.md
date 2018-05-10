@@ -19,6 +19,8 @@ labels    :
         caption: key
     Task:
         caption: key
+    Vulnerability:
+        caption: key
 relationships:
 ---
 

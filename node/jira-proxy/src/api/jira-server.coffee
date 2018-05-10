@@ -29,7 +29,7 @@ class Jira
     @.router.get  '/jira-server/track-queries/current'       , @.track_Queries_Current
     @.router.get  '/jira-server/track-queries/create/:name'  , @.track_Queries_Create
     @.router.get  '/jira-server/track-queries/delete/:name'  , @.track_Queries_Delete
-    @.router.get  '/jira-server/track-queries/update/:name'  , @.track_Queries_Update
+    @.router.use  '/jira-server/track-queries/update/:name'  , @.track_Queries_Update
     @
 
   send_Json_Data:(req,res,json_Data)->                    # this should be added as a global filter

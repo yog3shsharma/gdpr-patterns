@@ -75,6 +75,6 @@ class Neo4J
       if err
         @.send_Json_Data req, res,  err
       else
-        @.send_Json_Data req, res, { marches_size: matches.size(), matches : matches, nodes_created: results.size()}
+        @.send_Json_Data req, res, { matches_size: matches.size(), matches : matches, nodes_created: results.size()}
 
 module.exports = Neo4J
