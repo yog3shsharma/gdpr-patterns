@@ -18,9 +18,9 @@ class Data
     @.folder_Issues     .folder_Create()
     @.folder_Issues_Raw .folder_Create()
     @.folder_Mappings   .folder_Create()
-    {}.save_Json @.data.file_Tracked_Queries
+    #{}.save_Json @.file_Tracked_Queries
     @
-
+ 
   delete_Raw_Data: (id)=>
     path = @.issue_Raw_File(id)
     if path?.file_Exists()
