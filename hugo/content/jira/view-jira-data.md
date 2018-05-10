@@ -15,6 +15,10 @@ labels    :
         caption: key
     Security_Controls:
         caption: key
+    ISSUE:
+        caption: key
+    Task:
+        caption: key
 relationships:
 ---
 

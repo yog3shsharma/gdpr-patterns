@@ -1,10 +1,6 @@
 #neo4j   = require('neo4j');
 neo4j = require('neo4j-driver').v1;
-if (wallaby?.localProjectDir)
-  Config  = require '../../../jira-issues/src/config'
-else
-  Config = require(process.argv.slice(1)[1]);
-
+Config  = require '../../../jira-issues/src/config'
 
 _driver = null
 
@@ -12,13 +8,12 @@ class Neo4j
   constructor:->
     @.username = Config.neo4j.username
     @.password = Config.neo4j.password
-    @.url = Config.neo4j.url
-
+    @.url      = Config.neo4j.url
 
 
   driver: ()=>
     if not _driver
-      _driver =   neo4j.driver(Config.neo4j.url_bold, neo4j.auth.basic(@.username, @.password))
+      _driver =   neo4j.driver(@.url , neo4j.auth.basic(@.username, @.password))
     return _driver
 
   run_Cypher: (cypher, params, callback)=>

@@ -18,7 +18,6 @@ class Jira
 
 
   add_Routes: ()=>
-    @.data.setup()                        # make sure the setup is call on server start
     @.router.get  '/jira/fields/schema'   , @.fields_Schema
     @.router.get  '/jira/issue-raw/:id'   , @.issue_Raw
     @.router.get  '/jira/issue-delete/:id', @.issue_Delete

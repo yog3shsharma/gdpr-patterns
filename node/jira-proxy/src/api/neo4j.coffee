@@ -2,14 +2,6 @@ express      = require 'express'
 Data         = require '../../../jira-issues/src/data'
 Neo4J_Api    = require '../neo4j/neo4j'
 Neo4j_Issues = require '../neo4j/neo4j-issues'
-if (wallaby?.localProjectDir)
-  Config  = require '../../../jira-issues/src/config'
-else
-  Config = require(process.argv.slice(1)[1]);
-
-
-
-
 
 class Neo4J
   constructor: (options)->
