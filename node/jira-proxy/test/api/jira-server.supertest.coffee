@@ -38,8 +38,17 @@ describe 'api | supertest | jira-server', ->
         @.file_Fields_Schema.assert_File_Exists()
         @.issue_Files.assert_File_Exists()
 
-
   it 'mappings/create', ->
     request "mappings/create", (result)->
       result.size().assert_Is 1
       result[0].assert_File_Exists()
+
+  it.only 'track-queries/current', ->
+    request "track-queries/current", (result)->
+      result.assert_Is_Object()
+
+  it.only 'track-queries/create', ->
+    id = "projects"
+    jql = "project=SEC and issuetype =Project and status = Open"
+    request "track-queries/create/#{id}?jql=#{jql}", (result)->
+      result.assert_Is status: 'track query created'

@@ -8,7 +8,7 @@ describe 'Track-Queries', ->
 
   it 'constructor', ->
     using track_Queries ,->
-      @.file_Tracked_Queries.assert_File_Exists()
+      @.data.file_Tracked_Queries.assert_File_Exists()
 
   it 'create', ->
     name = 'test-name'

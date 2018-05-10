@@ -5,10 +5,6 @@ class Track_Queries
   constructor : ->
     @.save_Data = new Save_Data()
     @.data      = @.save_Data.data
-    @.file_Tracked_Queries = @.data.folder_Data.path_Combine('tracked_Queries.json')
-
-    if @.file_Tracked_Queries.file_Not_Exists()
-      {}.save_Json @.file_Tracked_Queries
 
   create: (name, jql)->
     queries = @.current()
@@ -19,15 +15,19 @@ class Track_Queries
           jql         : jql
           last_updated: null
           issues_saved: 0
-    queries.save_Json @.file_Tracked_Queries
+    queries.save_Json @.data.file_Tracked_Queries
 
   current :->
-    return @.file_Tracked_Queries.load_Json()
+    return @.data.file_Tracked_Queries.load_Json() || {}
 
   delete:(name)->
     queries = @.current()
-    delete queries[name]
-    queries.save_Json @.file_Tracked_Queries
+    if queries[name]
+      delete queries[name]
+      queries.save_Json @.data.file_Tracked_Queries
+      return true
+    else
+      return false
 
   now_Date :->
     now  = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000)  # adjusted for the timezone
@@ -36,7 +36,9 @@ class Track_Queries
   update: (name, callback)->
     queries = @.current()
     query   = queries[name]
-    if query
+    if query is undefined
+      console.log "[Track_Queries][update] query not found #{name}"
+    else
       jql = query.jql
       if query.last_updated
         jql += " and updated >= '#{query.last_updated}'"
@@ -48,7 +50,7 @@ class Track_Queries
           query.last_updated = now_date
           query.issues_saved = result.size()
           console.log "Updated #{query.issues_saved} issues"
-          queries.save_Json @.file_Tracked_Queries
+          queries.save_Json @.data.file_Tracked_Queries
 
         callback result
 

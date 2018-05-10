@@ -39,9 +39,9 @@ class Api
 
     get_Issues = () =>
       @._call_Jira "searchJira", [jql,options], (data)->
-        #console.log options, data.issues.size()
-        #console.log "[jira api] fetched #{data.issues.size()} issues"
-        if data.issues.size() > 0
+        if data?.issues?.size() > 0
+          #console.log options, data?.issues?.size()
+          #console.log "[jira api] fetched #{data?.issues?.size()} issues"
           options.startAt += data.issues.size()
           issues = issues.concat data.issues
           get_Issues()                          # recursive call to get more issues

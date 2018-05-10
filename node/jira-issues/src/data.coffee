@@ -7,8 +7,10 @@ class Data
     @.folder_Issues_Raw  = @.folder_Data.path_Combine('Issues_Raw')
     @.folder_Mappings    = @.folder_Data.path_Combine('Mappings')
 
-    @.file_Issue_Files   = @.folder_Mappings.path_Combine 'issue-files.json'
-    @.file_Fields_Schema = @.folder_Issues_Raw.path_Combine 'fields-schema.json'
+    @.file_Tracked_Queries = @.folder_Data.path_Combine 'tracked_Queries.json'
+    @.file_Issue_Files     = @.folder_Mappings.path_Combine 'issue-files.json'
+    @.file_Fields_Schema   = @.folder_Issues_Raw.path_Combine 'fields-schema.json'
+
 
   setup: ->
     # make sure folders exist
@@ -16,6 +18,7 @@ class Data
     @.folder_Issues     .folder_Create()
     @.folder_Issues_Raw .folder_Create()
     @.folder_Mappings   .folder_Create()
+    {}.save_Json @.data.file_Tracked_Queries
     @
 
   delete_Raw_Data: (id)=>
