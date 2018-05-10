@@ -1,7 +1,6 @@
 #Data      = require './data'
 Data      = require '../../../jira-issues/src/data'
 
-_issue_Files   = null  # local cache
 _fields_Schema = null  # local cache
 
 class Issues
@@ -38,9 +37,7 @@ class Issues
     return null
 
   issue_Files: ->
-    if not _issue_Files
-      _issue_Files = @.data.file_Issue_Files.load_Json()
-    return _issue_Files
+    @.data.issue_Files()          # use this version which has cache
 
   issue_Raw_Data: (id)=>
     id = id?.upper()               # all ids in Jira are upper case

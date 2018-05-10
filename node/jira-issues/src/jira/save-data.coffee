@@ -18,18 +18,25 @@ class Save_Data
         if not file
           callback { issue: "not found"}
         else
-          @.data.issue_Files_Reset_cache()
-          @.mappings_Create.map_Files()
-          callback file.load_Json()         # to handle the issues that have been renamed
-          return
-
-          raw_Data =  @.data.issue_Raw_Data(key)
-          if raw_Data
-            console.log "got raw_Data for id  #{raw_Data.key }"
-            callback raw_Data
+          if file is "404 - {\"errorMessages\":[\"Issue Does Not Exist\"],\"errors\":{}}"
+            callback jira_error : 'Issue Does Not Exist'
           else
-            console.log "raw_data was null"
-            callback error : "raw_data was null"
+
+            @.data.issue_Files_Reset_cache()
+            @.mappings_Create.map_Files()
+            raw_Data = file.load_Json()         # to handle the issues that have been renamed
+            if raw_Data
+              console.log "Got data with ID: #{raw_Data?.key}"
+              callback raw_Data
+            else
+              callback error : 'no data found'
+#          raw_Data =  @.data.issue_Raw_Data(key)
+#          if raw_Data
+#            console.log "got raw_Data for id  #{raw_Data.key }"
+#            callback raw_Data
+#          else
+#            console.log "raw_data was null"
+#            callback error : "raw_data was null"
 
 
   save_Issue: (key, callback)=>

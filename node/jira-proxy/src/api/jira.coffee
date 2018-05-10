@@ -18,7 +18,7 @@ class Jira
 
 
   add_Routes: ()=>
-    #@.router.get  '/jira/config'          , @.config
+    @.data.setup()                        # make sure the setup is call on server start
     @.router.get  '/jira/fields/schema'   , @.fields_Schema
     @.router.get  '/jira/issue-raw/:id'   , @.issue_Raw
     @.router.get  '/jira/issue-delete/:id', @.issue_Delete
@@ -35,9 +35,6 @@ class Jira
       res.send "<pre>#{data.json_Pretty()}</pre>"
     else
       res.json json_Data
-
-#  config: (req,res)=>
-#    res.json Config
 
   fields_Schema: (req, res)=>
     @.send_Json_Data req, res, @.data.file_Fields_Schema.load_Json()
@@ -59,7 +56,7 @@ class Jira
       if (raw_Data?.key)                                          # to handle issue rename
         @.send_Json_Data req, res, @.map_Issues.issue(raw_Data.key)
       else
-        @.send_Json_Data error: 'not found'
+        @.send_Json_Data req, res, raw_Data
 
   issues_Ids: (req, res)=>
     res.json @.data.issue_Files()._keys()
