@@ -1,13 +1,14 @@
 ---
-title     : Accepted Risks
+title     : Fixed Risks
 type      : neo4j
-cypher    : MATCH (a)-[to]-(b:Risk_Owner) where a.status = "Risk Approved" return *
-gravity   : -300
+cypher    : MATCH (a)-[to]-(b:Risk_Owner) where a.status = "Fixed" return *
+gravity   : -200
 labels    :
     RISK:
         label: .
         color: Crimson
         size: 1
+        //image  : /img/osa/osa_warning.png
     Risk_Service:
         caption: key
     ISSUE:
@@ -29,3 +30,8 @@ relationships:
 view  : fullscreen
 height: 630
 ---
+
+<!--
+{{< cypher-query height="80">}}
+{{</ cypher-query >}}
+-->

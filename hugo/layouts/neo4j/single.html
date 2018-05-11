@@ -5,7 +5,9 @@
     {{ .Scratch.Set "height" .Params.height             }}
     {{ .Scratch.Set "layout" .Params.layout             }}
 
-    <h2> {{ .Params.title }}</h2>
-    {{ .Content }}
+    <div id="content">
+        <h2> {{ .Params.title }}</h2>
+        {{ .Content }}
+    </div>
     {{ partial "neo4j/cypher.html" . }}
 {{ end }}

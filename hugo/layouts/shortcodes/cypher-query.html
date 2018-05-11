@@ -1,13 +1,15 @@
 {{ if  eq (printf "%T" .Params) "map[string]string"         }}
-    {{ .Scratch.Set "height" .Params.height                 }}
+    {{ .Scratch.Set "height"  .Params.height                 }}
     {{ .Scratch.Set "autorun" .Params.autorun               }}
+    {{ .Scratch.Set "view"    .Params.view                  }}
 {{ end}}
 
 
 {{ .Scratch.Set "query" (trim .Inner "\n") }}
 
-{{ $height    := default 35    (.Scratch.Get "height") }}
-{{ $autorun   := default "yes" (.Scratch.Get "autorun") }}
+{{ $height    := default 35    (.Scratch.Get "height")   }}
+{{ $autorun   := default "yes" (.Scratch.Get "autorun")  }}
+{{ $view      := .Scratch.Get "view"                     }}
 {{ $code_div  := (printf "repl_%d" (index (seq 1000 | shuffle) 0) ) }}
 
 {{ if eq (.Scratch.Get "query") ""                      }}
@@ -92,3 +94,23 @@
 
     get_Query_from_Url()
 </script>
+
+{{ if eq $view "fullscreen"}}
+    <style>
+        body             { background-color: white    }
+        #cypher-query    { padding: 5px ; margin: 0px }
+        #content         { margin-left: 10px    }
+    </style>
+    <script>
+        $('.app-header').hide()
+        //$('h2').hide()
+        $('.app-body').css( { margin: "0px"})
+        $('.container-fluid').css( { padding: "0px"})
+        $('.main').css( { margin : 0 })
+        $('.sidebar').hide()
+        $(function() {
+            $('.app-footer').hide()
+        });
+
+    </script>
+{{ end }}

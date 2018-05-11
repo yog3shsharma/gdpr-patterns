@@ -25,5 +25,23 @@
     </div>
 
     {{ partial "page/footer.html"  . }}
+
+    {{ if eq .Params.view "fullscreen"}}
+      <style>
+        body             { background-color: white    }
+        #cypher-query    { padding: 5px ; margin: 0px }
+        #content         { margin-left: 10px    }
+      </style>
+      <script>
+          $('.app-header').hide()
+          //$('h2').hide()
+          $('.app-body').css( { margin: "0px"})
+          $('.container-fluid').css( { padding: "0px"})
+          $('.main').css( { margin : 0 })
+          $('.sidebar').hide()
+          $('.app-footer').hide()
+
+      </script>
+    {{ end }}
   </body>
 </html>

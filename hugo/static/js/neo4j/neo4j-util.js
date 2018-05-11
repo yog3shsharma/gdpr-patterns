@@ -44,6 +44,7 @@ class neo4j_Util {
             self.show_Table()
             self.show_RawData()
             self.setup_Events()
+            self.fix_Nodes_Label_Witdh()
 
             let options = {
                 nodes: {
@@ -66,6 +67,39 @@ class neo4j_Util {
 
     }
 
+    fix_Nodes_Label_Witdh() {
+         function wordwrap ( str, width, brk, cut ) {
+            brk = brk || '\n';
+            width = width || 75;
+            cut = cut || false;
+
+            if (!str) { return str; }
+
+            var regex = '.{1,' +width+ '}(\\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\\S+?(\\s|$)');
+
+            return str.match( RegExp(regex, 'g') ).join( brk );
+        }
+        let left = this
+        let nodes = neo.viz._network.body.data.nodes;
+        let max_Size = 20
+        nodes.forEach(function(node) {
+            if (node.label.length > max_Size) {
+                let label =  wordwrap(node.label, max_Size, '\n')
+                nodes.update({id:node.id, label: label})
+            }
+            else
+            {
+                // if (node.label == 'RISK' ||
+                //     node.label == 'ISSUE' ||
+                //     node.label == 'Project' ||
+                //     node.label == 'Vulnerability' ||
+                //     node.label == 'Programme') {
+                //     nodes.remove({'id':node.id})
+                // }
+            }
+
+        })
+    }
     setLayout(layout) {
         let self = this;
         if (layout === 'hierarchical')
