@@ -43768,7 +43768,7 @@ class NeoVis {
      * @returns {{}}
      */
      buildNodeVisObject(n) {
-
+        
         var self = this;
         let node = {};
         let label = n.labels[0];
@@ -43860,11 +43860,13 @@ class NeoVis {
 
 
         // set all properties as tooltip
-        node['title'] = "";
-        for (let key in n.properties) {
-            if (n.hasOwnProperty(key))                                                                  // DC Change (check if it has side effects)
-                node['title'] += "<strong>" + key + ":</strong>" + " " + n.properties[key] + "<br>";
-        }
+        node['title' ] = "";
+        node['key'   ] = n.properties['key']
+        node['labels'] = n.labels;
+        // for (let key in n.properties) {
+        //     //if (n.hasOwnProperty(key))                                                                  // DC Change (check if it has side effects)
+        //     node['title'] += "<strong>" + key + ":</strong>" + " " + n.properties[key] + "<br>";
+        // }
 
         if (color     ) { node['color'] = color; delete node['group']; }
         if (labelValue) { node['label'] = labelValue    }
@@ -43877,7 +43879,6 @@ class NeoVis {
             }
         if (image     ) {
             node['shape' ] = 'image'
-
             node['image' ] = image
         }
 
