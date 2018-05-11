@@ -28,6 +28,7 @@ class Neo4j
         return result
       .catch  (error)->
         callback? error, null
+        return error
 
   create_node: (label, params, callback)=>
     label = label.replace('-','_').replace(' ', '_')
@@ -37,7 +38,12 @@ class Neo4j
   delete_all_nodes: (callback)=>
     @.run_Cypher "MATCH (n) DETACH DELETE n", {}, callback
 
-  merge_node: (label, params, callback)=>
+  merge_node: (label, raw_Params, callback)=>
+    params = {}
+    for key, value of raw_Params            # we need to replace all keys with the safe field name
+      if key isnt "Linked Issues"
+        key = key.to_Safe_String().replace(/\s/g,'_').replace(/-/g,'_')
+        params[key] = value
     label = label.replace('-','_').replace(' ', '_')
     params_query = @.params_For_Query(params)
     cypher = "MERGE (u:#{label} #{params_query})  RETURN u"

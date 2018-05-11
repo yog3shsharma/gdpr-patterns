@@ -2,7 +2,7 @@ Supertest = require '../../src/_test-utils/Supertest'
 cheerio   = require 'cheerio'
 Data      = require '../../../jira-issues/src/data'
 
-describe.only 'api | supertest | Jira', ->
+describe 'api | supertest | Jira', ->
   supertest = null
   data      = null
 
@@ -37,7 +37,7 @@ describe.only 'api | supertest | Jira', ->
       data.assert_Is_String()
       data.assert_Contains '"key": "RISK-1"'
 
-  it.only 'jira/issue-raw/RISK-1 (force fetch)', ->
+  it 'jira/issue-raw/RISK-1 (force fetch)', ->
     id = "RisK-1"
     data.delete_Raw_Data id
     supertest.request "/api/jira/issue-raw/#{id}?pretty" , (data)->

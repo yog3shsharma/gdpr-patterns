@@ -4,7 +4,6 @@
 
 <script>
     var jira_fields = {{ safeJS (partial "toJson-from-array.html" .Params.jira_fields) }}
-    console.log (jira_fields)
 </script>
 
 
@@ -17,13 +16,14 @@
 <script>
 
     function on_Node_Selected(params) {
-        _params = params
-        //console.log(params)
+        _node = null
         if (params.nodes.length === 1) {
             id = params.nodes[0]
             nodes = neo.viz._network.body.data.nodes;
             node  = nodes.get(id)
-            process_Id(node.label)
+            $('#issue_key'   ).html(node.key)
+            $('#issue_labels').html(node.labels[0])
+            process_Id(node.key)
         }
     }
     function process_Id(id)
@@ -67,7 +67,9 @@
             return "<a href=" + jira_link + value +" target='_blank'>" + value + "</a>"
         if (key === 'Linked Issues') {
             return JSON.stringify(value)            // todo:format this better
-
+        }
+        if (key==="Summary") {
+            $('#issue_summary').html(value)
         }
         return value
     }

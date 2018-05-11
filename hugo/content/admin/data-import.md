@@ -9,8 +9,9 @@ Use the links below to auto-populate the db
 **Get data from Jira server**
 
 - [get Issue  - RISK 1       ](/api/jira/issue/RISK-1?pretty)
-- [Get Issues - Open Projects](/api/jira-server/issues?pretty&jql=project=SEC and issuetype =Project and status = Open)
-- [Get Issues - All Projects ](/api/jira-server/issues?pretty&jql=project=SEC and issuetype =Project)
+- [Get Issues - Open Projects](/api/jira-server/issues?pretty&jql=project=SEC and issuetype = Project and status = Open)
+- [Get Issues - All Projects ](/api/jira-server/issues?pretty&jql=project=SEC and issuetype = Project)
+- [Get Issues - All Programme](/api/jira-server/issues?pretty&jql=project=SEC and issuetype = Programme)
 - [Get Issues - All Risks    ](/api/jira-server/issues?pretty&jql=project=RISK)
 - [Get Issues - All Vulns    ](/api/jira-server/issues?pretty&jql=project=VULN)
 - [Get Issues - All GDPR     ](/api/jira-server/issues?pretty&jql=project=GDPR)
@@ -21,7 +22,10 @@ Use the links below to auto-populate the db
 single
 
 - [add-Issue : RISK-1](/api/neo4j/nodes/create/RISK-1?pretty)
-- [add-Issue-and-Linked-Nodes: RISK-1](/api/neo4j/nodes/add-Issue-and-Linked-Nodes/RISK-1?pretty)
+- [add-Issue-and-Linked-Nodes: RISK-1                    ](/api/neo4j/nodes/add-Issue-and-Linked-Nodes/RISK-2?pretty)
+- [add-Issue-and-Linked-Nodes: RISK-1 (only Summary)     ](/api/neo4j/nodes/add-Issue-and-Linked-Nodes/RISK-2?pretty&filters=Summary)
+- [add-Issue-Metatada-as-Nodes: RISK-2                   ](/api/neo4j/nodes/add-Issue-Metatada-as-Nodes/RISK-2?pretty)
+- [add-Issues-Metatada-as-Nodes: RISK-100* (3 fields     ](/api/neo4j/nodes/add-Issues-Metatada-as-Nodes/RISK-100?pretty&filters=Summary,Risk+Owner,Risk+Rating)
 
 in batch
 

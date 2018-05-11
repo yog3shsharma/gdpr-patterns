@@ -110,7 +110,7 @@ class neo4j_Util {
         if (params.nodes.length === 1) {
             let id = params.nodes[0]
             let nodes = neo.viz._network.body.data.nodes;
-            let key = nodes.get(id).label
+            let key = nodes.get(id).key
             let url = 'https://jira.photobox.com/browse/' + key
             window.open(url, '_blank')
         }

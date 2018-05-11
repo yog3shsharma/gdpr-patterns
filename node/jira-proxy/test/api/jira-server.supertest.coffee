@@ -51,11 +51,11 @@ describe 'api | supertest | jira-server', ->
       result.size().assert_Is 1
       result[0].assert_File_Exists()
 
-  it.only 'track-queries/current', ->
+  it 'track-queries/current', ->
     request "track-queries/current", (result)->
       result.assert_Is_Object()
 
-  it.only 'track-queries/create', ->
+  it 'track-queries/create', ->
     id = "projects"
     jql = "project=SEC and issuetype =Project and status = Open"
     request "track-queries/create/#{id}?jql=#{jql}", (result)->

@@ -54,18 +54,16 @@ describe 'api | debug', ->
     return ""   # hack to handle mocha error: Resolution method is overspecified. Specify a callback *or* return a Promise; not both.
 
 
-  it.only 'add_Issues_As_Nodes', ()->
+  it 'add_Issues_As_Nodes', ()->
     id =  ["GDPR-222", "GDPR-223", "GDPR-225","GDPR-329"]
     result = await neo4j_Issues.add_Issues_As_Nodes id, (err, result)->
-
     result.size().assert_Is_Bigger_Than 3
 
-  it 'add_Issue_Metatada_As_Nodes', (done)->
+  it 'add_Issue_Metatada_As_Nodes', ()->
+
     id =  "GDPR-223"
-    neo4j_Issues.add_Issue_Metatada_As_Nodes id, (err, result)->
-      assert_Is_Null err
-      result.size().assert_Is_Bigger_Than 10
-      done()
+    results = await neo4j_Issues.add_Issue_Metatada_As_Nodes id
+    results.size().assert_Is_Bigger_Than 25
 
   it 'add_Issue_Linked_Issues_As_Single_Nodes', (done)->
     id =  "GDPR-228"

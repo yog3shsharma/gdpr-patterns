@@ -100,9 +100,9 @@
             nodes = viz._network.body.data.nodes;
             node = nodes.get(id)
             console.log(node)
-            url = "https://jira.photobox.com/browse/" + node.label
-            url = "/api/jira/issue/" + node.label + '?pretty'
-            console.log("going to open" + node.label)
+            url = "https://jira.photobox.com/browse/" + node.key
+            //url = "/api/jira/issue/" + node.label + '?pretty'
+            console.log("going to open" + node.key)
             window.open(url, '_blank');
 
         })

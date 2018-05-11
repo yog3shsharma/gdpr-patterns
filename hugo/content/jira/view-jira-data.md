@@ -4,6 +4,8 @@ type      : neo4j
 layout    : with-jira-view
 cypher    : MATCH (a)-[to]-(b) return * Limit 20
 menu      : main
+gravity   : -2000
+height    : 350
 weight    : 10
 labels    :
     RISK:
@@ -21,15 +23,17 @@ labels    :
         caption: key
     Vulnerability:
         caption: key
+    Summary:
+        caption: key
+        shape  : box
+    Risk_Owner:
+        caption: key
+    Risk_Rating:
+        caption: key
+
 relationships:
 ---
 
-
-
 {{< cypher-query>}}
 {{</ cypher-query >}}
-
-### legend:
-
-{{< img src="/img/osa/osa_warning.png" height="20" >}} RISK
 

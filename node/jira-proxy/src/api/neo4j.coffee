@@ -14,12 +14,14 @@ class Neo4J
 
 
   add_Routes: ()=>
-    @.router.get  '/neo4j/cypher'                               , @.cypher
-    @.router.get  '/neo4j/delete/all'                           , @.delete_all
+    @.router.get  '/neo4j/cypher'                                    , @.cypher
+    @.router.get  '/neo4j/delete/all'                                , @.delete_all
 
-    @.router.get  '/neo4j/nodes/add-Issue-and-Linked-Nodes/:id' , @.add_Issue_And_Linked_Nodes
-    @.router.get  '/neo4j/nodes/create/:ids'                    , @.nodes_Create
-    @.router.get  '/neo4j/nodes/create-regex/:regex'            , @.nodes_Create_via_Filter
+    @.router.get  '/neo4j/nodes/add-Issue-and-Linked-Nodes/:id'      , @.add_Issue_And_Linked_Nodes
+    @.router.get  '/neo4j/nodes/add-Issue-Metatada-as-Nodes/:id'     , @.add_Issue_Metatada_As_Nodes
+    @.router.get  '/neo4j/nodes/add-Issues-Metatada-as-Nodes/:regex' , @.add_Issues_Metatada_As_Nodes
+    @.router.get  '/neo4j/nodes/create/:ids'                         , @.nodes_Create
+    @.router.get  '/neo4j/nodes/create-regex/:regex'                 , @.nodes_Create_via_Filter
 
     #@.router.get  '/neo4j/create/:label'                  , @.create
     #@.router.get  '/neo4j/nodes/create/:id'           , @.nodes_Create
@@ -63,8 +65,24 @@ class Neo4J
 
   add_Issue_And_Linked_Nodes: (req,res)=>
     id = req.params.id
-    results = await @.neo4j_Issues.add_Issue_And_Linked_Nodes id, (err, results)=>
+    results = await @.neo4j_Issues.add_Issue_And_Linked_Nodes id
     @.send_Json_Data req, res, { nodes_created : results.size?(), results : results }
+
+
+  add_Issue_Metatada_As_Nodes: (req, res)=>
+    id      = req.params.id
+    filters = req.query.filters?.split(',')
+    results = await @.neo4j_Issues.add_Issue_Metatada_As_Nodes id, filters
+    @.send_Json_Data req, res, { nodes_created : results.size?(), results : results }
+
+  add_Issues_Metatada_As_Nodes: (req, res)=>
+    regex   = req.params.regex
+    filters = req.query.filters?.split(',')
+    ids     = @.neo4j_Issues.map_Issues.issues.ids()
+    matches = (id for id in ids when id.match(regex))
+
+    results = await @.neo4j_Issues.add_Issues_Metatada_As_Nodes matches, filters
+    @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
 
   nodes_Create: (req,res)=>
     ids = req.params.ids.split(',')
@@ -81,12 +99,5 @@ class Neo4J
 
     results = await @.neo4j_Issues.add_Issues_As_Nodes matches
     @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
-
-    return
-    @.neo4j_Issues.add_Issues_As_Nodes matches, (err, results)=>
-      if err
-        @.send_Json_Data req, res,  err
-      else
-        @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), matches : matches, nodes_created: results.size()}
 
 module.exports = Neo4J

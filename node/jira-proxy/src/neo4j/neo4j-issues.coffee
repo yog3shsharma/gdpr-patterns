@@ -40,7 +40,7 @@ class Neo4j_Issues
       data    = @.map_Issues.issue(key)
 
       label = data['Issue Type']
-      node_Result          = await @.neo4j.add_node label, key
+      node_Result          = await @.neo4j.merge_node label, data
       linked_Issues_Result = await @.add_Issue_Linked_Issues_As_Single_Nodes key
       if node_Result
         results.push node_Result
@@ -50,34 +50,23 @@ class Neo4j_Issues
       if linked_Issues_Result
         results = results.concat linked_Issues_Result
 
-      #console.log nodes_created : results?.size(), results : results
-
       return results
 
   add_Issue_As_Nodes: (id,callback)->
     @.add_Issue_Linked_Issues_As_Single_Nodes id, (err, results)->
       callback err, results
 
-  add_Issue_As_Nodes_with_Metadata: (id,callback)->
-    @.add_Issue_Metatada_As_Nodes id, (err, results1)=>
-      if err
-        callback err, results1
-      else
-        @.add_Issue_Linked_Issues_As_Single_Nodes id, (err, results2)->
-          result =  results1.concat results2
-          callback err, result
+#  add_Issue_As_Nodes_with_Metadata: (id,callback)->
+#    @.add_Issue_Metatada_As_Nodes id, (err, results1)=>
+#      if err
+#        callback err, results1
+#      else
+#        @.add_Issue_Linked_Issues_As_Single_Nodes id, (err, results2)->
+#          result =  results1.concat results2
+#          callback err, result
 
   add_Issues_As_Nodes: (ids)->
     results = []
-#    add_Helper = (id, next)=>
-#      @.add_Issue_As_Nodes id, (err, partial_Result)=>
-#      #
-#      #@.add_Issue_As_Nodes_with_Metadata id, (err, partial_Result)=>
-#        if err
-#          callback null, results
-#        else
-#          results = results.concat partial_Result
-#          next()
 
     for id in ids
       id_Results = await @.add_Issue_And_Linked_Nodes id
@@ -85,55 +74,80 @@ class Neo4j_Issues
         results = results.concat id_Results
       else
         console.log "[add_Issues_As_Nodes] no results for id: #{id}"
-    #async.eachSeries ids, add_Helper, ()->
-    #callback? null, results
     return results
 
-  add_Issue_Metatada_As_Nodes: (key,callback)->
+#  add_Issue_Metatada_As_Nodes: (key, filters)->
+#    results = []
+#    data  = @.map_Issues.issue(key)
+#    if not data
+#      return results
+#    issue_Key     = data.key
+#    issue_Type    = data['Issue Type'   ]
+#    targets = []
+#
+#    issue_Root_Node_to_Metadata =
+#      source_label : issue_Type
+#      source_key   : issue_Key
+#      target_label : "metadata"
+#      target_key   : issue_Key
+#      edge_label   : "metadata"
+#    targets.push  issue_Root_Node_to_Metadata
+#
+#    for name,value of data
+#      if not value
+#        continue
+#      if filters and not filters.contains name
+#        continue
+#      if ['key', 'Issue Type', 'Linked Issues'].not_Contains(name)
+#        options =
+#          source_label : "metadata"
+#          source_key   : issue_Key
+#          target_label : name
+#          target_key   : value
+#          edge_label   : name
+#        targets.push options
+#
+#    for target in targets
+#      results.push await @.neo4j.add_node_and_connection target
+#    return results
+
+  add_Issue_Metatada_As_Nodes: (key, filters)->
+    results = []
     data  = @.map_Issues.issue(key)
     if not data
-      return callback {}
+      return results
     issue_Key     = data.key
     issue_Type    = data['Issue Type'   ]
     targets = []
-    results = []
 
     for name,value of data
       if not value
         continue
+      if filters and not filters.contains name
+        continue
       if ['key', 'Issue Type', 'Linked Issues'].not_Contains(name)
         options =
-          source_label : "metadata"
+          source_label : issue_Type
           source_key   : issue_Key
           target_label : name
           target_key   : value
           edge_label   : name
         targets.push options
 
+    for target in targets
+      results.push await @.neo4j.add_node_and_connection target
+    return results
 
-    add_metadata_node = (next)=>
-      options =
-        source_label : issue_Type
-        source_key   : issue_Key
-        target_label : "metadata"
-        target_key   : issue_Key
-        edge_label   : "metadata"
-      targets.push options
-      @.neo4j.add_node_and_connection options, next
+  add_Issues_Metatada_As_Nodes: (ids, filters)=>
+    results = []
 
-
-    run_Target = (options, next)=>
-      @.neo4j.add_node_and_connection options, (err, response)->
-        if err
-          console.log options
-          callback err, targets
-        else
-          results.push response
-          next()
-
-    add_metadata_node ->
-      async.eachSeries targets, run_Target, ->
-        callback null, results
+    for id in ids
+      id_Results = await @.add_Issue_Metatada_As_Nodes id, filters
+      if id_Results
+        results = results.concat id_Results
+      else
+        console.log "[add_Issues_As_Nodes] no results for id: #{id}"
+    return results
 
   add_Issue_Linked_Issues_As_Single_Nodes: (key,callback)->
     data  = @.map_Issues.issue(key)

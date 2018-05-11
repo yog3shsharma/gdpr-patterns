@@ -1,10 +1,13 @@
-Neo4j = require '../../src/neo4j/neo4j'
+Neo4j       = require '../../src/neo4j/neo4j'
+Map_Issues = require '../../../jira-mappings/src/map-issues'
 
 describe 'api | debug', ->
   neo4j = null
+  map_Issues = null
 
   beforeEach ->
-    neo4j =  new Neo4j()
+    neo4j      =  new Neo4j()
+    map_Issues = new Map_Issues()
 
   it 'constructor', ->
     using neo4j, ->
@@ -46,10 +49,18 @@ describe 'api | debug', ->
         assert_Is_Null err
         response.summary.counters.nodesCreated().assert_Is 0
 
+
+  it 'merge_node', ->
+    key = "GDPR-225"
+    data = map_Issues.issue key
+    label = "RISK"
+    result = await neo4j.merge_node(label, data)
+    result.records.assert_Size_Is 1
+
   it 'add_node',->
-      key = "RISK3"
-      value = "RISK-ABCAB"
-      result = await neo4j.add_node(key, value)
+      label = "RISK"
+      key   = "RISK-3"
+      result = await neo4j.add_node(label, key)
       result.records.assert_Size_Is 1
 
   it 'add_node_and_connection',->
