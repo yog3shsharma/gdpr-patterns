@@ -13,8 +13,8 @@ describe 'api | supertest | Jira', ->
     data      = new Data()
     supertest = new Supertest()
 
-  it 'jira/issue-delete/RISK-1', ->
-    supertest.request '/api/jira/issue-delete/RISK-1', (data)->
+  it 'jira/issue-delete/RISK-25', ->
+    supertest.request '/api/jira/issue-delete/RISK-25', (data)->
       data.assert_Is status:true
 
   it 'fields/schema', ->
@@ -37,8 +37,8 @@ describe 'api | supertest | Jira', ->
       data.assert_Is_String()
       data.assert_Contains '"key": "RISK-1"'
 
-  it 'jira/issue-raw/RISK-1 (force fetch)', ->
-    id = "RisK-1"
+  xit 'jira/issue-raw/RISK-25 (force fetch)', ->
+    id = "RisK-25"
     data.delete_Raw_Data id
     supertest.request "/api/jira/issue-raw/#{id}?pretty" , (data)->
       data.assert_Is_String()
@@ -48,12 +48,12 @@ describe 'api | supertest | Jira', ->
   it 'jira/issue/RISK-1', ->
     supertest.request '/api/jira/issue/RISK-1', (data)->
       data.assert_Is_Object()
-      data.key.assert_Is 'risk-1'
+      data.key.assert_Is 'RISK-1'
 
   it 'jira/issue/RISK-1', ->
     supertest.request '/api/jira/issue/RISK-1?pretty', (data)->
       data.assert_Is_String()
-      data.assert_Contains '"key": "risk-1"'
+      data.assert_Contains '"key": "RISK-1"'
 
   it 'jira/issues/ids', ->
     supertest.request '/api/jira/issues/ids', (data)->
@@ -64,20 +64,9 @@ describe 'api | supertest | Jira', ->
       data["RISK-1"].assert_Is '/RISK/RISK/RISK-1.json'
 
 
-  xit 'jira/issues_Convert', ->
-    supertest.request '/api/jira/issues/convert', (data)->
-      console.log data
-
-
   # BUGS
-
-#  it 'No default engine error on jira/issue ',->
-#    request 'issue/GDPR-180?pretty', (data)->
-#      $ = cheerio.load data
-#      $.text().assert_Contains '"key": "gdpr-180",'
-
 
   it 'TypeError: Cannot read property json_Pretty of null',->
     request 'issue/GDPR-aaaa?pretty', (data)->
-      data.assert_Contains 'no data'
+      data.assert_Contains 'not found'
 

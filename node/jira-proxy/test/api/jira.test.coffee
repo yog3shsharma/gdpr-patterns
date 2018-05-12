@@ -20,11 +20,6 @@ describe 'api | jira', ->
       @.constructor.name.assert_Is 'Jira'
       @.router.assert_Is_Function()
 
-  it 'config', ->
-    res.json = (data)->
-        data.via_config.assert_Is_True()
-    jira.config(req,res)
-
   it 'issue_Raw', ->
     res.json =  (data)->
       data.key.assert_Is req.params.id
@@ -34,7 +29,7 @@ describe 'api | jira', ->
 
   it 'issue', ->
     res.json = (data)->
-      console.log data
+      data.key.assert_Is 'RISK-1'
 
     req = params : id : 'RISK-1'
     jira.issue(req,res)

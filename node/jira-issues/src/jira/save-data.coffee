@@ -48,7 +48,7 @@ class Save_Data
 
   save_Issue_Data: (data)->
 
-    if data.key
+    if data?.key
       issue_Project = data.fields.project.name
       issue_Type = data.fields.issuetype.name
       issue_Id   = data.key
@@ -86,11 +86,12 @@ class Save_Data
     @.save_Issues "project=#{project}", callback
 
   save_Issues_Schema: (callback)=>
+    target_File = @.data.file_Fields_Schema
     @.jira._call_Jira 'listFields', [] ,(data)=>
-      target_File = @.data.file_Fields_Schema
-      data.save_Json target_File
-      callback? target_File
+      if data
+        data.save_Json target_File
       return target_File
+
 
 
 module.exports = Save_Data

@@ -23,6 +23,7 @@ class Neo4J
     @.router.get  '/neo4j/nodes/create/:ids'                         , @.nodes_Create
     @.router.get  '/neo4j/nodes/create-regex/:regex'                 , @.nodes_Create_via_Filter
 
+    #todo refactor the direct node creation capability (will be needed for the dsl
     #@.router.get  '/neo4j/create/:label'                  , @.create
     #@.router.get  '/neo4j/nodes/create/:id'           , @.nodes_Create
 #    @.router.get  '/neo4j/create-all-nodes'  , @.create_all_nodes

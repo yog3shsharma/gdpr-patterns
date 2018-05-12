@@ -1,13 +1,17 @@
 Supertest = require '../../src/_test-utils/Supertest'
+Jira_API  = require '../../../jira-issues/src/jira/api'
 
 describe 'api | supertest | jira-server', ->
   supertest = null
 
-  request = (path, callback)->
-    supertest.request "/api/jira-server/" + path, callback
-
   before ->
     supertest = new Supertest()
+    jira_Api = new Jira_API()
+    if not await jira_Api.jira_Server_Available()
+      this.skip()
+
+  request = (path, callback)=>
+    supertest.request "/api/jira-server/" + path, callback
 
   it 'config', ->
     request 'config', (data)->

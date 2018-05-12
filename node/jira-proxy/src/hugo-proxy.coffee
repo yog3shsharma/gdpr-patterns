@@ -77,7 +77,7 @@ class Hugo_Proxy
       req.pipe(connector, {end:true});
     @
 
-  handler_errors: ()->
+  handler_errors: ()=>
     @.app.use (err, req, res, next)->
       res.status(500).json(err.stack)
 

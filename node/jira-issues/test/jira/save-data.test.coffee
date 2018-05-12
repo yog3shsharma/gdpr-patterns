@@ -24,9 +24,9 @@ describe.only 'Save-Data', ->
         @.summary.assert_Is 'JIRA - Too many JIRA Administrators'
 
   it 'save_Issues_Schema', ->
-    save_Data.save_Issues_Schema (result)->
-      result.assert_File_Exists()
-      result.load_Json()[0].id.assert_Is 'resolution'
+    result = await save_Data.save_Issues_Schema ()
+    result.assert_File_Exists()
+    result.load_Json()[0].id.assert_Is 'resolution'
 
   it 'save_Issues', ->
     jql = "issue in linkedIssues(Risk-218) and issuetype = 'Risk'"

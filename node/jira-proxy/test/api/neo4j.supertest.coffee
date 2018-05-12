@@ -13,24 +13,25 @@ describe 'api | supertest | neo4j', ->
     request 'cypher', (data)->
       data.records.size().assert_Is_Number()
 
-  it 'create', ->
-    cypher = 'create/AAAA?aaa=123&bbb=678'
-    request cypher, (data)->
-      data.records.assert_Is []
-      data.summary.statement.text.assert_Is "CREATE (n:AAAA {aaa:'123',bbb:'678'})"
+#  it.only 'create', ->
+#    cypher = 'create/AAAA?aaa=123&bbb=678'
+#    request cypher, (data)->
+#      console.log data
+#      data.records.assert_Is []
+#      data.summary.statement.text.assert_Is "CREATE (n:AAAA {aaa:'123',bbb:'678'})"
 
 
   xit 'delete/all', ()->
     request 'delete/all', (data)->
       data.records.assert_Is []
 
-  it.only 'add-Issue-and-Linked-Nodes',->
+  it 'add-Issue-and-Linked-Nodes',->
     id = 'RISK-10'
     request "nodes/add-Issue-and-Linked-Nodes/#{id}", (data)->
       data.nodes_created.assert_Is_Bigger_Than 0
 
   it 'add-Issue-and-Linked-Nodes (not found)',->
-    id = 'RISK-3'
+    id = 'RISK-3AAA'
     request "nodes/add-Issue-and-Linked-Nodes/#{id}", (data)->
       data.assert_Is { nodes_created: 0, results: [] }
 
@@ -48,7 +49,6 @@ describe 'api | supertest | neo4j', ->
   it 'add-Issues-Metatada-as-Nodes', ->
     regex = 'RISK-100'
     request "nodes/add-Issues-Metatada-as-Nodes/#{regex}", (data)->
-      console.log data.nodes_created
       data.nodes_created.assert_Is_Bigger_Than 10
 
   it 'nodes_Create', ->
@@ -56,12 +56,9 @@ describe 'api | supertest | neo4j', ->
     request "nodes/create/#{id}", (data)->
       data.nodes_created.assert_Is_Bigger_Than 7
 
-  @.timeout 5000
-  xit 'create-regex', ->
-    regex = 'GDPR-22'
-    #regex = "RISK-1"
+
+  it 'create-regex', ->
+    regex = 'RISK-100'
     request "nodes/create-regex/#{regex}", (data)->
-      #console.log data
-      #console.log data.nodes_created
-      data.matches.assert_Is_Bigger_Than 7
-      data.nodes_created.assert_Is_Bigger_Than 7 #20
+      data.matches_size.assert_Is_Bigger_Than 2
+      data.nodes_created.assert_Is_Bigger_Than 7

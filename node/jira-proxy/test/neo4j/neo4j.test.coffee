@@ -22,19 +22,17 @@ describe 'api | debug', ->
       #response.records.assert_Is []
       response.records[0].constructor.name.assert_Is 'Record'
 
-  xit 'create_node', ->
+  it 'create_node', ->
     label = 'An_Label'
     params =
       a: 42
       b: 12
     neo4j.create_node label, params, (err, response)->
-      console.log err
       assert_Is_Null err
       response.summary.counters._stats.nodesCreated.assert_Is 1
 
-  xit 'delete_all_nodes', (done)->
+  it 'delete_all_nodes', ()->
     neo4j.delete_all_nodes (err, result)->
-      assert_Is_Null err
       result.records.assert_Is []
 
   it 'merge_node', ->

@@ -165,14 +165,14 @@ class Neo4j_Issues
     callback? null, results
     return results
 
-  add_Linked_Issues_As_Full_Nodes: (key,callback)->
+  add_Linked_Issues_As_Full_Nodes: (key)->
     data  = @.map_Issues.issue(key)
     if not data
-      return callback {}
+      return {}
 
     linked_Issues = data['Linked Issues']
     ids =  (item.key for item in linked_Issues)
-    @.add_Issues_As_Nodes ids, callback
+    @.add_Issues_As_Nodes ids
 
 
 module.exports = Neo4j_Issues

@@ -77,7 +77,6 @@ class Map_Issues
     if field_Name is 'Linked Issues'
       return @.get_LinkedIssues raw_Data
 
-    console.log   field_Type
     if parser[field_Type]
       return parser[field_Type](raw_Data)
 

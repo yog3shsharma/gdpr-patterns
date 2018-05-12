@@ -9,8 +9,8 @@ class Debug
 
 
   add_Routes: ()=>
-    @.router.get  '/js'           , @.js_neovis
-    @.router.get  '/js/neovis.js'        , @.js_neovis
+    @.router.get  '/js'            , @.js_neovis
+    @.router.get  '/js/neovis.js'  , @.js_neovis
     @.router.get  '/js/ping'       , @.ping
     @
 
@@ -19,7 +19,7 @@ class Debug
     res.send root_Dir
 
   js_neovis : (req, res)->
-    root_Dir    = (wallaby?.localProjectDir.path_Combine('..') || '.')
+    root_Dir    = (wallaby?.localProjectDir || '.')
 
     neovis_Dir  = root_Dir.path_Combine('../neovis.js')
 

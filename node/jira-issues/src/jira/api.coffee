@@ -21,7 +21,8 @@ class Api
           console.log err.message
           callback {"jira_error" : err.message }
     else
-      callback callback {"jira_error" : 'jira server offline' }
+      console.log {"jira_error" : 'jira server offline' }
+      callback null
 
 
   issue: (key, callback)->

@@ -2,7 +2,7 @@ Hugo_Proxy = require '../src/hugo-proxy'
 
 describe  'Hugo-Proxy', ->
   hugo_Proxy = null
-  options    = app : {}
+  options    = app : use : ()-> {}
 
   beforeEach ->
     hugo_Proxy = new Hugo_Proxy(options)
