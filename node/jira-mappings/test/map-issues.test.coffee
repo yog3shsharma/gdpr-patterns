@@ -102,6 +102,7 @@ describe 'Jira_Api', ->
     for key in raw_Data._keys()
       console.log key, raw_Data[key]
       result = map_Issues.get_Data_By_Type(key, raw_Data[key].raw)
+      console.log result
       break
 
       if result isnt null
