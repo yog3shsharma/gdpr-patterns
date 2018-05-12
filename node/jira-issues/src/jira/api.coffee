@@ -13,12 +13,16 @@ class Api
       callback data.name
 
   _call_Jira: (command, params, callback)=>
-    @._jira_Api[command].apply(@._jira_Api,  params)
-      .then (data)->
-        callback data
-      .catch (err)->
-        console.log err.message
-        callback {"jira_error" : err.message }
+    if (await @.jira_Server_Available())
+      @._jira_Api[command].apply(@._jira_Api,  params)
+        .then (data)->
+          callback data
+        .catch (err)->
+          console.log err.message
+          callback {"jira_error" : err.message }
+    else
+      callback callback {"jira_error" : 'jira server offline' }
+
 
   issue: (key, callback)->
     issueNumber  = key.upper()
@@ -63,5 +67,27 @@ class Api
       maxResults: 50
       fields    : ['summary','status']
     @._call_Jira "searchJira", [jql,options], callback
+
+
+  jira_Server_Available: ()=>
+    port = if (Config.protocol is 'https') then 443 else 80
+    host = Config.host
+    @.server_Available host, port
+
+  server_Available: (host,  port)=>
+    net     = require 'net'
+    options =
+      timeout : 100
+      host    : host
+      port    : port
+
+    return new Promise (resolve) =>
+      using new net.Socket(), ->
+        @.setTimeout(options.timeout);
+        @.on 'error'                        , () => @.destroy(); resolve(false);
+        @.on 'timeout'                      , () => @.destroy(); resolve(false);
+        @.connect options.port, options.host, () => @.end()    ; resolve(true);
+
+
 
 module.exports = Api

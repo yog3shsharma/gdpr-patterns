@@ -1,10 +1,12 @@
 Save_Data = require '../../src/jira/save-data'
 
-describe 'Save-Data', ->
+describe.only 'Save-Data', ->
   save_Data = null
 
   before ->
     save_Data = new Save_Data()
+    if await save_Data.jira.jira_Server_Available() is false
+      this.skip()
 
   it 'constructor', ->
     using save_Data, ->
@@ -26,9 +28,7 @@ describe 'Save-Data', ->
       result.assert_File_Exists()
       result.load_Json()[0].id.assert_Is 'resolution'
 
-
-
-  xit 'save_Issues', ->
+  it 'save_Issues', ->
     jql = "issue in linkedIssues(Risk-218) and issuetype = 'Risk'"
     save_Data.save_Issues jql, (data)->
       data[0].assert_File_Exists
