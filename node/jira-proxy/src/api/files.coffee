@@ -11,12 +11,7 @@ class Debug
   add_Routes: ()=>
     @.router.get  '/js'            , @.js_neovis
     @.router.get  '/js/neovis.js'  , @.js_neovis
-    @.router.get  '/js/ping'       , @.ping
     @
-
-  ping: (req,res)->
-    root_Dir    = (wallaby? || '.').real_Path()
-    res.send root_Dir
 
   js_neovis : (req, res)->
     root_Dir    = (wallaby?.localProjectDir || '.')

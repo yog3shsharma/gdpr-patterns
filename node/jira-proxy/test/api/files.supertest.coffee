@@ -3,11 +3,11 @@ Supertest = require '../../src/_test-utils/Supertest'
 describe 'api | supertest | files', ->
   supertest = null
 
-  request = (path, callback)->
-    supertest.request "/api/js/#{path}", callback
-
   before ->
     supertest = new Supertest()
+
+  request = (path, callback)->
+    supertest.request "/api/js/#{path}", callback
 
   it 'neovis.js', ->
     request 'neovis.js', (data)->

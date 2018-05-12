@@ -68,5 +68,5 @@ describe 'api | supertest | Jira', ->
 
   it 'TypeError: Cannot read property json_Pretty of null',->
     request 'issue/GDPR-aaaa?pretty', (data)->
-      data.assert_Contains 'not found'
+      data.assert_Contains 'jira_error'
 
