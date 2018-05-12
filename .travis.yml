@@ -1,7 +1,11 @@
 language: node_js
+git:
+  submodules: false
 before_install:
   - cat .gitmodules
   - sed -ie 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - cat .gitmodules
+  - git submodules init
+  - git submodules update
 install:
   - ls
