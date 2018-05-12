@@ -1,6 +1,6 @@
 Save_Data = require '../../src/jira/save-data'
 
-describe.only 'Save-Data', ->
+describe 'Save-Data', ->
   save_Data = null
 
   before ->
@@ -24,7 +24,7 @@ describe.only 'Save-Data', ->
         @.summary.assert_Is 'JIRA - Too many JIRA Administrators'
 
   it 'save_Issues_Schema', ->
-    result = await save_Data.save_Issues_Schema ()
+    result = await save_Data.save_Issues_Schema()
     result.assert_File_Exists()
     result.load_Json()[0].id.assert_Is 'resolution'
 

@@ -30,7 +30,6 @@ class Gdpr_Task
 
   map_Array_on_Value: (data, field_Id)->
     result = []
-    console.log field_Id
     if field_Id and data[field_Id]
       for item in data[field_Id]
         result.push item.value
@@ -39,6 +38,6 @@ class Gdpr_Task
   map_Array_on_Lines: (data, field_Id)->
     if field_Id and data[field_Id]
       return data[field_Id].split_Lines()
-    result []
+    return []
 
 module.exports = Gdpr_Task

@@ -70,11 +70,10 @@ describe 'api | debug', ->
       edge_label   : 'An edge'
 
     neo4j.add_node_and_connection options, (err, response)->
-      console.log  err
       assert_Is_Null err
       response.summary.counters.relationshipsCreated().assert_Is 1
       response.summary.counters.nodesCreated()
 
   it 'params_For_Query', ->
-    console.log neo4j.params_For_Query(a:42, b:12)
+    neo4j.params_For_Query(a:42, b:12).assert_Is "{a:{a},b:{b}}"
 

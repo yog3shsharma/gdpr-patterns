@@ -17,7 +17,7 @@ describe 'Gdpr_Task', ->
       @.data_Location     .assert_Contains 'drive'
       @.data_Security     .assert_Contains "Access Control"
       @.data_Source       .assert_Contains "HRIS"
-      @.personal_Data     .assert_Contains "Personal Information"
+      @.personal_Data     .assert_Is []
       @.processing_Purpose.assert_Contains "Dental"
       @.retention_Schedule.assert_Is "?"
       @.recipient         .assert_Contains "London"

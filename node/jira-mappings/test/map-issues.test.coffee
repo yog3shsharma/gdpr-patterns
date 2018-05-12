@@ -11,13 +11,14 @@ describe 'Jira_Api', ->
       @.constructor.name.assert_Is 'Map_Issues'
       @.issues.data.folder_Data.assert_Folder_Exists()
 
-  xit 'issue', ->       # fix to use test data (needed from CI integration)
-    id = 'RISK-1'
-    id = 'RISK-778'
-    result = map_Issues.issue(id)
+  it 'issue', ->       # fix to use test data (needed from CI integration)
+    using map_Issues.issue('RISK-778'), ->
+      @['key'        ].assert_Is 'RISK-778'
+      @['Risk Rating'].assert_Is 'Low'
+      @['Epic Link'  ].assert_Is 'SEC-2039'
 
     using map_Issues.issue('GDPR-180'), ->
-      @['id'         ].assert_Is 'GDPR-180'
+      @['key'        ].assert_Is 'GDPR-180'
       @['Risk Rating'].assert_Is 'To be determined'
       @['Epic Link'  ].assert_Is 'GDPR-176'
 

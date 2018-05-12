@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (wallaby) {
     return {
         files: [
             'node/jira-issues/src/**/*.coffee',
@@ -8,13 +8,11 @@ module.exports = function () {
         tests: [
             'node/jira-issues/test/**/*.coffee'
         ],
-
+        compilers: {
+            '**/*.js?(x)': wallaby.compilers.babel({}),
+        },
         env: {
             type: 'node'
-        }//,
-        // workers: {
-        //     initial: 1,         // without these sometimes the fluentnode apis
-        //     regular: 1          // are not detected
-        // }
+        }
     }
 }

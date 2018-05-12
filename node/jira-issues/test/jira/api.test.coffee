@@ -29,9 +29,9 @@ describe 'Jira_Api', ->
       data.total.assert_Is_Bigger_Than 398
       data.issues.size().assert_Is 50
 
-  it 'jira_Server_Available', ()->
-    result = await jira_Api.jira_Server_Available()
-    result.assert_Is_False()
+#  it 'jira_Server_Available', ()->
+#    result = await jira_Api.jira_Server_Available()
+#    result.assert_Is_False()
 
   it 'server_Available', ()->
     host = "google.com"
