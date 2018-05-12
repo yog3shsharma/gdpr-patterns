@@ -38,7 +38,7 @@ describe 'Jira_Api', ->
                         { key: 'SEC-394' , type: 'risk reduced by', direction: 'outward' },
                         { key: 'RISK-775', type: 'is parent of'   , direction: 'outward' } ]
 
-  xit 'get_Data_By_Type' ,->
+  it 'get_Data_By_Type' ,->
     raw_Data =
       any:
         raw: 9223372036854775807
