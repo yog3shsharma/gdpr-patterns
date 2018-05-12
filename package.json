@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "node ./node_modules/.bin/mocha  --recursive --compilers coffee:coffee-script/register node/mappings-api/"
+    "test": "node ./node_modules/.bin/mocha  --recursive --compilers coffee:coffeescript/register node/jira-mappings/"
   },
   "repository": {
     "type": "git",

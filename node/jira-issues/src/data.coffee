@@ -11,7 +11,6 @@ class Data
     @.file_Issue_Files     = @.folder_Mappings.path_Combine 'issue-files.json'
     @.file_Fields_Schema   = @.folder_Issues_Raw.path_Combine 'fields-schema.json'
 
-
   setup: ->
     # make sure folders exist
     @.folder_Data       .folder_Create()

@@ -1,4 +1,4 @@
-Data = require '../../src/util/data'
+Data      = require '../../../jira-issues/src/data'
 
 describe 'Data', ->
   data = null

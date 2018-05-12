@@ -1,4 +1,4 @@
-Data      = require '../src/util/data'
+Data      = require '../../jira-issues/src/data'
 Map_Files = require '../src/map-files'
 
 describe 'X-Refs | Create', ->

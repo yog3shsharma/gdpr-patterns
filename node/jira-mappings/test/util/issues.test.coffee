@@ -10,7 +10,11 @@ describe 'Issues', ->
 
   it 'fields_Schema', ->
     using issues.fields_Schema(),->
-      console.log @
+      @.resolution.assert_Is  {
+        name             : 'Resolution',
+        schema_Type_Name : 'resolution',
+        schema_Type_Class: undefined,
+        schema_Type_ID   : undefined }
 
 
   it 'issue_Files', ->

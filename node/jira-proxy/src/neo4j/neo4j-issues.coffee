@@ -1,7 +1,6 @@
 Map_Issues = require '../../../jira-mappings/src/map-issues'
 Save_Data  = require '../../../jira-issues/src/jira/save-data'
 Neo4j      = require '../neo4j/neo4j'
-async      = require 'async'
 
 class Neo4j_Issues
   constructor:->
@@ -9,27 +8,6 @@ class Neo4j_Issues
     @.map_Issues = new Map_Issues()
     @.save_Data  = new Save_Data()
     @.neo4j = new Neo4j()
-
-#  add_Issue: (id, callback)=>
-#    data  = @.map_Issues.issue(id)
-#    data['Linked Issues'] = data['Linked Issues'].size()
-#    #delete data['Linked Issues']
-#    label = data['Issue Type']
-#    @.neo4j.create_node label, data, callback
-#
-#  add_Issues: (ids, callback)=>
-#    result = []
-#    add_Helper = (id, next)=>
-#      @.add_Issue id, (err, data)=>
-#        if err
-#          callback null, result
-#        else
-#          added_Id = data.records[0]._fields[0].properties.id
-#          result.push added_Id
-#          next()
-
-#    async.eachSeries ids, add_Helper, ()->
-#      callback null, result
 
   add_Issue_And_Linked_Nodes: (key,callback)=>
     results = []
@@ -186,10 +164,6 @@ class Neo4j_Issues
       await run_Target target
     callback? null, results
     return results
-
-    #async.eachSeries targets, run_Target, ->
-    #  callback null, results
-
 
   add_Linked_Issues_As_Full_Nodes: (key,callback)->
     data  = @.map_Issues.issue(key)
