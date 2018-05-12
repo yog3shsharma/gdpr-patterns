@@ -1,3 +1,7 @@
 language: node_js
+before_install:
+  - cat .gitmodules
+  - sed -ie 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - cat .gitmodules
 install:
   - ls
