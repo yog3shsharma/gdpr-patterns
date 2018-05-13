@@ -14,7 +14,7 @@
         $.get(url, function (res, status)
         {
             if (typeof(res) === "object")
-                res = JSON.stringify(res)
+                res = JSON.stringify(res,null,"   ")
             $("#result_{{$result_div}}").html(res)
             $('#cypher-query button').click()
         })

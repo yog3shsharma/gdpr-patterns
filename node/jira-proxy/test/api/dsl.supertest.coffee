@@ -30,7 +30,7 @@ describe 'api | supertest | dsl', ->
       data.key   .assert_Is 'RISK-1'
       data.answer.assert_Is 42
 
-  it.only 'coffee - run neo4j query', ->
+  it 'coffee - run neo4j query', ->
     code = "return @.neo4j.run_Cypher 'MATCH (a) return count(a)'"
     request "exec?code=#{code.url_Encode()}", (data)->
-      data.records[0]._fields[0].low.assert_Is_Bigger_Than 10
+      data.records[0]._fields[0].low.assert_Is_Bigger_Than 1

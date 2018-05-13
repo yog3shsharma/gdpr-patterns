@@ -18,3 +18,11 @@ describe 'Data', ->
       @.key.assert_Is key
 
     assert_Is_Null data.issue_Data(null)
+
+  it 'issues_by_Keys()',->
+    using data.issues_by_Keys(),->
+      @._keys().size().assert_Is_Bigger_Than 1000
+
+  it 'issues_by_Props()',->
+    using data.issues_by_Properties(),->
+      @._keys().size().assert_Is_Bigger_Than 100

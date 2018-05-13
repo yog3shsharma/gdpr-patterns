@@ -2,6 +2,7 @@ CoffeeScript = require 'coffeescript'
 
 Data            = require '../../../jira-issues/src/data'
 Config          = require '../../../jira-issues/src/config'
+Jira            = require '../dsl/jira'
 Map_Issues      = require '../../../jira-mappings/src/map-issues'
 Save_Data       = require '../../../jira-issues/src/jira/save-data'
 Neo4J           = require '../neo4j/neo4j'
@@ -11,6 +12,7 @@ class Exec_Code
   constructor: ->
     @.data          = new Data()
     @.config        = Config
+    @.jira          = new Jira()
     @.map_Issues    = new Map_Issues()
     @.save_Data     = new Save_Data()
     @.neo4j         = new Neo4J()

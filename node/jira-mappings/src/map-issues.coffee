@@ -1,11 +1,15 @@
 Issues    = require '../src/util/issues'
 
 config = # move this to spearate file
-  ignore_fields:   [ "Σ Progress" , "Attachment", "Classement", "Classement (Obsolete)", "Global Rank (Obsolete)",
-                     "Global Rank", "Moonpig IOS Definition of Ready Verified?","Severity Moonpig Mobile","Frequency","Regression",
-                     "Fix Version/s", "Progress", "Request participants","Reporter", "Sub-Tasks", "Time Tracking", "Affects Version/s", "Votes", "Watchers",
-                     "Log Work", "Work Ratio",
-                     "Component/s", "Description", "Labels"]
+  ignore_fields:      [ "Σ Progress" , "Attachment", "Classement", "Classement (Obsolete)", "Global Rank (Obsolete)",
+                        "Global Rank", "Moonpig IOS Definition of Ready Verified?","Severity Moonpig Mobile","Frequency","Regression",
+                        "Fix Version/s", "Progress", "Request participants","Reporter", "Sub-Tasks", "Time Tracking", "Affects Version/s", "Votes", "Watchers",
+                        "Log Work", "Work Ratio",
+                        "Component/s", "Description", "Labels"]
+  properties_to_Skip: [ "key", "Created", "Updated","Linked Issues","Resolved", "Due Date","Resources Needed",
+                        "Comment","Summary", "Budget (£k)","Budget Schedule","Project Name","Project Overview",
+                        "Resource", "Task Response","Risk Description","Mitigating Actions to be Undertaken",
+                        "Risk Title","Risk Expire Date"]
 
 class Map_Issues
   constructor: ->
@@ -85,5 +89,26 @@ class Map_Issues
     console.log raw_Data
     return null
 
+  map_Issues_by_Key: ()->
+    results = {}
+    for key in @.issues.ids().take()
+      issue = @.issue(key)
+      results[key] = issue
+
+    return results.save_Json @.issues.data.file_Issues_by_Key
+
+  map_Issues_by_Properties: ()=>
+    max_size = 50
+    issues_by_Key = @.issues.data.issues_by_Keys()
+    results = {}
+    for key, key_Value of issues_by_Key
+      for prop, prop_Value of key_Value
+        if config.properties_to_Skip.not_Contains(prop)
+          results[prop] ?= {}
+          if prop_Value and prop_Value.size?() < max_size
+            if typeof(prop_Value) isnt "object"
+              results[prop][prop_Value] ?= []
+              results[prop][prop_Value].add key
+    return results.save_Json @.issues.data.file_Issues_by_Properties
 
 module.exports = Map_Issues

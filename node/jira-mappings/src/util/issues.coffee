@@ -8,7 +8,6 @@ class Issues
     @.data = new Data()
 
   fields_Schema: ()->
-    _fields_Schema = null
     if not _fields_Schema
       raw_Data = @.data.file_Fields_Schema.load_Json()
       _fields_Schema = @.map_Fields_Schema(raw_Data)

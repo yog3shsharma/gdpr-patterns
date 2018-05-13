@@ -1,7 +1,7 @@
 Data      = require '../../jira-issues/src/data'
 Map_Files = require '../src/map-files'
 
-describe 'X-Refs | Create', ->
+describe 'Map_Files', ->
   data      = null
   map_Files = null
 

@@ -16,10 +16,10 @@ class Save_Data
       console.log("Issue #{key} didn't exist locally, so fetching it from JIRA Server")
       @.save_Issue key,(file)=>
         if not file
-          callback { issue: "not found"}
+          callback { jira_error: "[save_Issue] File Not Created"}
         else
           if file is "404 - {\"errorMessages\":[\"Issue Does Not Exist\"],\"errors\":{}}"
-            callback jira_error : 'Issue Does Not Exist'
+            callback jira_error : '[get_Issue] Issue Does Not Exist'
           else
 
             @.data.issue_Files_Reset_cache()

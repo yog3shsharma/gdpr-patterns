@@ -1,15 +1,18 @@
 require 'fluentnode'
 
+_issue_Files = null  # local cache for this file
+
 class Data
   constructor: ->
-    @.folder_Data        =  (wallaby?.localProjectDir || './').path_Combine('data')
-    #@.folder_Issues      = @.folder_Data.path_Combine('Issues')
-    @.folder_Issues_Raw  = @.folder_Data.path_Combine('Issues_Raw')
-    @.folder_Mappings    = @.folder_Data.path_Combine('Mappings')
+    @.folder_Data                =  (wallaby?.localProjectDir || './').path_Combine('data')
+    @.folder_Issues_Raw          = @.folder_Data.path_Combine('Issues_Raw')
+    @.folder_Mappings            = @.folder_Data.path_Combine('Mappings')
 
-    @.file_Tracked_Queries = @.folder_Mappings.path_Combine 'tracked_Queries.json'
-    @.file_Issue_Files     = @.folder_Mappings.path_Combine 'issue-files.json'
-    @.file_Fields_Schema   = @.folder_Issues_Raw.path_Combine 'fields-schema.json'
+    @.file_Tracked_Queries       = @.folder_Mappings.path_Combine 'tracked_queries.json'
+    @.file_Issue_Files           = @.folder_Mappings.path_Combine 'issue-files.json'
+    @.file_Issues_by_Key         = @.folder_Mappings.path_Combine 'issues-by-key.json'
+    @.file_Issues_by_Properties  = @.folder_Mappings.path_Combine 'issues-by-properties.json'
+    @.file_Fields_Schema         = @.folder_Mappings.path_Combine 'fields-schema.json'
 
   setup: ->
     # make sure folders exist
@@ -26,7 +29,7 @@ class Data
       return path.delete_File()
     return true
 
-  issue_Raw_File: (id)->
+  issue_Raw_File: (id)->          #todo duplicate code from Issues class
     path = @.issue_Files()[id?.upper()]
     if path
       return @.folder_Issues_Raw.path_Combine(path)
@@ -40,7 +43,7 @@ class Data
   issue_Files_Reset_cache: ()->
     _issue_Files = null
 
-  issue_Raw_Data: (id)=>
+  issue_Raw_Data: (id)=>                  #todo duplicate code from Issues class
     path = @.issue_Raw_File(id)
     if path
       return path?.load_Json()
@@ -52,6 +55,11 @@ class Data
     if path
       return path?.load_Json()
     return null
+
+  issues_by_Keys       : -> return @.file_Issues_by_Key       .load_Json() || {}
+  issues_by_Properties : -> return @.file_Issues_by_Properties.load_Json() || {}
+
+
 
 module.exports = Data
 

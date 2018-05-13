@@ -1,10 +1,13 @@
+Data       = require '../../jira-issues/src/data'
 Map_Issues = require '../src/map-issues'
 
 describe 'Jira_Api', ->
+  data       = null
   map_Issues = null
 
   before ->
-     map_Issues = new Map_Issues()
+    data       = new Data()
+    map_Issues = new Map_Issues()
 
   it 'constructor', ->
     using map_Issues, ->
@@ -104,5 +107,16 @@ describe 'Jira_Api', ->
       result = map_Issues.get_Data_By_Type(key,key, raw_Data[key].raw)
       result.assert_Is raw_Data[key].result
 
+#  it 'map_Issues_by_Key', ->
+#    using map_Issues.map_Issues_by_Key(),->
+#      @.assert_File_Exists()
 
+  it 'load file_Issues_By_Key', ->
+    data = map_Issues.issues.data.file_Issues_by_Key
+    data.load_Json()
+        ._keys().size().assert_Is_Bigger_Than 1000
 
+  it 'map_Issues_by_Properties', ->
+    results = map_Issues.map_Issues_by_Properties()
+    console.log results
+      

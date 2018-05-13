@@ -94,7 +94,7 @@ describe 'api | debug', ->
 
     (await @.neo4j.nodes_Count()).assert_Is 2
 
-  it.only 'neo4j_Issues - add issue and linked nodes',=>
+  it 'neo4j_Issues - add issue and linked nodes',=>
     await @.neo4j.delete_all_nodes()
     await @.neo4j_Issues.add_Issue_And_Linked_Nodes('GDPR-255')
     (await @.neo4j.nodes_Count()).assert_Is 49
