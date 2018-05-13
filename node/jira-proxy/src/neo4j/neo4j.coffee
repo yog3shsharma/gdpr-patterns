@@ -16,7 +16,6 @@ class Neo4j
     return _driver
 
   run_Cypher: (cypher, params, callback)=>
-    uri  = "http://#{@.username}:#{@.password}@#{@.url}')"
 
     session = @.driver().session()
 
@@ -50,6 +49,7 @@ class Neo4j
 
 
   add_node: (label, key)=>
+    label = @.label_Format label
     cypher = "MERGE (u1:#{label} {key:{key}} ) return *"
     params = key : key
     @.run_Cypher cypher, params
@@ -80,5 +80,19 @@ class Neo4j
       result.push "#{id}:{#{id}}"
     return '{'+ result.join(",") + '}'
 
+
+
+  # DSL methods
+
+  nodes_Count: ()=>
+    result = await @.run_Cypher "MATCH (n) RETURN count(n) as count"
+    return result.records[0].get("count").toNumber()
+
+  nodes_Keys: ()=>
+    result = await @.run_Cypher "MATCH (n) RETURN n.key as key"
+    ids = []
+    result.records.map (record)->
+      ids.push record.get('key')
+    return ids
 
 module.exports = Neo4j

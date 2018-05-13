@@ -1,13 +1,16 @@
-Neo4j       = require '../../src/neo4j/neo4j'
-Map_Issues = require '../../../jira-mappings/src/map-issues'
+Neo4j         = require '../../src/neo4j/neo4j'
+Neo4J_Issues  = require '../../src/neo4j/neo4j-issues'
+Map_Issues    = require '../../../jira-mappings/src/map-issues'
 
 describe 'api | debug', ->
   neo4j = null
   map_Issues = null
 
-  beforeEach ->
-    neo4j      =  new Neo4j()
-    map_Issues = new Map_Issues()
+  beforeEach =>
+    @.neo4j        = neo4j        = new Neo4j()           # also assigning @.neo4j so that
+    @.neo4j_Issues = neo4j_Issues = new Neo4J_Issues()
+    map_Issues   = new Map_Issues()
+
 
   it 'constructor', ->
     using neo4j, ->
@@ -77,3 +80,21 @@ describe 'api | debug', ->
   it 'params_For_Query', ->
     neo4j.params_For_Query(a:42, b:12).assert_Is "{a:{a},b:{b}}"
 
+
+  # DSL
+
+  it 'nodes_Count', ->
+    console.log await neo4j.nodes_Count()
+
+  it 'delete-all and add node and edge', =>
+
+    await @.neo4j.delete_all_nodes()
+    await @.neo4j.add_node("NEW_LABEL3123","qweaaa")
+    await @.neo4j.add_node("NEW LABEL","qweaaa")
+
+    (await @.neo4j.nodes_Count()).assert_Is 2
+
+  it.only 'neo4j_Issues - add issue and linked nodes',=>
+    await @.neo4j.delete_all_nodes()
+    await @.neo4j_Issues.add_Issue_And_Linked_Nodes('GDPR-255')
+    (await @.neo4j.nodes_Count()).assert_Is 49

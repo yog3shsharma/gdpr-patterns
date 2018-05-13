@@ -16,6 +16,7 @@
             if (typeof(res) === "object")
                 res = JSON.stringify(res)
             $("#result_{{$result_div}}").html(res)
+            $('#cypher-query button').click()
         })
     }
     update_Title_Text = function() {        // note, jQuery wasn't available at this point in time
