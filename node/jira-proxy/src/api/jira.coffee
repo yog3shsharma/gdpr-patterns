@@ -1,6 +1,5 @@
 express         = require 'express'
 Data            = require '../../../jira-issues/src/data'
-Config          = require '../../../jira-issues/src/config'
 Map_Issues      = require '../../../jira-mappings/src/map-issues'
 Save_Data       = require '../../../jira-issues/src/jira/save-data'
 

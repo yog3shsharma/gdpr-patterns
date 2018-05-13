@@ -10,7 +10,6 @@ class Neo4j
     @.password = Config.neo4j.password
     @.url      = Config.neo4j.url
 
-
   driver: ()=>
     if not _driver
       _driver =   neo4j.driver(@.url , neo4j.auth.basic(@.username, @.password))

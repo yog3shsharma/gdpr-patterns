@@ -23,7 +23,7 @@ class Debug
   ping: (req,res)->
     res.send ('pong')
 
-  git_pull: (req,res)->
+  git_pull: (req,res)->     #todo: add unit test
     cmd    = 'git'
     params = ['pull']
     cmd.start_Process_Capture_Console_Out params, (data)->
@@ -33,6 +33,6 @@ class Debug
         cmd_log : data;
       res.json(result)
 
-  jira_status: (req,res)->
+  jira_status: (req,res)->  #todo: wire with code that checks if jira is online (and ideally with code that checks if we can login ok)
 
 module.exports = Debug
