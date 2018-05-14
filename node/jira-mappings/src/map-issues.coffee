@@ -104,11 +104,16 @@ class Map_Issues
     for key, key_Value of issues_by_Key
       for prop, prop_Value of key_Value
         if config.properties_to_Skip.not_Contains(prop)
-          results[prop] ?= {}
           if prop_Value and prop_Value.size?() < max_size
-            if typeof(prop_Value) isnt "object"
+            results[prop] ?= {}
+            if prop_Value instanceof Array
+              for item in prop_Value
+                results[prop][item] ?= []
+                results[prop][item].add key
+            else
               results[prop][prop_Value] ?= []
               results[prop][prop_Value].add key
+
     return results.save_Json @.issues.data.file_Issues_by_Properties
 
 module.exports = Map_Issues

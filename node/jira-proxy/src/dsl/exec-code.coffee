@@ -7,6 +7,7 @@ Map_Issues      = require '../../../jira-mappings/src/map-issues'
 Save_Data       = require '../../../jira-issues/src/jira/save-data'
 Neo4J           = require '../neo4j/neo4j'
 Neo4J_Issues    = require '../neo4j/neo4j-issues'
+Neo4J_Import    = require '../dsl/neo4j-import'
 
 class Exec_Code
   constructor: ->
@@ -17,6 +18,7 @@ class Exec_Code
     @.save_Data     = new Save_Data()
     @.neo4j         = new Neo4J()
     @.neo4j_Issues  = new Neo4J_Issues()
+    @.neo4j_Import  = new Neo4J_Import()
 
   coffee: (code)->
     if not code

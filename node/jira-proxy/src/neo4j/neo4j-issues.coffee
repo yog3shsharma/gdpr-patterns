@@ -9,6 +9,26 @@ class Neo4j_Issues
     @.save_Data  = new Save_Data()
     @.neo4j = new Neo4j()
 
+  add_Issue: (key)=>
+    results = []
+    @.save_Data.get_Issue key, (raw_Data)=>                        # will force load if issue doesn't exist locally
+      if (not raw_Data?.key)                                          # to handle issue rename
+        return results
+      key = raw_Data.key
+      data    = @.map_Issues.issue(key)
+      label = data['Issue Type']
+      node_Result          = await @.neo4j.merge_node label, data
+      if node_Result
+        results.push node_Result
+      return results = []
+
+  add_Issues: (keys)=>
+    results = []
+    for key in keys
+      results.add await @.add_Issue(key)
+    return results
+
+
   add_Issue_And_Linked_Nodes: (key)=>
     results = []
     @.save_Data.get_Issue key, (raw_Data)=>                        # will force load if issue doesn't exist locally

@@ -23,7 +23,7 @@ class Save_Data
           else
 
             @.data.issue_Files_Reset_cache()
-            @.mappings_Create.map_Files()
+            @.mappings_Create.map_Files.create()
             raw_Data = file.load_Json()         # to handle the issues that have been renamed
             if raw_Data
               console.log "Got data with ID: #{raw_Data?.key}"

@@ -58,11 +58,15 @@ describe 'api | debug', ->
     result = await neo4j.merge_node(label, data)
     result.records.assert_Size_Is 1
 
-  it 'add_node',->
+  it 'add_Node',->
       label = "RISK"
       key   = "RISK-3"
-      result = await neo4j.add_node(label, key)
+      result = await neo4j.add_Node(label, key)
       result.records.assert_Size_Is 1
+
+  it.only 'add_edge',->
+    result = await neo4j.add_Edge "label-1","key-1", "to","label-2","key-2"
+    result.records[0].length.assert_Is 3
 
   it 'add_node_and_connection',->
     options =
@@ -89,8 +93,8 @@ describe 'api | debug', ->
   it 'delete-all and add node and edge', =>
 
     await @.neo4j.delete_all_nodes()
-    await @.neo4j.add_node("NEW_LABEL3123","qweaaa")
-    await @.neo4j.add_node("NEW LABEL","qweaaa")
+    await @.neo4j.add_Node("NEW_LABEL3123","qweaaa")
+    await @.neo4j.add_Node("NEW LABEL","qweaaa")
 
     (await @.neo4j.nodes_Count()).assert_Is 2
 

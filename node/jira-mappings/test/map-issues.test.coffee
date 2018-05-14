@@ -116,7 +116,9 @@ describe 'Jira_Api', ->
     data.load_Json()
         ._keys().size().assert_Is_Bigger_Than 1000
 
-  it 'map_Issues_by_Properties', ->
+  it.only 'map_Issues_by_Properties', ->
     results = map_Issues.map_Issues_by_Properties()
-    console.log results
+    results.assert_File_Exists()
+    console.log results.load_Json()._keys().contains('Brands')
+    console.log results.load_Json()['Brands']._keys()
       

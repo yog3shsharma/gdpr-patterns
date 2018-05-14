@@ -47,15 +47,23 @@ class Neo4j
     cypher = "MERGE (u:#{label} #{params_query})  RETURN u"
     @.run_Cypher cypher, params, callback
 
+  add_Edge: (source_label, source_key, edge_label,target_label,target_key)->
+    options =
+      source_label : source_label
+      source_key   : source_key
+      edge_label   : edge_label
+      target_label : target_label
+      target_key   : target_key
+    @.add_node_and_connection options
 
-  add_node: (label, key)=>
+  add_Node: (label, key)=>
     label = @.label_Format label
     cypher = "MERGE (u1:#{label} {key:{key}} ) return *"
     params = key : key
     @.run_Cypher cypher, params
 
 
-  # there is a limitation with this script at the moment since it needs the node1 and node2 params titles to be different
+
   add_node_and_connection: (options, callback)->
 
     params = key1: options.source_key, key2 :options.target_key
@@ -71,7 +79,8 @@ class Neo4j
     @.run_Cypher cypher, params, callback
 
   label_Format: (text)->
-    return text.replace(/\s/g, '_').replace(/-/g,'_')
+    return "" if not text
+    return text.replace(/\s/g, '_').replace(/-/g,'_').replace(/\./g,'_')
 
   params_For_Query: (params)=>      # move to utils section
     ids = params._keys()

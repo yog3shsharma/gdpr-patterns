@@ -7,7 +7,6 @@ class Jira
   constructor: ->
     @.data = new Data()
 
-
   _issues_by_Keys: ->
     if not _issues_by_Keys
       _issues_by_Keys = @.data.issues_by_Keys()
@@ -26,11 +25,19 @@ class Jira
       result[name]=[]
       for key in value
         result[name].add issues[key]
+        @._add_Helper_Methods(result[name])
     return result
 
+  _add_Helper_Methods: (target)->
+    target.keys      = -> (item.key     for item in @)
+    target.summaries = -> (item.Summary for item in @)
+
+  issues           : => @._issues_by_Keys()
 
   assignees        : => @._expand_Issues @._issues_by_Properties()["Assignee"           ]
+  brands           : => @._expand_Issues @._issues_by_Properties()["Brands"             ]
   business_Owners  : => @._expand_Issues @._issues_by_Properties()["Business Owner"     ]
+  cost_Centers     : => @._expand_Issues @._issues_by_Properties()["Cost Center"        ]
   capabilities     : => @._expand_Issues @._issues_by_Properties()["Security Capability"]
   departments      : => @._expand_Issues @._issues_by_Properties()["Department"         ]
   issue_Types      : => @._expand_Issues @._issues_by_Properties()["Issue Type"         ]
@@ -40,7 +47,6 @@ class Jira
   pillars          : => @._expand_Issues @._issues_by_Properties()["Security Pillar"    ]
   _programmes      : => @._expand_Issues @._issues_by_Properties()["Security Programme" ]  # temp
   status           : => @._expand_Issues @._issues_by_Properties()["Status"             ]
-
 
   data_Journeys     : => @.issue_Types()['Data Journey'      ]
   data_Sources      : => @.issue_Types()['Data Source'       ]

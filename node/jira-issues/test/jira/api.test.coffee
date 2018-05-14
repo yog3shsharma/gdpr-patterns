@@ -15,7 +15,7 @@ describe 'Jira_Api', ->
     jira_Api.currentUser (name)->
       name.assert_Is 'jira.api'
 
-  it 'issue', ()-> 
+  it 'issue', ()->
     jira_Api.issue 'RISK-1', (issue)->
       issue.fields.summary.assert_Is 'JIRA - Too many JIRA Administrators'
 

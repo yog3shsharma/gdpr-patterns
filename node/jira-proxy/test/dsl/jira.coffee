@@ -12,6 +12,10 @@ describe 'dsl | exec-code',->
         ._keys().assert_Size_Is_Greater_Than 100
         .assert_Contains ["Pillars","Risk Owner"]
 
+  it 'check keys',->
+    jira.projects().keys()     .assert_Is_Bigger_Than 100
+    jira.projects().summaries().assert_Is_Bigger_Than 100
+
   it 'assignees'       ,-> jira.assignees()      ._keys().size().assert_Is_Bigger_Than 50
   it 'business_Owners' ,-> jira.business_Owners()._keys().size().assert_Is_Bigger_Than 15
   it 'capabilities'    ,-> jira.capabilities()   ._keys().size().assert_Is_Bigger_Than 15
@@ -23,7 +27,6 @@ describe 'dsl | exec-code',->
   it 'risk_Owners'     ,-> jira.risk_Owners()    ._keys().size().assert_Is_Bigger_Than 50
   it 'risk_Ratings'    ,-> jira.risk_Ratings()   ._keys().assert_Is [ 'High', 'To be determined', 'Critical', 'Info', 'Medium', 'Low' ]
   it 'status'          ,-> jira.status()         ._keys().size().assert_Is_Bigger_Than 30
-
 
 
 
