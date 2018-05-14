@@ -3,6 +3,9 @@ data
 node_modules/
 *.log
 
+!gdpr-patterns-presentation/data/neo4j_server.yaml
+
+
 hugo/content/pbx-gs
 bin/local
 .DS_Store
