@@ -10,5 +10,9 @@ before_install:
   - cat .gitmodules
   - git submodule init
   - git submodule update
+  - sed -ie 's/git@github.com:/https:\/\/github.com\//' gdpr-patterns-presentation/.gitmodules
+  - cat gdpr-patterns-presentation/.gitmodules
+  - git submodule update --init --recursive
+
 install:
   - npm install

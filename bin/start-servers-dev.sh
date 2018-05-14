@@ -2,7 +2,7 @@ echo "********************************************"
 echo "*** Starting Hugo Server in Dev mode     ***"
 echo "********************************************"
 
-cd hugo
+cd gdpr-patterns-presentation
 hugo serve  &
 cd ..
 

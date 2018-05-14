@@ -2,7 +2,7 @@ echo "***************************"
 echo "*** Starting Hugo Server ***"
 echo "***************************"
 
-cd hugo
+cd gdpr-patterns-presentation
 hugo serve --watch=false &
 cd ..
 
