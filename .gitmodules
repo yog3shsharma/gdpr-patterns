@@ -1,3 +1,6 @@
 [submodule "hugo/themes/coreui-hugo"]
 	path = hugo/themes/coreui-hugo
 	url = git@github.com:project-cx/coreui-hugo.git
+[submodule "gdpr-patterns-presentation"]
+	path = gdpr-patterns-presentation
+	url = git@github.com:pbx-gs/gdpr-patterns-presentation.git
