@@ -14,8 +14,10 @@ class Api
 
   _call_Jira: (command, params, callback)=>
     if (await @.jira_Server_Available())
+      console.log("Request made")
       @._jira_Api[command].apply(@._jira_Api,  params)
         .then (data)->
+          console.log("Request completed")
           callback data
         .catch (err)->
           console.log err.message
@@ -23,6 +25,7 @@ class Api
     else
       console.log {"jira_error" : 'jira server offline' }
       callback null
+
 
 
   issue: (key, callback)->
@@ -49,12 +52,17 @@ class Api
           #console.log "[jira api] fetched #{data?.issues?.size()} issues"
           options.startAt += data.issues.size()
           issues = issues.concat data.issues
+
+          callback issues
+          issues = []
           get_Issues()                          # recursive call to get more issues
+          
         else
           callback issues                       # no more issues'
 
 
     get_Issues jql
+
 
   # This can be improved to fail faster when access is not available
   ping_Server: (callback)->

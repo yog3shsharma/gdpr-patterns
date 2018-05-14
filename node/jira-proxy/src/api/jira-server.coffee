@@ -25,6 +25,8 @@ class Jira
     @.router.get  '/jira-server/homepage'                    , @.homepage
     @.router.get  '/jira-server/issue/:id'                   , @.issue
     @.router.get  '/jira-server/issues'                      , @.issues
+    @.router.get  '/jira-server/all_issues'                  , @.all_issues
+
 
     @.router.get  '/jira-server/mappings/issues/files'       , @.mappings_Issues_Files
     @.router.get  '/jira-server/mappings/create'             , @.mappings_Create_All
@@ -59,6 +61,7 @@ class Jira
 
   issues: (req,res)=>
     jql = req.query.jql
+    #console.log(jql)
     if jql
       @.save_Data.save_Issues jql, (files)=>
         result =
@@ -67,6 +70,11 @@ class Jira
         @.send_Json_Data req,res, result
     else
       res.json error: 'jql must be provided'
+
+  all_issues: (req,res)=>
+      @.save_Data.save_All_Issues req
+      res.json message: 'Request received and will be processed in background, take your HTTP session back :)'
+
 
   mappings_Create_All: (req,res)=>
     res.json @.mappings_Create.all()

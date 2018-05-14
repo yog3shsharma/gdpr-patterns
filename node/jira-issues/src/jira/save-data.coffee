@@ -66,11 +66,22 @@ class Save_Data
     else
       return null
 
+  save_All_Issues: (req)=>
+    console.log("save all issues called")
+    @.jira.issues "project is not EMPTY", ["*all"], (data)=>
+      files = []      
+      for item in data
+        files.add @.save_Issue_Data(item)
+      #console.log 'All files saved'
+      console.log("save all issues called - completed")
+
+
   save_Issues: (jql, callback)=>
     #console.log 'Save issues jql: ' + jql
     @.jira.issues jql,["*all"], (data)=>
       files = []
       #console.log 'Got all files, now saving them'
+      
       for item in data
         files.add @.save_Issue_Data(item)
       #console.log 'All files saved'
