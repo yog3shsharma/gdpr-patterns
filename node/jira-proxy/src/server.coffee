@@ -24,6 +24,7 @@ class Server
     add_Routes '/api', './api/jira-server'
     add_Routes '/api', './api/neo4j'
     add_Routes '/api', './api/files'
+    add_Routes '/api', './api/admin'
     add_Routes '/'   , './hugo-proxy'  # set hugo proxy
     @
 
