@@ -3,7 +3,7 @@ echo "*** Starting Hugo Server ***"
 echo "***************************"
 
 cd gdpr-patterns-presentation
-hugo serve --watch=false &
+hugo serve --bind 0.0.0.0 --watch=false &
 cd ..
 
 node_modules/.bin/nodemon         \

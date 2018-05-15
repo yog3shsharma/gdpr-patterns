@@ -17,7 +17,14 @@ RUN     git submodule init                      && \
         git submodule update --init --recursive && \
         npm install
 
-EXPOSE 3000
-EXPOSE 1313
+RUN     git pull origin
+
+EXPOSE 3000:3000
+EXPOSE 1313:1313
 
 CMD bin/start-servers.sh
+
+
+# docker build -t gdpr-patterns:latest bin/docker_all/
+# docker stop gdpr-patterns-img; docker rm gdpr-patterns-img --force;
+# docker run -d --name gdpr-patterns-img -p 1313:1313 -p 3000:3000 gdpr-patterns
