@@ -1,7 +1,7 @@
 ---
 title     : List of Risks
 type      : neo4j
-cypher    : MATCH (a:RISK)-[to]-(b) return * Limit 50
+cypher    : MATCH path = (a:RISK)-[]-(b:RISK)-[]-(c:RISK) return * Limit 50
 #cypher    : "MATCH (a {key : 'RISK-221'})-[to:is_parent_of*0..5]-(b) return * Limit 50"
 #height    : 100
 #width     : 100

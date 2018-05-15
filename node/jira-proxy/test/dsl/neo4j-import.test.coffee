@@ -131,12 +131,22 @@ describe 'dsl | dsl-use-cases', ->
 
 
 
-  it.only 'map_Risks - all_Issues_by_Filter (Vulnerability:Risk Rating,key) - import nodes',->
-    @.timeout 20000
-    result = await @.neo4j_Import.clear()
-                    .all_Issues_by_Filter('RISK','Risk Rating', 'cost_Centers')
+#  it.only 'map_Risks - all_Issues_by_Filter (Vulnerability:Risk Rating,key) - import nodes',->
+#    @.timeout 20000
+#    result = await @.neo4j_Import.clear()
+#                    .all_Issues_by_Filter('RISK','Risk Rating', 'cost_Centers')
+#
+#    #nodes_Ids = await @.neo4j.nodes_Keys()
+#    #result = await @.neo4j_Issues.add_Issues nodes_Ids
+#    #console.log result.size()
+#    #result.size().assert_Is_Bigger_Than 20
 
-    #nodes_Ids = await @.neo4j.nodes_Keys()
-    #result = await @.neo4j_Issues.add_Issues nodes_Ids
-    #console.log result.size()
-    #result.size().assert_Is_Bigger_Than 20
+
+  it.only 'map_Risks',->
+    @.timeout 60000
+    risks_Ids = (issue.key for issue in @.jira.risks()) #.take(50)
+
+    await @.neo4j_Import.clear()
+    result_1 = await  @.neo4j_Issues.add_Issues_As_Nodes risks_Ids
+    result_1      .size().assert_Is 2802
+
