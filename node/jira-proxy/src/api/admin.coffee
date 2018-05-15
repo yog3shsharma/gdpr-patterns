@@ -1,4 +1,5 @@
 express   = require 'express'
+fs = require('fs')
 
 class Admin
   constructor: (options)->
@@ -15,10 +16,11 @@ class Admin
         console.log req.url
         next()
 
-    @.router.get  '/admin/ping'       , @.ping
-    @.router.get  '/admin/env'       , @.getEnv
-    @.router.put  '/admin/env'       , @.putEnv
-    @.router.post  '/admin/env'       , @.putEnv
+    @.router.get    '/admin/ping'       , @.ping
+    @.router.get    '/admin/env'        , @.getEnv
+    @.router.put    '/admin/env'        , @.putEnv
+    @.router.post   '/admin/env'        , @.putEnv
+    @.router.get    '/admin/countfiles' , @.getCountFiles
     @
 
   ping: (req,res)->
@@ -41,5 +43,31 @@ class Admin
     #console.log(req.query)
     res.send {}
 
+
+  countFolderSize=(pathname) ->
+    cnt = 0
+    try
+      fs.readdirSync(pathname).forEach (file) ->
+          stats = fs.lstatSync(pathname + "/" + file)
+          if stats.isDirectory()
+            cnt += countFolderSize(pathname+"/"+file)
+          else 
+            cnt++
+    catch e
+      console.log("No file or direcotry: "  + pathname)
+    finally
+      return cnt
+
+
+  getCountFiles: (req,res)->
+    res_data = {
+      path: require('path').dirname(require.main.filename),
+      files: 0
+    }
+
+    res_data.path = res_data.path + "/../data"
+    res_data.files = countFolderSize(res_data.path)
+    
+    res.send res_data
 
 module.exports = Admin
