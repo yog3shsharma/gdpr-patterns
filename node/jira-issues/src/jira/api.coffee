@@ -41,7 +41,7 @@ class Api
     issues   = []
     options =
       startAt   : 0
-      maxResults: 200
+      maxResults: 60
       #expand    : ['changelog']
       fields    : fields || ['summary','status']
 
@@ -56,7 +56,7 @@ class Api
           callback issues
           issues = []
           get_Issues()                          # recursive call to get more issues
-          
+
         else
           callback issues                       # no more issues'
 
