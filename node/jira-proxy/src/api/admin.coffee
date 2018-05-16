@@ -1,5 +1,5 @@
 express   = require 'express'
-fs = require('fs')
+fs = require('fs-extra')
 
 class Admin
   constructor: (options)->
@@ -21,11 +21,18 @@ class Admin
     @.router.put    '/admin/env'        , @.putEnv
     @.router.post   '/admin/env'        , @.putEnv
     @.router.get    '/admin/countfiles' , @.getCountFiles
+    @.router.delete    '/admin/datafolder' , @.deleteDataFolder
     @
 
   ping: (req,res)->
     res.send ('pong')
-    
+
+  deleteDataFolder: (req,res)->
+    pathname = require('path').dirname(require.main.filename)+ "/../data"
+    console.log("deleteing " + pathname)
+    fs.removeSync(pathname)
+    res.send {"exit": 0}
+       
   getEnv: (req,res)->
     environment_vars = {
       Jira_Protocol: process.env.Jira_Protocol,
@@ -54,7 +61,7 @@ class Admin
           else 
             cnt++
     catch e
-      console.log("No file or direcotry: "  + pathname)
+      console.error("No file or direcotry: "  + pathname)
     finally
       return cnt
 
