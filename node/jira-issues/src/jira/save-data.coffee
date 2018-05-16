@@ -66,9 +66,9 @@ class Save_Data
     else
       return null
 
-  save_All_Issues: (req)=>
+  save_All_Issues: (jql)=>
     console.log("save all issues called")
-    @.jira.issues "project is not EMPTY", ["*all"], (data)=>
+    @.jira.issues jql, ["*all"], (data)=>
       files = []      
       for item in data
         files.add @.save_Issue_Data(item)

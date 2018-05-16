@@ -72,7 +72,8 @@ class Jira
       res.json error: 'jql must be provided'
 
   all_issues: (req,res)=>
-      @.save_Data.save_All_Issues req
+      jql  = req.query.jql
+      @.save_Data.save_All_Issues jql
       res.json message: 'Request received and will be processed in background, take your HTTP session back :)'
 
 
