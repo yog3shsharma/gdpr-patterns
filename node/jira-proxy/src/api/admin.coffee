@@ -38,9 +38,15 @@ class Admin
       Jira_Protocol: process.env.Jira_Protocol,
       Jira_Host: process.env.Jira_Host,
       Jira_Username: process.env.Jira_Username,
-      Jira_Password: process.env.Jira_Password.length
+      Jira_Password: process.env.Jira_Password
     }
-    res.send environment_vars
+
+    if process.env.Jira_Password
+      environment_vars.Jira_Password = true
+    else
+      environment_vars.Jira_Password = false
+    
+    res.json environment_vars
 
   putEnv: (req,res)->
     process.env.Jira_Protocol = req.query.Jira_Protocol

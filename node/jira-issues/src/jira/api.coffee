@@ -41,7 +41,7 @@ class Api
     issues   = []
     options =
       startAt   : 0
-      maxResults: 60
+      maxResults: 500
       #expand    : ['changelog']
       fields    : fields || ['summary','status']
 
