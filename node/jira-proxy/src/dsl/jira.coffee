@@ -32,7 +32,28 @@ class Jira
     target.keys      = -> (item.key     for item in @)
     target.summaries = -> (item.Summary for item in @)
 
+  issue            : (key)=> @.issues()[key]
   issues           : => @._issues_by_Keys()
+
+  issue_Linked_Issues: (key, issue_Type)=>
+    matches = []
+    issue = @.issues()[key]
+    if issue
+      for item in issue['Linked Issues']
+        key = item.key
+        linked_Issue = @.issues()[key]
+        if not issue_Type
+          matches.push key
+        else if linked_Issue and linked_Issue['Issue Type'] is issue_Type
+          matches.push key
+    return matches
+
+  issues_Linked_Issues: (keys, issue_Type)=>
+    child_Issues = []
+    for key in keys
+      linked_Issues = issue_Linked_Issues(key,issue_Type)
+      child_Issues  = child_Issues.concat(linked_Issues).unique()
+    return child_Issues
 
   assignees        : => @._expand_Issues @._issues_by_Properties()["Assignee"           ]
   brands           : => @._expand_Issues @._issues_by_Properties()["Brands"             ]
@@ -61,5 +82,12 @@ class Jira
   controls          : => @.issue_Types()['Security Controls' ]
   gGoals            : => @.issue_Types()['Security Goal'     ]
   vulns             : => @.issue_Types()['Vulnerability'     ]
+
+
+  add_First_Data_Journey: ()=>
+    issue = @.jira.data_Journeys()[0]
+    await @.neo4j_Import.clear()
+    result_1 = await @.neo4j_Issues.add_Issue_And_Linked_Nodes issue.key
+    resolve result_1
 
 module.exports = Jira

@@ -6,8 +6,15 @@
 {{ $result_div := .Scratch.Get "result_div" }}
 
 <script>
+    var repl_Disabled = "{{ .Params.autorun}}" === "no"
     exec_Code_{{safeJS $code_div}} = function()
     {
+        if (repl_Disabled)
+        {
+            console.log('Server side REPL auto run was disabled')
+            repl_Disabled = false
+            return
+        }
         code = myCodeMirror_{{safeJS $code_div}}.getValue()
         url = `/api/dsl/exec?code=${encodeURIComponent(code)}`
 

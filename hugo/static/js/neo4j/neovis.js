@@ -43769,10 +43769,9 @@ class NeoVis {
      */
      buildNodeVisObject(n) {
         
-        var self = this;
+        let self = this;
         let node = {};
-        let label = n.labels[0];
-
+        let label = n.labels[0].toLowerCase();
         let captionKey   = this._config && this._config.labels && this._config.labels[label] && this._config.labels[label]['caption'   ],
             sizeKey      = this._config && this._config.labels && this._config.labels[label] && this._config.labels[label]['size'      ],
             sizeCypher   = this._config && this._config.labels && this._config.labels[label] && this._config.labels[label]['sizeCypher'],
@@ -43784,7 +43783,6 @@ class NeoVis {
             shape        = this._config && this._config.labels && this._config.labels[label] && this._config.labels[label]['shape'     ],
             size         = this._config && this._config.labels && this._config.labels[label] && this._config.labels[label]['size'      ],
             labelValue   = this._config && this._config.labels && this._config.labels[label] && this._config.labels[label]['label'     ];
-
 
         node['id'] = n.identity.toInt();
 

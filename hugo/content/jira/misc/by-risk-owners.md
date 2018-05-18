@@ -3,12 +3,9 @@ title     : by Risk Owner
 type      : neo4j
 #gravity   : -4000
 view      : fullscreen
-height    : 800
+height    : 300
 labels    :
-    #RISK:
-    #    caption: key
-    #    image  : /img/osa/osa_warning.png
-    Risk_Owner:
+    Risk_Owners:
         caption: key
         size   : 40
         mass: 3
@@ -42,7 +39,14 @@ relationships:
         label:
 ---
 
-Risks mapped to owners
+Risks mapped to owners:
+{{< repl-dsl height="100" autorun="no">}}
+return new Promise (resolve)=>
+    await @.neo4j_Import.clear()
+    result = await @.neo4j_Import.all_Issues_by_Filter('RISK','Risk Rating', 'risk_Owners')
+    resolve result
+
+{{</ repl-dsl >}}
 
 {{< cypher-query height="40">}}
 MATCH path=(a)-[to]-(b) return path Limit 50

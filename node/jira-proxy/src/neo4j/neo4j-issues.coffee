@@ -49,10 +49,12 @@ class Neo4j_Issues
           results = results.concat linked_Issues_Result
 
       return results
+  add_Issues_As_Nodes: (id)->
+    return await @.add_Issue_And_Linked_Nodes id
 
-  add_Issue_As_Nodes: (id,callback)->
-    @.add_Issue_Linked_Issues_As_Single_Nodes id, (err, results)->
-      callback err, results
+#  add_Issue_As_Nodes: (id,callback)->
+#    @.add_Issue_Linked_Issues_As_Single_Nodes id, (err, results)->
+#      callback err, results
 
 #  add_Issue_As_Nodes_with_Metadata: (id,callback)->
 #    @.add_Issue_Metatada_As_Nodes id, (err, results1)=>
@@ -67,6 +69,7 @@ class Neo4j_Issues
     results = []
 
     for id in ids
+      console.log "processing #{id}"
       id_Results = await @.add_Issue_And_Linked_Nodes id
       if id_Results
         results = results.concat id_Results

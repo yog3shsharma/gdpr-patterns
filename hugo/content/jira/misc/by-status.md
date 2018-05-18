@@ -1,5 +1,5 @@
 ---
-title     : by Risk Owner
+title     : by Status
 type      : neo4j
 #gravity   : -4000
 view      : fullscreen

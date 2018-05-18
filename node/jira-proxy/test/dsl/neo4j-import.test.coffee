@@ -142,7 +142,7 @@ describe 'dsl | dsl-use-cases', ->
 #    #result.size().assert_Is_Bigger_Than 20
 
 
-  it.only 'map_Risks',->
+  it 'map_Risks',->
     @.timeout 60000
     risks_Ids = (issue.key for issue in @.jira.risks()) #.take(50)
 
