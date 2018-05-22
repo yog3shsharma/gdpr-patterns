@@ -25,6 +25,13 @@ EXPOSE 1313:1313
 CMD bin/start-servers.sh
 
 
+# docker login
+
+# 7473, 7474, 7687
+# docker ps -a
 # docker build -t gdpr-patterns:latest bin/docker_all/
-# docker stop gdpr-patterns-img; docker rm gdpr-patterns-img --force;
-# docker run -d --name gdpr-patterns-img -p 1313:1313 -p 3000:3000 gdpr-patterns
+# docker tag gdpr-patterns pbxgs/gdpr-patterns
+# docker push pbxgs/gdpr-patterns
+# docker stop gdpr-patterns; docker rm gdpr-patterns --force;
+# docker run -d --name gdpr-patterns -p 1313:1313 -p 3000:3000 --env Neo4J_Url=bolt://10.8.0.17:7687 --env Neo4J_Username=neo4j --env Neo4J_Password=test pbxgs/gdpr-patterns
+# docker pull pbxgs/gdpr-patterns
