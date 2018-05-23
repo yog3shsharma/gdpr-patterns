@@ -28,7 +28,7 @@ class Admin
     res.send ('pong')
 
   deleteDataFolder: (req,res)->
-    pathname = require('path').dirname(require.main.filename)+ "/../data"
+    pathname = require('path').dirname(require.main.filename)+ "/../data/Issues_Raw"
     console.log("deleteing " + pathname)
     fs.removeSync(pathname)
     res.send {"exit": 0}
@@ -78,7 +78,7 @@ class Admin
       files: 0
     }
 
-    res_data.path = res_data.path + "/../data"
+    res_data.path = res_data.path + "/../data/Issues_Raw"
     res_data.files = countFolderSize(res_data.path)
     
     res.send res_data
