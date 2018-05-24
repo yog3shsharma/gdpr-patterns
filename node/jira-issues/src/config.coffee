@@ -11,7 +11,7 @@ config_data =
   apiVersion : process.env.Jira_ApiVersion || jira_Details?.apiVersion || 'latest'   ,
   strictSSL  : false
   neo4j      : {
-    url     : process.env.Neo4J_Url      || "bolt://10.8.0.17:7687"
+    url     : process.env.Neo4J_Url      || "bolt://localhost:7687"
     username: process.env.Neo4J_Username || 'neo4j',
     password: process.env.Neo4J_Password || 'test' }
 

@@ -42,7 +42,10 @@ class Neo4j
       if key isnt "Linked Issues"
         key = key.to_Safe_String().replace(/\s/g,'_').replace(/-/g,'_')
         params[key] = value
-    label = label.replace('-','_').replace(' ', '_')
+    try
+      label = label.replace('-','_').replace(' ', '_')
+    catch e 
+      label = 'underfined'
     params_query = @.params_For_Query(params)
     cypher = "MERGE (u:#{label} #{params_query})  RETURN u"
     @.run_Cypher cypher, params, callback

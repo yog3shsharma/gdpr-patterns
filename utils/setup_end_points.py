@@ -13,6 +13,7 @@ print "0,", r.status_code
 r = requests.delete("http://" + server + ":3000/api/admin/datafolder")
 print "0,", r.status_code
 
+#exit(0)
 
 while True:
     r = requests.get("http://" + server + ":3000/api/admin/countfiles")

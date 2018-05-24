@@ -21,7 +21,10 @@ class Api
           callback data
         .catch (err)->
           console.log err.message
-          callback {"jira_error" : err.message }
+          try
+            callback {"jira_error" : err.message }
+          catch ee
+            callback null
     else
       console.log {"jira_error" : 'jira server offline' }
       callback null
