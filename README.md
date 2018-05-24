@@ -14,4 +14,10 @@
     2. Browse http://localhost:3000/
 
 
+export Jira_Protocol="https"
+export Jira_Host="jira.*.com"
+export Jira_Username="username"
+export Jira_Password="password"
+
+
 
