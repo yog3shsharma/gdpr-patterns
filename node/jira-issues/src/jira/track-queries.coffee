@@ -38,11 +38,6 @@ class Track_Queries
     queries = @.current()
     query   = queries[name]
 
-    console.log(1, queries)
-    console.log(2, name)
-    console.log(3, query)
-    console.log(4, query)
-
     if query is undefined
       console.log "[Track_Queries][update] query not found #{name}"
     else
@@ -75,6 +70,7 @@ class Track_Queries
       console.log "Updating tracked files '#{name}' using jql: #{jql}"
 
       now_date = @.now_Date()
+      console.log(now_date)
       @.save_Data.save_Issues jql, (result)=>
         if result.size() > 0
           query.last_updated = now_date

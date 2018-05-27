@@ -8,6 +8,7 @@ Save_Data = require '../node/jira-issues/src/jira/save-data.coffee'
 CONFIG = require(process.argv.slice(2)[0])
 exec = require('child_process').exec
 
+git_url = process.env.GIT_HTTP_Url || CONFIG.jira_data_git
 
 track_Queries   = new Track_Queries()
 mappings_Create = new Mappings_Create()
@@ -16,24 +17,29 @@ save_data = new Save_Data()
 
 delay         = 60 * 1000
 
-pull_update_from_GIT = ->
-  exec_command = 'git clone ' + CONFIG.jira_data_git + ' data'
+clone_GIT = ->
+  exec_command = 'git clone ' + git_url + ' data'
   new Promise (resolve) ->
     exec exec_command, (error, stdout, stderr) ->
       if stdout
         console.log 'git cloned into "data" folder'
       if error
         console.error 'ERROR ', stderr
+      
+      await pull_from_GIT()
+      resolve(99)
 
-      exec 'cd data; git pull origin master; cd ..', (error, stdout, stderr) ->
-        if stdout
-          console.log 'jira data updated from master'
-        if error
-          console.error 'ERROR ', stderr
-        resolve(99)
+pull_from_GIT = ->
+  new Promise (resolve) ->
+    exec 'cd data; git pull origin master; cd ..', (error, stdout, stderr) ->
+      if stdout
+        console.log 'jira data updated from master'
+      if error
+        console.error 'ERROR ', stderr
+      resolve(99)
 
-push_updates_to_GIT = ->
-  exec_command = 'cd data; git add --all; git commit -m "update"; git push; cd ..'
+push_to_GIT = ->
+  exec_command = 'cd data; git add --all; git commit -m "' + new Date().getTime() + '"; git push; cd ..'
   new Promise (resolve) ->
     exec exec_command, (error, stdout, stderr) ->
       if stdout
@@ -44,9 +50,10 @@ push_updates_to_GIT = ->
 
 update_Mappings = (result)->
   if result.size() > 0
+    await pull_from_GIT()
     console.log("Size: "  +result.size())
     mappings_Create.all()
-    await push_updates_to_GIT()
+    await push_to_GIT()
 
 update_data_from_JIRA = ->
   new Promise (resolve) ->
@@ -54,8 +61,7 @@ update_data_from_JIRA = ->
     resolve(99)
 
 init = ->
-  await pull_update_from_GIT()  
-  #await update_data_from_JIRA()
+  await clone_GIT()  
   setInterval  await update_data_from_JIRA, delay
 
 init()
