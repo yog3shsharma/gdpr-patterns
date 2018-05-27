@@ -27,10 +27,13 @@ class Admin
   ping: (req,res)->
     res.send ('pong')
 
-  deleteDataFolder: (req,res)->
+  deleteDataFolder_NoHTTP: ->
     pathname = require('path').dirname(require.main.filename)+ "/../data/Issues_Raw"
-    console.log("deleteing " + pathname)
+    console.log("Deleteing " + pathname)
     fs.removeSync(pathname)
+    
+  deleteDataFolder: (req,res)->
+    deleteDataFolder_NoHTTP()
     res.send {"exit": 0}
        
   getEnv: (req,res)->

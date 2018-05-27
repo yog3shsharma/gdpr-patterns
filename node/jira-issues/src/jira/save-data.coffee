@@ -67,13 +67,13 @@ class Save_Data
       return null
 
   save_All_Issues: (jql)=>
-    console.log("save all issues called")
+    #console.log("save all issues called")
     @.jira.issues jql, ["*all"], (data)=>
       files = []      
       for item in data
         files.add @.save_Issue_Data(item)
       #console.log 'All files saved'
-      console.log("save all issues called - completed")
+      console.log("save all issues called - completed for " + data.length + " tickets")
 
 
   save_Issues: (jql, callback)=>

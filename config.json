@@ -4,6 +4,8 @@
     "languageCode": "en-uk",
     "paginate": "10",
     "theme": "coreui-hugo",
+    "jql": "(project = GDPR or project = VULN or project = SEC or project = RISK or project = TM) ",
+    "jira_data_git": "ssh://git@10.8.0.17:10022/gs/jira-data.git",
     "Params": {
       "ghrepo": ""
     },

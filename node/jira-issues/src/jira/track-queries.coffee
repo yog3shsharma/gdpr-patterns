@@ -34,8 +34,15 @@ class Track_Queries
     return now.toISOString().replace('T',' ').substr(0, 16);
 
   update: (name, callback)->
+
     queries = @.current()
     query   = queries[name]
+
+    console.log(1, queries)
+    console.log(2, name)
+    console.log(3, query)
+    console.log(4, query)
+
     if query is undefined
       console.log "[Track_Queries][update] query not found #{name}"
     else
@@ -53,6 +60,29 @@ class Track_Queries
           queries.save_Json @.data.file_Tracked_Queries
 
         callback result
+  
+  update_by_jql: (jql, callback)->
+    name = 'open-projects'
 
+    queries = @.current()
+    query   = queries[name]
+
+    if query is undefined
+      console.log "[Track_Queries][update] query not found #{name}"
+    else
+      if query.last_updated
+        jql += " and updated >= '#{query.last_updated}'"
+      console.log "Updating tracked files '#{name}' using jql: #{jql}"
+
+      now_date = @.now_Date()
+      @.save_Data.save_Issues jql, (result)=>
+        if result.size() > 0
+          query.last_updated = now_date
+          query.jql = jql
+          query.issues_saved = result.size()
+          console.log "Updated #{query.issues_saved} issues"
+          queries.save_Json @.data.file_Tracked_Queries
+
+        callback result
 
 module.exports = Track_Queries

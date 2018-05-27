@@ -13,11 +13,13 @@ class Api
       callback data.name
 
   _call_Jira: (command, params, callback)=>
+    #console.log("C", command)
+    #console.log("P", params)
     if (await @.jira_Server_Available())
-      console.log("Request made")
+      console.log("Connecting to jira...")
       @._jira_Api[command].apply(@._jira_Api,  params)
         .then (data)->
-          console.log("Request completed")
+          console.log("Connection completed")
           callback data
         .catch (err)->
           console.log err.message
@@ -55,7 +57,7 @@ class Api
           #console.log "[jira api] fetched #{data?.issues?.size()} issues"
           options.startAt += data.issues.size()
           issues = issues.concat data.issues
-
+          
           callback issues
           issues = []
           get_Issues()                          # recursive call to get more issues
