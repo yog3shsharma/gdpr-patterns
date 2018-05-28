@@ -64,6 +64,7 @@ update_data_from_JIRA = ->
     resolve(99)
 
 init = ->
+  console.log("START")
   await clone_GIT()
   await pull_from_GIT()  
   setInterval  await update_data_from_JIRA, delay
