@@ -15,7 +15,7 @@ mappings_Create = new Mappings_Create()
 admin_functions = new Admin_Functions()
 save_data = new Save_Data()
 
-delay         = 60 * 1000
+delay         = 5 * 1000
 
 clone_GIT = ->
   exec_command = 'git clone ' + git_url + ' data'
@@ -50,10 +50,10 @@ push_to_GIT = ->
 
 update_Mappings = (result)->
   if result.size() > 0
-    await pull_from_GIT()
     console.log("Size: "  +result.size())
     mappings_Create.all()
     await push_to_GIT()
+    await pull_from_GIT()
 
 update_data_from_JIRA = ->
   new Promise (resolve) ->

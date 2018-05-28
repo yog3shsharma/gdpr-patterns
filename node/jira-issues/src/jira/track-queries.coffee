@@ -70,9 +70,7 @@ class Track_Queries
       if query.last_updated
         jql += " and updated >= #{query.last_updated}"
       console.log "Updating tracked files '#{name}' using jql: #{jql}"
-
-      now_date = @.now_Date()
-      console.log(now_date)
+      
       @.save_Data.save_Issues jql, (result)=>
         if result.size() > 0
           #query.last_updated = now_date
