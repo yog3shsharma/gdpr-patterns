@@ -69,15 +69,15 @@ class Track_Queries
     else
       if query.last_updated
         jql += " and updated >= #{query.last_updated}"
-      console.log "Updating tracked files '#{name}' using jql: #{jql}"
-      
+      console.log "JQL files '#{name}' using jql: #{jql}"
+
       @.save_Data.save_Issues jql, (result)=>
         if result.size() > 0
           #query.last_updated = now_date
           query.last_updated = new Date().getTime()
           query.jql = jql
           query.issues_saved = result.size()
-          console.log "Updated #{query.issues_saved} issues"
+          #console.log "Updated #{query.issues_saved} issues"
           queries.save_Json @.data.file_Tracked_Queries
 
         callback result
