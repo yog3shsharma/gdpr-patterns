@@ -1,6 +1,8 @@
 FROM    node:9.10.1
 
-RUN     apt-get update && apt-get install apt-utils vim -y
+RUN     apt-get update && apt-get install apt-utils git vim -y
+RUN     git config --global user.name "GDPR Patterns"
+RUN     git config --global user.email gdpr-patterns@example.com
 RUN     git clone https://github.com/pbx-gs/gdpr-patterns.git
 WORKDIR gdpr-patterns
 RUN     npm install
