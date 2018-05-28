@@ -23,20 +23,21 @@ clone_GIT = ->
     exec exec_command, (error, stdout, stderr) ->
       if stdout
         console.log 'GIT CLONED'
-        resolve(99)
+        #resolve(99)
       if error
         console.error 'ERROR ', stderr
-        resolve(99)
-      
+        #resolve(99)
+      resolve(99)
 
 pull_from_GIT = ->
   new Promise (resolve) ->
     exec 'cd data; git pull origin master; cd ..', (error, stdout, stderr) ->
       if stdout
         console.log 'GIT PULLED'
-        resolve(99)
+        #resolve(99)
       if error
         console.error 'ERROR ', stderr
+      resolve(99)
 
 push_to_GIT = ->
   exec_command = 'cd data; git add --all; git commit -m "' + new Date().getTime() + '"; git push; cd ..'
@@ -44,10 +45,10 @@ push_to_GIT = ->
     exec exec_command, (error, stdout, stderr) ->
       if stdout
         console.log 'GIT PUSHED'
-        resolve(99)
+        #resolve(99)
       if error
         console.error 'ERROR ', stderr
-      
+      resolve(99)
 
 update_Mappings = (result)->
   if result.size() > 0
