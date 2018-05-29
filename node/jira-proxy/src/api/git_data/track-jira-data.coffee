@@ -1,4 +1,5 @@
 exec = require('child_process').exec
+CONFIG = require(process.argv.slice(2)[0])
 
 class Git_Operations
   constructor: ()->
