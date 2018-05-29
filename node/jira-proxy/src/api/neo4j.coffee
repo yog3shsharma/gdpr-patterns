@@ -31,7 +31,7 @@ class Neo4J
 
   send_Json_Data:(req,res,json_Data)=>                    # this should be added as a global filter
     pretty = req.query?._keys().contains 'pretty'
-    if pretty
+    if pretty and json_Data
       res.send "<pre>#{json_Data.json_Pretty()}</pre>"
     else
       res.json json_Data

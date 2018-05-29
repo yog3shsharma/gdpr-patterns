@@ -1,5 +1,6 @@
 express   = require 'express'
 fs = require('fs-extra')
+Git_Operations = require './git_data/track-jira-data.coffee'
 
 class Admin
   constructor: (options)->
@@ -18,20 +19,28 @@ class Admin
 
     @.router.get    '/admin/ping'       , @.ping
     @.router.get    '/admin/env'        , @.getEnv
-    @.router.put    '/admin/env'        , @.putEnv
-    @.router.post   '/admin/env'        , @.putEnv
+    @.router.get    '/admin/git/pull' , @.getGitPull
+    @.router.get    '/admin/git/clone' , @.getGitClone
     @.router.get    '/admin/countfiles' , @.getCountFiles
     @.router.delete    '/admin/datafolder' , @.deleteDataFolder
     @
 
   ping: (req,res)->
-    res.send ('pong')
+    res.send 'pong'
 
-  deleteDataFolder_NoHTTP: ->
-    pathname = require('path').dirname(require.main.filename)+ "/../data/Issues_Raw"
+  getGitPull: (req,res)->
+    res.send await new Git_Operations().pull_from_GIT()
+
+  getGitClone: (req,res)->
+    res.send await new Git_Operations().clone_GIT()
+
+
+
+  deleteDataFolder_NoHTTP=(pathname) ->
+    pathname = require('path').dirname(require.main.filename)+ "/../data"
     console.log("Deleteing " + pathname)
     fs.removeSync(pathname)
-    
+  
   deleteDataFolder: (req,res)->
     deleteDataFolder_NoHTTP()
     res.send {"exit": 0}
@@ -50,14 +59,6 @@ class Admin
       environment_vars.Jira_Password = false
     
     res.json environment_vars
-
-  putEnv: (req,res)->
-    process.env.Jira_Protocol = req.query.Jira_Protocol
-    process.env.Jira_Host = req.query.Jira_Host
-    process.env.Jira_Username = req.query.Jira_Username
-    process.env.Jira_Password = req.query.Jira_Password
-    #console.log(req.query)
-    res.send {}
 
 
   countFolderSize=(pathname) ->
@@ -81,7 +82,7 @@ class Admin
       files: 0
     }
 
-    res_data.path = res_data.path + "/../data/Issues_Raw"
+    res_data.path = res_data.path + "/../data"
     res_data.files = countFolderSize(res_data.path)
     
     res.send res_data
