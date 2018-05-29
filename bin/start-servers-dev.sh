@@ -10,7 +10,6 @@ touch data/Mappings/tracked_queries.json;
 touch data/Mappings/issues-by-properties.json;
 touch data/Mappings/issues-by-key.json;
 
-
 cd gdpr-patterns-presentation
 hugo serve  &
 cd ..

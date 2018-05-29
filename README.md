@@ -25,7 +25,7 @@
 ## Docker
     1. docker build -t gdpr-patterns:latest bin/docker/gdpr-patterns --no-cache && docker tag gdpr-patterns pbxgs/gdpr-patterns && docker push pbxgs/gdpr-patterns;
     2. docker stop gdpr-patterns; docker rm gdpr-patterns --force;
-    3. docker run -d --name gdpr-patterns pbxgs/gdpr-patterns
+    3. docker run -d --name gdpr-patterns -p 1313:1313 -p 3000:3000 --env Neo4J_Url=bolt://10.8.0.17:7687 --env Neo4J_Username=neo4j --env Neo4J_Password=test pbxgs/gdpr-patterns
 
 
 ## Docker Data
