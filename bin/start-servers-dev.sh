@@ -10,6 +10,11 @@ touch data/Mappings/tracked_queries.json;
 touch data/Mappings/issues-by-properties.json;
 touch data/Mappings/issues-by-key.json;
 
+time git clone ssh://git@10.8.0.17:10022/gs/jira-data.git data
+cd data
+git pull
+cd ..
+
 cd gdpr-patterns-presentation
 hugo serve  &
 cd ..

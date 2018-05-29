@@ -160,6 +160,9 @@ class Neo4j_Issues
     targets = []
     results = []
 
+    if !linked_Issues
+      return null
+
     for issue in linked_Issues
       linked_Issue = @.map_Issues.issue(issue.key)          # doing this here is highly inefficient (this mapping needs to be done when mapping the Linked Issues)
       options =
