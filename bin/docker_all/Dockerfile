@@ -4,6 +4,9 @@ RUN     apt-get update && apt-get install apt-utils vim -y
 ENV     HUGO_VERSION 0.36.1
 ENV     HUGO_BINARY hugo_${HUGO_VERSION}_Linux-64bit.deb
 
+RUN     git config --global user.name "GDPR Patterns"
+RUN     git config --global user.email gdpr-patterns@example.com
+
 ADD     https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_BINARY} /tmp/hugo.deb
 RUN     dpkg -i /tmp/hugo.deb                   && \
 	    rm /tmp/hugo.deb
