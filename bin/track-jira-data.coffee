@@ -1,10 +1,15 @@
 #!/usr/bin/env coffee
 require 'fluentnode'
 
+
 Track_Queries   = require '../node/jira-issues/src/jira/track-queries'
 Mappings_Create = require '../node/jira-mappings/src/create.coffee'
 Admin_Functions = require '../node/jira-proxy/src/api/admin.coffee'
 Save_Data = require '../node/jira-issues/src/jira/save-data.coffee'
+
+Jira_Setup = require '../node/jira-proxy/src/api/jira-server.coffee'
+
+
 CONFIG = require(process.argv.slice(2)[0])
 exec = require('child_process').exec
 
@@ -14,8 +19,9 @@ track_Queries   = new Track_Queries()
 mappings_Create = new Mappings_Create()
 admin_functions = new Admin_Functions()
 save_data = new Save_Data()
+jira_setup = new Jira_Setup()
 
-delay         = 30 * 1000
+delay         = 5 * 1000
 
 clone_GIT = ->
   exec_command = 'git clone ' + git_url + ' data'
@@ -68,6 +74,8 @@ init = ->
   console.log("START")
   await clone_GIT()
   await pull_from_GIT()  
-  setInterval  await update_data_from_JIRA, delay
+  await jira_setup.setup_init()
+  await track_Queries.create  'open-projects', CONFIG.jql
+  setInterval await update_data_from_JIRA, delay
 
 init()

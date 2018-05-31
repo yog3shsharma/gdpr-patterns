@@ -111,11 +111,15 @@ class Jira
     else
       res.json error: 'name  must be provided'
 
-  setup: (req,res)=>        # todo: refactor into separate class so that it can be called during the server setup
+  setup_init: =>
     @.data.setup()                          # setup data folders
     @.mappings_Create.all()                 # create first set of mappings
     await @.save_Data.save_Issues_Schema()  # make sure schema exists
 
+  setup: (req,res)=>        # todo: refactor into separate class so that it can be called during the server setup
+    @.data.setup()                          # setup data folders
+    @.mappings_Create.all()                 # create first set of mappings
+    await @.save_Data.save_Issues_Schema()  # make sure schema exists
     result =
       folder_Data         : @.data.folder_Data
       #folder_Issues       : @.data.folder_Issues

@@ -1,16 +1,16 @@
 # GDPR Patterns
 
 ## Installing
-    1. git clone git@github.com:pbx-gs/gdpr-patterns.git
-    2. cd gdp-patterns
-    6. Install neo4J, hugo and nodeJS 
-    7. Start Neo4J (keep in mind URL, username and password)
-    8. Edit the file "config.json" 
-    9. ./bin/install.sh
+1. git clone git@github.com:pbx-gs/gdpr-patterns.git && cd gdp-patterns
+2. Install neo4J, hugo 0.36.1, nodeJS v>=8
+3. git submodule init && git submodule update  --init --recursive
+4. mkdir -p gdpr-patterns-presentation/data && echo -e "url: bolt://localhost:7687\nuser: neo4j\npassword : test" > gdpr-patterns-presentation/data/neo4j_server.yaml
+5. npm install
+
 
 ## Running
-    1. ./bin/start-servers.sh
-    2. Browse http://localhost:3000/
+1. ./bin/start-servers.sh
+2. Browse http://localhost:3000/
 
 ## Enviroment Variables
     export Jira_Protocol="https"
@@ -20,7 +20,7 @@
     export Neo4J_Url="bolt://localhost:7687"
     export Neo4J_Username='neo4j'
     export Neo4J_Password='test' 
-    export GIT_HTTP_Url='https://user:pass@bitbucket.org/pbx-gs/gdpr-patterns-data.git'
+    export GIT_HTTP_Url='https://user:pass@bitbucket.org/pbx-gs/public-gdpr-patterns-data.git'
 
 ## Docker
     1. docker build -t gdpr-patterns:latest bin/docker/gdpr-patterns --no-cache && docker tag gdpr-patterns pbxgs/gdpr-patterns && docker push pbxgs/gdpr-patterns;

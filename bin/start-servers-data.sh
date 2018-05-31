@@ -1,5 +1,5 @@
 echo "**************************************************"
-echo "***   Starting Hugo Server in Dev mode - DATA  ***"
+echo "***  Starting DATA Server in Dev mode - DATA   ***"
 echo "**************************************************"
 
 node_modules/.bin/nodemon \
