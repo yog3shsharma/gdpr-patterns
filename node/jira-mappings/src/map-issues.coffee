@@ -5,7 +5,7 @@ config = # move this to spearate file
                         "Global Rank", "Moonpig IOS Definition of Ready Verified?","Severity Moonpig Mobile","Frequency","Regression",
                         "Fix Version/s", "Progress", "Request participants","Reporter", "Sub-Tasks", "Time Tracking", "Affects Version/s", "Votes", "Watchers",
                         "Log Work", "Work Ratio",
-                        "Component/s", "Description", "Labels"]
+                        "Component/s",  "Labels"]
   properties_to_Skip: [ "key", "Created", "Updated","Linked Issues","Resolved", "Due Date","Resources Needed",
                         "Comment","Summary", "Budget (£k)","Budget Schedule","Project Name","Project Overview",
                         "Resource", "Task Response","Risk Description","Mitigating Actions to be Undertaken",
