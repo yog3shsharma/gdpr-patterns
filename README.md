@@ -21,6 +21,7 @@
     export Neo4J_Username='neo4j'
     export Neo4J_Password='test' 
     export GIT_HTTP_Url='https://user:pass@bitbucket.org/pbx-gs/public-gdpr-patterns-data.git'
+    export GDPR_APP='http://localhost:3000'
 
 ## Docker
     1. docker build -t gdpr-patterns:latest bin/docker/gdpr-patterns --no-cache && docker tag gdpr-patterns pbxgs/gdpr-patterns && docker push pbxgs/gdpr-patterns;

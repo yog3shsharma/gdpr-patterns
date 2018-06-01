@@ -5,6 +5,7 @@
     "paginate": "10",
     "theme": "coreui-hugo",
     "jql": "(project = GDPR or project = VULN or project = SEC or project = RISK or project = TM) ",
+    "GDPR_APP": "http://localhost:3000",
     "jira_data_git": "https://user:pass@bitbucket.org/pbx-gs/public-gdpr-patterns-data.git",
     "Params": {
       "ghrepo": ""
