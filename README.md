@@ -34,3 +34,40 @@
     2. docker stop gdpr-patterns-data; docker rm gdpr-patterns-data --force;
     3. docker run -d --name gdpr-patterns-data  --env --env GIT_HTTP_Url='http://gdpr-patterns:@0.0.0.0:10080/gs/jira-data.git pbxgs/gdpr-patterns-data
 
+## Run Docker "gdpr-patterns"
+```
+docker stop gdpr-patterns; docker rm gdpr-patterns --force;
+
+docker pull pbxgs/gdpr-patterns;
+
+docker run -d\
+	 --name gdpr-patterns\
+	 --env Jira_Host="gdpr-patterns.atlassian.net"\
+	 --env Jira_Username="yourname@yourdomain.com"\
+	 --env Jira_Password="your password"\
+	 --env Neo4J_Url=bolt://localhost:7687\
+	 --env Neo4J_Username=neo4j\
+	 --env Neo4J_Password=test\
+	 --env GIT_HTTP_Url='http://bitbucket.org/pbx-gs/public-gdpr-patterns-data.git'\
+	 --env GDPR_APP="http://localhost:3000"\
+	pbxgs/gdpr-patterns
+
+```
+## Run Docker "gdpr-patterns-data"
+```
+docker stop gdpr-patterns-data; docker rm gdpr-patterns-data --force;
+
+docker pull pbxgs/gdpr-patterns-data;
+
+docker run -d\
+	 --name gdpr-patterns-data\
+	 --env Jira_Host=gdpr-patterns.atlassian.net\
+	 --env Jira_Username="username"\
+	 --env Jira_Password="pass"\
+	 --env Neo4J_Url=bolt://localhost:7687\
+	 --env Neo4J_Username=neo4j\
+	 --env Neo4J_Password=test\
+	 --env GIT_HTTP_Url='http://username:password@bitbucket.org/pbx-gs/public-gdpr-patterns-data.git'\
+	 --env GDPR_APP="http://localhost:3000"\
+	pbxgs/gdpr-patterns-data
+```
