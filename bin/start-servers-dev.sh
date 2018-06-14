@@ -2,15 +2,21 @@ echo "********************************************"
 echo "*** Starting Hugo Server in Dev mode     ***"
 echo "********************************************"
 
-#time git clone ssh://git@10.8.0.17:10022/gs/jira-data.git data
-#cd data
-#git pull
-#cd ..
+# Remove Data folder
+rm -rf data;
+echo "Data folder deleted"
 
+# Clone JIRA tickets from JIRA (based on env variable)
+time git clone $GIT_HTTP_Url data
+echo "JIRA tickets copied locally from remote GIT"
+
+echo "Starting HUGO"
 cd gdpr-patterns-presentation
 hugo serve  &
+echo "Hugo started"
 cd ..
 
+echo "Starting Application"
 node_modules/.bin/nodemon         \
     -w ./node/jira-proxy/src/     \
     -w ./node/jira-issues/src/    \
