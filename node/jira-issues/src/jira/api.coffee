@@ -46,7 +46,7 @@ class Api
     issues   = []
     options =
       startAt   : 0
-      maxResults: 500
+      maxResults: 800
       #expand    : ['changelog']
       fields    : fields || ['summary','status']
 
@@ -78,7 +78,7 @@ class Api
   search: (jql, callback)->
     options =
       startAt   : 1
-      maxResults: 50
+      maxResults: 800
       fields    : ['summary','status']
     @._call_Jira "searchJira", [jql,options], callback
 
@@ -91,7 +91,7 @@ class Api
   server_Available: (host,  port)=>
     net     = require 'net'
     options =
-      timeout : 100
+      timeout : 500
       host    : host
       port    : port
 
