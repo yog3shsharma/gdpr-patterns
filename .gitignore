@@ -9,3 +9,4 @@ node_modules/
 hugo/content/pbx-gs
 bin/local
 .DS_Store
+.idea
