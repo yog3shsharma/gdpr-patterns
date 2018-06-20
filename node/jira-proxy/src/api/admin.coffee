@@ -38,7 +38,7 @@ class Admin
 
   deleteDataFolder_NoHTTP=(pathname) ->
     pathname = require('path').dirname(require.main.filename)+ "/../data"
-    console.log("Deleteing " + pathname)
+    console.log("Deleting " + pathname)
     fs.removeSync(pathname)
   
   deleteDataFolder: (req,res)->
