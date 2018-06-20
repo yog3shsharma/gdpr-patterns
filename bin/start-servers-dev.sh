@@ -7,7 +7,7 @@ rm -rf data;
 echo "Data folder deleted"
 
 # Clone JIRA tickets from JIRA (based on env variable)
-time git clone $GIT_HTTP_Url data
+git clone $GIT_HTTP_Url data
 echo "JIRA tickets copied locally from remote GIT"
 
 echo "Starting HUGO"
