@@ -3,11 +3,11 @@ echo "*** Starting Hugo Server in Dev mode     ***"
 echo "********************************************"
 
 # Remove Data folder
-rm -rf data;
+#rm -rf data;
 echo "Data folder deleted"
 
 # Clone JIRA tickets from JIRA (based on env variable)
-git clone $GIT_HTTP_Url data
+#git clone $GIT_HTTP_Url data
 echo "JIRA tickets copied locally from remote GIT"
 
 echo "Starting HUGO"

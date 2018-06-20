@@ -21,6 +21,7 @@ class Neo4J
     @.router.get  '/neo4j/nodes/add-Issue-Metatada-as-Nodes/:id'     , @.add_Issue_Metatada_As_Nodes
     @.router.get  '/neo4j/nodes/add-Issues-Metatada-as-Nodes/:regex' , @.add_Issues_Metatada_As_Nodes
     @.router.get  '/neo4j/nodes/create/:ids'                         , @.nodes_Create
+    @.router.get  '/neo4j/nodes/create-regex/all'                    , @.nodes_Create_all
     @.router.get  '/neo4j/nodes/create-regex/:regex'                 , @.nodes_Create_via_Filter
 
     #todo refactor the direct node creation capability (will be needed for the dsl
@@ -94,10 +95,21 @@ class Neo4J
 
 
   nodes_Create_via_Filter : (req,res)=>
+    console.log 44
     regex   = req.params.regex
+    console.log regex
     ids     = @.neo4j_Issues.map_Issues.issues.ids()
     matches = (id for id in ids when id.match(regex))
-
+    console.log matches
+    results = await @.neo4j_Issues.add_Issues_As_Nodes matches
+    @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
+  
+  nodes_Create_all : (req,res)=>
+    console.log 1234
+    ids     = @.neo4j_Issues.map_Issues.issues.ids()
+    console.log size(ids)
+    matches = (id for id in ids when id.match(regex))
+    console.log matches
     results = await @.neo4j_Issues.add_Issues_As_Nodes matches
     @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
 
