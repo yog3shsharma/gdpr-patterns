@@ -122,5 +122,6 @@ init = ->
   setInterval await update_data_from_JIRA, delay
 
 
-init()
+
+init2()
 

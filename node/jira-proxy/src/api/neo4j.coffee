@@ -100,17 +100,15 @@ class Neo4J
     console.log regex
     ids     = @.neo4j_Issues.map_Issues.issues.ids()
     matches = (id for id in ids when id.match(regex))
-    console.log matches
+    console.log matches[0]
     results = await @.neo4j_Issues.add_Issues_As_Nodes matches
     @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
   
   nodes_Create_all : (req,res)=>
-    console.log 1234
     ids     = @.neo4j_Issues.map_Issues.issues.ids()
-    console.log size(ids)
-    matches = (id for id in ids when id.match(regex))
-    console.log matches
-    results = await @.neo4j_Issues.add_Issues_As_Nodes matches
-    @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
+    @.neo4j_Issues.add_Issues_As_Nodes ids
+    @.send_Json_Data req, res, {"exit": true}
+
+    
 
 module.exports = Neo4J

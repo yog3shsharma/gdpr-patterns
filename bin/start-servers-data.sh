@@ -2,7 +2,7 @@ echo "**************************************************"
 echo "***  Starting DATA Server in Dev mode - DATA   ***"
 echo "**************************************************"
 
-rm -rf data/
+#rm -rf data/
 
 node_modules/.bin/nodemon \
     -w  ./node/jira-proxy/src/  \

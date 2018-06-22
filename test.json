@@ -1,0 +1,14 @@
+  {
+    "user-id": 2,
+    "username": "user_2",
+    "avatar": "URL",
+    "following": [
+      "user_10",
+      "user_6",
+      "user_1"
+    ],
+    "followers": [
+      "user_10"
+    ]
+  }
+
