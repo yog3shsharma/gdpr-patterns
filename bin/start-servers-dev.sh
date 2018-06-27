@@ -6,6 +6,10 @@ echo "********************************************"
 #rm -rf data;
 echo "Data folder deleted"
 
+#cd data
+#git pull
+#cd ..
+
 # Clone JIRA tickets from JIRA (based on env variable)
 #git clone $GIT_HTTP_Url data
 echo "JIRA tickets copied locally from remote GIT"

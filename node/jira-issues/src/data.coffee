@@ -45,6 +45,7 @@ class Data
 
   issue_Raw_Data: (id)=>                  #todo duplicate code from Issues class
     path = @.issue_Raw_File(id)
+    #console.log path
     if path
       return path?.load_Json()
     return null
@@ -56,6 +57,14 @@ class Data
       return path?.load_Json()
     return null
 
+  issue_clean_Data: (id)=>
+    console.log 'aaa'
+    path = @.issue_Raw_File(id)
+    #return {}
+    if path
+      return path?.load_Json()
+    return null
+  
   issues_by_Keys       : -> return @.file_Issues_by_Key       .load_Json() || {}
   issues_by_Properties : -> return @.file_Issues_by_Properties.load_Json() || {}
 

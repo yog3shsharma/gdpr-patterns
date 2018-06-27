@@ -13,6 +13,8 @@ class Save_Data
     if raw_Data
       callback raw_Data
     else
+      callback { jira_error: "[save_Issue] File Not Created"}
+      return
       console.log("Issue #{key} didn't exist locally, so fetching it from JIRA Server")
       @.save_Issue key,(file)=>
         if not file

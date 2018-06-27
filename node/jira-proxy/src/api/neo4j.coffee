@@ -21,7 +21,10 @@ class Neo4J
     @.router.get  '/neo4j/nodes/add-Issue-Metatada-as-Nodes/:id'     , @.add_Issue_Metatada_As_Nodes
     @.router.get  '/neo4j/nodes/add-Issues-Metatada-as-Nodes/:regex' , @.add_Issues_Metatada_As_Nodes
     @.router.get  '/neo4j/nodes/create/:ids'                         , @.nodes_Create
-    @.router.get  '/neo4j/nodes/create-regex/all'                    , @.nodes_Create_all
+    @.router.get  '/neo4j/nodes/create-regex/all_nodes'              , @.nodes_Create_all_nodes
+    
+    @.router.get  '/neo4j/nodes/create-regex/all_links'              , @.nodes_Create_all_links
+
     @.router.get  '/neo4j/nodes/create-regex/:regex'                 , @.nodes_Create_via_Filter
 
     #todo refactor the direct node creation capability (will be needed for the dsl
@@ -104,9 +107,14 @@ class Neo4J
     results = await @.neo4j_Issues.add_Issues_As_Nodes matches
     @.send_Json_Data req, res, { regex: regex , matches_size: matches.size(), nodes_created: results.size(), matches : matches}
   
-  nodes_Create_all : (req,res)=>
+  nodes_Create_all_nodes : (req,res)=>
     ids     = @.neo4j_Issues.map_Issues.issues.ids()
     @.neo4j_Issues.add_Issues_As_Nodes ids
+    @.send_Json_Data req, res, {"exit": true}
+
+  nodes_Create_all_links : (req,res)=>
+    ids     = @.neo4j_Issues.map_Issues.issues.ids()
+    @.neo4j_Issues.add_Issues_As_Links ids
     @.send_Json_Data req, res, {"exit": true}
 
     

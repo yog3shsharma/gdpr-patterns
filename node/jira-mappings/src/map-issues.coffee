@@ -36,6 +36,25 @@ class Map_Issues
     console.log "did not found data for id #{key}"
     return null
 
+  issue_if_exist: (key)->
+    fields_Schema = @.issues.fields_Schema()
+    raw_Issue = @.issues.issue_Raw_Data(key)
+    if raw_Issue
+      result = key : key      # add this extra mapping so that it will be needed on import (later)
+
+      for name,value of raw_Issue
+        if fields_Schema[name]
+          field_Name         = fields_Schema[name].name
+          field_Type         = fields_Schema[name].schema_Type_Name
+
+          if config.ignore_fields.contains field_Name
+            continue
+
+          result[field_Name] = @.get_Data_By_Type field_Name, field_Type, value
+      return result
+    console.log "did not found data for id #{key}"
+    return null
+
   get_LinkedIssues: (raw_Data)->
     result = []
     for item in raw_Data

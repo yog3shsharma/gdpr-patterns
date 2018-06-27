@@ -3,6 +3,7 @@ neo4j = require('neo4j-driver').v1;
 Config  = require '../../../jira-issues/src/config'
 
 _driver = null
+_session = null
 
 class Neo4j
   constructor:->
@@ -14,6 +15,22 @@ class Neo4j
     if not _driver
       _driver =   neo4j.driver(@.url , neo4j.auth.basic(@.username, @.password))
     return _driver
+
+  session1: ()=>
+    if not _session
+      _session =  @.driver().session()
+    return _session
+    
+  run_Cypher_Single_Session: (cypher, params, callback)=>
+    session = @.session1()
+    session.run(cypher, params)
+      .then  (result)->
+        #session.close();
+        #callback? null,result
+        #return result
+      .catch  (error)->
+        callback? error, null
+        return error
 
   run_Cypher: (cypher, params, callback)=>
 
@@ -27,6 +44,7 @@ class Neo4j
       .catch  (error)->
         callback? error, null
         return error
+
 
   create_node: (label, params, callback)=>
     label = label.replace('-','_').replace(' ', '_')
@@ -50,14 +68,31 @@ class Neo4j
     cypher = "MERGE (u:#{label} #{params_query})  RETURN u"
     @.run_Cypher cypher, params, callback
 
-  add_Edge: (source_label, source_key, edge_label,target_label,target_key)->
+  add_Edge: (source_label, source_key, edge_label, target_label, target_key)->
     options =
       source_label : source_label
       source_key   : source_key
       edge_label   : edge_label
       target_label : target_label
       target_key   : target_key
+    #console.log(options)
     @.add_node_and_connection options
+
+  add_Edge2: (source_key, edge_label, target_key)->
+    options =
+      source_key   : source_key
+      edge_label   : edge_label
+      target_key   : target_key
+    #console.log(options)
+    params = key1: options.source_key, key2 :options.target_key
+
+    edge    = @.label_Format options.edge_label
+    cypher = """MERGE (u1 {key: '#{source_key}' } )
+                MERGE (u2 {key: '#{target_key}' } )
+                MERGE (u1)-[r:#{edge}]->(u2)
+                return u1,u2,r"""
+
+    await @.run_Cypher_Single_Session cypher
 
   add_Node: (label, key)=>
     label = @.label_Format label
@@ -79,6 +114,7 @@ class Neo4j
                 MERGE (u1)-[r:#{edge}]->(u2)
                 return u1,u2,r"""
     #console.log  cypher
+    #console.log(cypher)
     @.run_Cypher cypher, params, callback
 
   label_Format: (text)->

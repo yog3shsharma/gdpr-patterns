@@ -20,8 +20,8 @@ mappings_Create = new Mappings_Create()
 admin_functions = new Admin_Functions()
 save_data = new Save_Data()
 jira_server = new Jira_Server()
-
-delay         = 10 * 1000
+               #  H *  M *  S *  MS
+delay         =   1 * 60 * 60 *  1000
 
 clone_GIT = ->
   exec_command = 'git clone ' + git_url + ' data'
@@ -66,11 +66,7 @@ init_db_and_graph = ->
     "/api/neo4j/delete/all?pretty",
     "/api/admin/git/clone",
     "/api/admin/git/pull",
-    "/api/neo4j/nodes/create-regex/VULN?pretty",
-    "/api/neo4j/nodes/create-regex/SEC?pretty",
-    "/api/neo4j/nodes/create-regex/GDPR?pretty",
-    "/api/neo4j/nodes/create-regex/RISK?pretty",
-    "/api/neo4j/nodes/create-regex/TM?pretty"
+    "/api/neo4j/nodes/create-regex/all"
   ]
   for value in arr
     try
