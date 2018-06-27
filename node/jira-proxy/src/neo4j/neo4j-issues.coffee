@@ -112,7 +112,8 @@ class Neo4j_Issues
         for link in data['Linked Issues']
           link_name = link['type'].replace(/\s/g,'_').replace(/-/g,'_')
           Issue_Type = data['Issue Type'].replace(/\s/g,'_').replace(/-/g,'_')
-          @.neo4j.add_Edge2 key, link_name, link['key']
+          await @.neo4j.add_Edge2 key, link_name, link['key']
+          console.log key
         @.link_all_nodes keys[1..]
       else
         @.link_all_nodes keys[1..]
